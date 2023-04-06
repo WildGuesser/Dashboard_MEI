@@ -140,28 +140,6 @@ namespace FrontEnd.Controllers
                 return NotFound();
             }
 
-            //get all students
-            HttpResponseMessage message =  await _InternalClient.GetAsync(_APIserver + "/Alunos/Index");
-
-            if (message.IsSuccessStatusCode)
-            {
-                string body = await message.Content.ReadAsStringAsync();
-
-                List<Alunos> alunosList = JsonConvert.DeserializeObject<List<Alunos>>(body);
-
-                // If the number already exists for a different student, return a validation error
-                if (alunosList.Any(a => a.Numero_Aluno == alunos.Numero_Aluno) && alunosList.Any(a => a.Id != id))
-                {
-                    ModelState.AddModelError(string.Empty, $"O número de aluno {alunos.Numero_Aluno} já está sendo usado.");
-                    return View(alunos);
-                }
-            }
-            else
-            {
-                // Handle the error by returning the Edit view with the current object
-                return View(alunos);
-            }
-
             try
             {
                 // Serialize the Alunos object to JSON
@@ -230,7 +208,7 @@ namespace FrontEnd.Controllers
             try
             {
                 // Send a DELETE request to the API to delete the Alunos object with the specified ID
-                var response = await _InternalClient.DeleteAsync(_APIserver + $"/Alunos/Delete/{id}");
+                var response = await _InternalClient.DeleteAsync(_APIserver + $"/Alunos/{id}");
 
                 response.EnsureSuccessStatusCode();
 
@@ -252,6 +230,37 @@ namespace FrontEnd.Controllers
             }
         }
 
+
+        // POST: Alunos/DeleteMultiple
+        [HttpPost]
+        public async Task<IActionResult> DeleteMultiple(List<int> ids)
+        {
+
+
+                try
+                {
+                    // Serialize the list of IDs to JSON
+                    string json = JsonConvert.SerializeObject(ids);
+
+                    // Send a DELETE request to the API to delete the Alunos objects with the specified IDs
+                    var response = await _InternalClient.PostAsync(_APIserver + "/Alunos/DeleteMultiple",
+                        new StringContent(json, Encoding.UTF8, "application/json"));
+
+                    response.EnsureSuccessStatusCode();
+
+                    // Redirect to the Index action
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (HttpRequestException ex)
+                {
+                    _logger.LogError(ex, "Error deleting Alunos objects");
+                    ViewData["ErrorMessage"] += ex.Message;
+
+                    // Handle the exception by returning the Alunos Index view
+                    return RedirectToAction(nameof(Index));
+                }
+            
+        }
 
     }
 }

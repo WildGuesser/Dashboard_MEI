@@ -1,47 +1,69 @@
-﻿// Wait for the DOM to be fully loaded
+﻿
+//Procurar por elemento
+//document.addEventListener("DOMContentLoaded", function () {
+//    var table = document.getElementById("myTable");
+//    var searchInput = document.getElementById("search-input");
+//    var columnSelect = document.getElementById("column-select");
+
+//    searchInput.addEventListener("keyup", function () {
+//        var searchValue = this.value.toLowerCase();
+//        var columnIndex = columnSelect.selectedIndex;
+
+//        for (var i = 1; i < table.rows.length; i++) {
+//            var row = table.rows[i];
+
+//                var cell = row.cells[columnIndex];
+//                var cellValue = cell.innerHTML.toLowerCase();
+
+//                if (cellValue.indexOf(searchValue) > -1) {
+//                    row.style.display = "";
+//                } else {
+//                    row.style.display = "none";
+//                }
+
+//        }
+//    });
+
+//    columnSelect.addEventListener("change", function () {
+//        searchInput.dispatchEvent(new Event("keyup"));
+//    });
+//});
+
+//Procura global
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the table element
     var table = document.getElementById("myTable");
-
-    // Get the search input element
     var searchInput = document.getElementById("search-input");
-
-    // Get the column select element
     var columnSelect = document.getElementById("column-select");
 
-    // Add an event listener to the search input element
     searchInput.addEventListener("keyup", function () {
-        // Get the value of the search input
         var searchValue = this.value.toLowerCase();
 
-        // Get the index of the selected column
-        var columnIndex = columnSelect.selectedIndex;
-
-        // Loop through the rows of the table
-        for (var i = 0; i < table.rows.length; i++) {
-            // Get the current row
+        for (var i = 1; i < table.rows.length; i++) {
             var row = table.rows[i];
+            var rowText = "";
 
-            // Get the cell in the selected column of the current row
-            var cell = row.cells[columnIndex];
+            for (var j = 0; j < row.cells.length; j++) {
+                rowText += row.cells[j].textContent.toLowerCase();
+            }
 
-            // Get the value of the cell
-            var cellValue = cell.innerHTML.toLowerCase();
-
-            // Check if the cell value contains the search value
-            if (cellValue.indexOf(searchValue) > -1) {
-                // Show the row if the cell value contains the search value
+            if (rowText.includes(searchValue)) {
                 row.style.display = "";
             } else {
-                // Hide the row if the cell value does not contain the search value
                 row.style.display = "none";
             }
         }
     });
+});
 
-    // Add an event listener to the column select element
-    columnSelect.addEventListener("change", function () {
-        // Trigger the keyup event on the search input to update the search results
-        searchInput.dispatchEvent(new Event("keyup"));
+//Comfimação de apagar multiplas entradas
+document.addEventListener('DOMContentLoaded', function () {
+    var deleteBtn = document.getElementById('delete-btn');
+
+    deleteBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        if (confirm("Are you sure you want to delete the selected items?")) {
+            document.getElementById('delete-form').submit();
+        }
     });
 });

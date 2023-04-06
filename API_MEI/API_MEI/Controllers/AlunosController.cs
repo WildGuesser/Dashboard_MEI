@@ -141,5 +141,31 @@ namespace API_MEI.Controllers
         }
 
 
+        [HttpPost("DeleteMultiple")]
+        public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                return BadRequest("Nenhum ID de aluno foi fornecido para exclusão múltipla.");
+            }
+
+            var alunosToDelete = await _context.Alunos.Where(a => ids.Contains(a.Id)).ToListAsync();
+
+            if (alunosToDelete == null || alunosToDelete.Count == 0)
+            {
+                return NotFound("Nenhum aluno encontrado com os IDs fornecidos para exclusão múltipla.");
+            }
+
+            try
+            {
+                _context.Alunos.RemoveRange(alunosToDelete);
+                await _context.SaveChangesAsync();
+                return Ok($"Exclusão múltipla de {alunosToDelete.Count} alunos concluída com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir múltiplos alunos: {ex.Message}");
+            }
+        }
     }
 }
