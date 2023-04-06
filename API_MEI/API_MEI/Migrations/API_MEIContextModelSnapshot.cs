@@ -4,18 +4,16 @@ using API_MEI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API_MEI.Data.Migrations
+namespace API_MEI.Migrations
 {
     [DbContext(typeof(API_MEIContext))]
-    [Migration("20230331110256_createDatabase")]
-    partial class createDatabase
+    partial class API_MEIContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,11 +25,15 @@ namespace API_MEI.Data.Migrations
             modelBuilder.Entity("API_MEI.Models.Alunos", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Curso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -42,11 +44,16 @@ namespace API_MEI.Data.Migrations
 
                     b.Property<string>("Instituição")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Numero_Aluno")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -56,6 +63,7 @@ namespace API_MEI.Data.Migrations
             modelBuilder.Entity("API_MEI.Models.Docentes", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Contacto")
@@ -360,8 +368,7 @@ namespace API_MEI.Data.Migrations
 
             modelBuilder.Entity("API_MEI.Models.Alunos", b =>
                 {
-                    b.Navigation("Trabalho")
-                        .IsRequired();
+                    b.Navigation("Trabalho");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Docentes", b =>

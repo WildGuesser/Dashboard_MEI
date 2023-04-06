@@ -34,10 +34,25 @@ namespace API_MEI.Controllers
             return Ok(await aPI_MEIContext.ToListAsync());
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAlunoById(int id)
+        {
+            var aluno = await _context.Alunos.FindAsync(id);
+
+            if (aluno == null)
+            {
+                return NotFound($"Aluno com ID {id} não encontrado.");
+            }
+
+            var alunoDTO = _mapper.Map<AlunosDTO>(aluno);
+
+            return Ok(alunoDTO);
+        }
+
         // POST: Alunos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Create")]
      
         public async Task<IActionResult> Create(AlunosDTO alunosDTO)
         {
@@ -66,21 +81,32 @@ namespace API_MEI.Controllers
 
 
 
-
-        [HttpPut]
-        public async Task<IActionResult> Edit(AlunosDTO alunosDTO)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(int id, Alunos alunos)
         {
-            // Aqui estamos mapeando a trabalhoDTO para uma instância de trabalho
-            var alunos = _mapper.Map<Alunos>(alunosDTO);
+            // Here, we retrieve the existing student from the database by ID.
+            var existingStudent = await _context.Alunos.FindAsync(id);
+            if (existingStudent == null)
+            {
+                return NotFound($"Aluno com ID {id} não encontrado.");
+            }
 
             try
             {
-                // Aqui estamos adicionando a atividade ao contexto e salvando as alterações no banco de dados
+                if (existingStudent.Numero_Aluno == alunos.Numero_Aluno && existingStudent.Id != id)
+                {
+                    return BadRequest($"O número do aluno '{alunos.Numero_Aluno}' já está em uso.");
+                }
+                // Then, we create a new student entity with the updated key value.
+                _context.Entry(existingStudent).State = EntityState.Detached;
+
                 _context.Update(alunos);
+
+                // Finally, we save the changes to the database.
                 await _context.SaveChangesAsync();
 
-                // Se tudo correr bem, retornamos um Ok com a trabalhoDTO
-                return Ok("Aluno alterado com sucesso");
+                // Return a success message with the updated student entity.
+                return Ok(alunos);
             }
             catch (DbUpdateException ex)
             {

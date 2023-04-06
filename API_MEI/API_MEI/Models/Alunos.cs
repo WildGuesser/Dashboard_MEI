@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -7,17 +8,29 @@ namespace API_MEI.Models
     public class Alunos
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // tell EF not to generate a value for this property
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public int Id { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "O número do aluno deve ser maior que zero.")]
+ 
+        public int Numero_Aluno { get; set; }
+
+        [Required]
+
+        [StringLength(100)]
         public string Nome { get; set; }
 
         [Required]
+
+        [StringLength(100)]
         public string Curso { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
+
+        [StringLength(100)]
         public string Instituição { get; set; } 
 
         [Required]
@@ -25,7 +38,7 @@ namespace API_MEI.Models
 
         [JsonIgnore]
         [InverseProperty("Alunos")]
-        public virtual Trabalho Trabalho { get; set; }
+        public virtual Trabalho? Trabalho { get; set; }
 
     }
 }

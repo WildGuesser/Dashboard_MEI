@@ -1,32 +1,44 @@
 ﻿using API_MEI.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_MEI.DTOs
 {
     public class AlunosDTO
     {
-        
-            [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.None)] // tell EF not to generate a value for this property
-            public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-            [Required]
-            public string Nome { get; set; }
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "O número do aluno deve ser maior que zero.")]
+        public int Numero_Aluno { get; set; }
 
-            [Required]
-            public string Curso { get; set; }
+        [Required]
 
-            public string? Filiacao { get; set; }
+        [StringLength(100)]
+        public string Nome { get; set; }
 
-            public string Email { get; set; }
+        [Required]
+
+        [StringLength(100)]
+        public string Curso { get; set; }
+
+        [EmailAddress]
+        public string Email { get; set; }
 
 
-            [Required]
-            public bool Estado { get; set; }
+        [StringLength(100)]
+        public string Instituição { get; set; }
 
-           
+        [Required]
+        public bool Estado { get; set; }
 
+        [JsonIgnore]
+        [InverseProperty("Alunos")]
+        public virtual Trabalho? Trabalho { get; set; }
     }
 }
 

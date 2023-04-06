@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace API_MEI.Models
 {
     public class Docentes
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // tell EF not to generate a value for this property
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public string Id { get; set; }
 
         [Required]
@@ -18,9 +19,9 @@ namespace API_MEI.Models
 
         public string? Filiacao { get; set; }
 
-
+        [JsonIgnore]
         [InverseProperty("Docentes")]
-        public virtual ICollection <Membros> Membros { get; set; }
+        public virtual ICollection <Membros>? Membros { get; set; }
 
     }
 }
