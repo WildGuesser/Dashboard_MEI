@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table_Alunos</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+
+</head>
+<body>
+    @model IEnumerable<FrontEnd.Models.Alunos>
+
+    <div class="container">
+        <div class="">
+            <div class="">
+                <div class="">
+                    <select class="form-select" id="column-select">
+                        <option value="0">Numero Aluno</option>
+                        <option value="1">Nome</option>
+                        <option value="2">Curso</option>
+                        <option value="3">Email</option>
+                        <option value="4">Instituição</option>
+                        <option value="5">Estado</option>
+                    </select>
+                    <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                    <button class="btn btn-primary" id="search-btn">Search</button>
+                </div>
+
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th data-type="numeric" class="text">
+                                @Html.DisplayNameFor(model => model.Numero_Aluno)
+                            </th>
+                            <th class="text">
+                                @Html.DisplayNameFor(model => model.Nome)
+                            </th>
+                            <th class ="text">
+                                @Html.DisplayNameFor(model => model.Curso)
+                            </th>
+                            <th class="text">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th class ="text">
+                                @Html.DisplayNameFor(model => model.Instituição)
+                            </th>
+                            <th class ="text">
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </th>
+                            <th data-type="text-long" class="text">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text" id="0">@Html.DisplayFor(modelItem => item.Numero_Aluno)</td>
+                                <td class="text" id="1">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                <td class="text" id="2">@Html.DisplayFor(modelItem => item.Curso)</td>
+                                <td class="text" id="3">@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td class="text" id="4">@Html.DisplayFor(modelItem => item.Instituição)</td>
+                                <td class="text" id="5">@Html.DisplayFor(modelItem => item.Estado)</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id">Edit</a>
+                                    <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+
+</body>
+</html>
