@@ -35,7 +35,7 @@ namespace API_MEI.Controllers
 
         // GET: Docentes/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDocente(string id)
+        public async Task<IActionResult> GetDocente(int id)
         {
             var docente = await _context.Docentes.FindAsync(id);
 
@@ -75,7 +75,7 @@ namespace API_MEI.Controllers
 
         // PUT: Docentes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocente(string id, DocentesDTO docenteDTO)
+        public async Task<IActionResult> UpdateDocente(int id, DocentesDTO docenteDTO)
         {
             if (id != docenteDTO.Id)
             {
@@ -108,7 +108,7 @@ namespace API_MEI.Controllers
 
         // DELETE: Docentes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDocente(string id)
+        public async Task<IActionResult> DeleteDocente(int id)
         {
             var docente = await _context.Docentes.FindAsync(id);
 

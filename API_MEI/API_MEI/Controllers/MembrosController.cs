@@ -31,7 +31,6 @@ namespace API_MEI.Controllers
             var membros = await _context.Membros
                 .Include(m => m.Equipa_Orientadores)
                 .Include(m => m.Docentes)
-                .Include(m => m.Especialistas)
                 .ToListAsync();
 
             return _mapper.Map<List<MembrosDTO>>(membros);
@@ -44,8 +43,7 @@ namespace API_MEI.Controllers
             var membros = await _context.Membros
                 .Include(m => m.Equipa_Orientadores)
                 .Include(m => m.Docentes)
-                .Include(m => m.Especialistas)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Equipa_Orientadores_Id == id);
 
             if (membros == null)
             {
@@ -109,7 +107,7 @@ namespace API_MEI.Controllers
                     _context.Membros.Add(membros);
                     await _context.SaveChangesAsync();
 
-                    return CreatedAtAction(nameof(GetMembros), new { id = membros.Id }, _mapper.Map<MembrosDTO>(membros));
+                    return CreatedAtAction(nameof(GetMembros), new { id = membros.Equipa_Orientadores_Id }, _mapper.Map<MembrosDTO>(membros));
                 }
                 catch (DbUpdateException ex)
                 {

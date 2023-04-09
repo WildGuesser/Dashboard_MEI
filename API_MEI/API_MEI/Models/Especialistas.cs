@@ -1,26 +1,30 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace API_MEI.Models
 {
     public class Especialistas
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // tell EF not to generate a value for this property
-        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         [Required]
         public string Nome { get; set; }
 
-        public string? Email { get; set; }
+        [EmailAddress]
+        public string Email_especialista { get; set; }
 
         public string? Contacto { get; set; }
 
+
+        [Required]
         public int Empresa_ID { get; set; }
 
-
+        [JsonIgnore]
         [InverseProperty("Especialistas")]
-        public virtual ICollection <Membros> Membros { get; set; }
+        public ICollection <Equipa_Orientadores> Equipa_Orientadores { get; set; }
 
 
         [ForeignKey("Empresa_ID")]

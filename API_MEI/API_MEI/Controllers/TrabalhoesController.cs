@@ -61,10 +61,10 @@ namespace API_MEI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit(TrabalhoDTOwID trabalhoDTOwID)
+        public async Task<IActionResult> Edit(TrabalhoDTO trabalhoDTO)
         {
             // Aqui estamos mapeando a trabalhoDTO para uma instância de trabalho
-            var trabalho = _mapper.Map<Trabalho>(trabalhoDTOwID);
+            var trabalho = _mapper.Map<Trabalho>(trabalhoDTO);
 
             try
             {

@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API_MEI.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace API_MEI.Models
+namespace API_MEI.DTOs
 {
-    public class Equipa_Orientadores
+    public class Equipa_OrientadoresDTO
     {
         [Key]
         public int Id { get; set; }

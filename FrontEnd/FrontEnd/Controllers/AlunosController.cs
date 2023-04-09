@@ -119,7 +119,7 @@ namespace FrontEnd.Controllers
                     return NotFound();
                 }
 
-                return View(alunos);
+                return PartialView(alunos);
             }
             catch (HttpRequestException ex)
             {

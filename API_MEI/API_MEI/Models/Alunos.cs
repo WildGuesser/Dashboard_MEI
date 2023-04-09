@@ -24,7 +24,7 @@ namespace API_MEI.Models
         [Required]
 
         [StringLength(100)]
-        public string Curso { get; set; }
+        public string? Curso { get; set; }
 
         [EmailAddress]
         public string Email { get; set; }

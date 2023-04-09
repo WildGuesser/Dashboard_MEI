@@ -9,7 +9,6 @@ namespace API_MEI.Mappings
         public EntitiesToDTOMappingProfile()
         {
             CreateMap<Trabalho, TrabalhoDTO>().ReverseMap();
-            CreateMap<Trabalho, TrabalhoDTOwID>().ReverseMap(); //Criei isto para colocar o HttpPut com ID
             CreateMap<Juri, JuriDTO>().ReverseMap();
             CreateMap<Alunos, AlunosDTO>().ReverseMap();
             CreateMap<Docentes, DocentesDTO>().ReverseMap();

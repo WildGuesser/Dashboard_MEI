@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API_MEI.Migrations
+namespace API_MEI.Data.Migrations
 {
     [DbContext(typeof(API_MEIContext))]
-    [Migration("20230405225958_create-database")]
-    partial class createdatabase
+    [Migration("20230409114333_createDatabase")]
+    partial class createDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,18 +60,223 @@ namespace API_MEI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Alunos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Curso = "Administração",
+                            Email = "sofia.silva@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal do Rio Grande do Sul",
+                            Nome = "Sofia Silva",
+                            Numero_Aluno = 845732
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Curso = "Direito",
+                            Email = "lucas.oliveira@yahoo.com",
+                            Estado = true,
+                            Instituição = "Universidade de Brasília",
+                            Nome = "Lucas Oliveira",
+                            Numero_Aluno = 678123
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Curso = "Engenharia Elétrica",
+                            Email = "ap.costa@hotmail.com",
+                            Estado = false,
+                            Instituição = "Universidade Federal de Pernambuco",
+                            Nome = "Ana Paula Costa",
+                            Numero_Aluno = 923456
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Curso = "Medicina",
+                            Email = "pedro.santos@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade de São Paulo",
+                            Nome = "Pedro Santos",
+                            Numero_Aluno = 346782
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Curso = "Ciências da Computação",
+                            Email = "julia.ferreira@yahoo.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal de Minas Gerais",
+                            Nome = "Julia Ferreira",
+                            Numero_Aluno = 812394
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Curso = "Psicologia",
+                            Email = "rafaela.souza@hotmail.com",
+                            Estado = false,
+                            Instituição = "Universidade Federal do Paraná",
+                            Nome = "Rafaela Souza",
+                            Numero_Aluno = 473829
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Curso = "Engenharia Mecânica",
+                            Email = "marcos.oliveira@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Estadual de Campinas",
+                            Nome = "Marcos Oliveira",
+                            Numero_Aluno = 912345
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Curso = "Design Gráfico",
+                            Email = "carla.rodrigues@yahoo.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal do Rio de Janeiro",
+                            Nome = "Carla Rodrigues",
+                            Numero_Aluno = 567890
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Curso = "Engenharia Civil",
+                            Email = "gustavo.mendes@hotmail.com",
+                            Estado = false,
+                            Instituição = "Universidade de São Paulo",
+                            Nome = "Gustavo Mendes",
+                            Numero_Aluno = 234567
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Curso = "Letras",
+                            Email = "fernanda.oliveira@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal de Santa Catarina",
+                            Nome = "Fernanda Oliveira",
+                            Numero_Aluno = 789012
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Curso = "Ciências Contábeis",
+                            Email = "jose.santos@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal do Ceará",
+                            Nome = "José Santos",
+                            Numero_Aluno = 473829
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Curso = "Engenharia Química",
+                            Email = "amanda.silva@hotmail.com",
+                            Estado = false,
+                            Instituição = "Universidade de São Paulo",
+                            Nome = "Amanda Silva",
+                            Numero_Aluno = 923456
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Curso = "Arquitetura",
+                            Email = "mariana.souza@yahoo.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal do Paraná",
+                            Nome = "Mariana Souza",
+                            Numero_Aluno = 845732
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Curso = "Administração",
+                            Email = "paulo.santos@gmail.com",
+                            Estado = false,
+                            Instituição = "Universidade de Brasília",
+                            Nome = "Paulo Santos",
+                            Numero_Aluno = 678123
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Curso = "Direito",
+                            Email = "gabriel.oliveira@hotmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal de Pernambuco",
+                            Nome = "Gabriel Oliveira",
+                            Numero_Aluno = 346782
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Curso = "Medicina Veterinária",
+                            Email = "bruna.ferreira@yahoo.com",
+                            Estado = true,
+                            Instituição = "Universidade de São Paulo",
+                            Nome = "Bruna Ferreira",
+                            Numero_Aluno = 812394
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Curso = "Engenharia de Produção",
+                            Email = "carlos.oliveira@gmail.com",
+                            Estado = false,
+                            Instituição = "Universidade Federal de Minas Gerais",
+                            Nome = "Carlos Oliveira",
+                            Numero_Aluno = 912345
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Curso = "Psicologia",
+                            Email = "laura.rodrigues@hotmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Federal do Rio Grande do Sul",
+                            Nome = "Laura Rodrigues",
+                            Numero_Aluno = 567890
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Curso = "Engenharia de Computação",
+                            Email = "fabio.mendes@gmail.com",
+                            Estado = true,
+                            Instituição = "Universidade Estadual de Campinas",
+                            Nome = "Fábio Mendes",
+                            Numero_Aluno = 234567
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Curso = "Design de Interiores",
+                            Email = "isabella.oliveira@yahoo.com",
+                            Estado = false,
+                            Instituição = "Universidade Federal de Santa Catarina",
+                            Nome = "Isabella Oliveira",
+                            Numero_Aluno = 789012
+                        });
                 });
 
             modelBuilder.Entity("API_MEI.Models.Docentes", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Contacto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Filiacao")
@@ -94,6 +299,10 @@ namespace API_MEI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Email_empresa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Local")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -115,30 +324,32 @@ namespace API_MEI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Orientador1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Especialista_Id")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Orientador2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Orientador3")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Membros_Id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Especialista_Id");
 
                     b.ToTable("Equipa_Orientadores");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Especialistas", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Contacto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Email_especialista")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Empresa_ID")
@@ -187,28 +398,15 @@ namespace API_MEI.Migrations
 
             modelBuilder.Entity("API_MEI.Models.Membros", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Docente_Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Equipa_Orientadores_Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Especialista_Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Docente_Id")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Equipa_Orientadores_Id", "Docente_Id");
 
                     b.HasIndex("Docente_Id");
-
-                    b.HasIndex("Equipa_Orientadores_Id");
-
-                    b.HasIndex("Especialista_Id");
 
                     b.ToTable("Membros");
                 });
@@ -263,29 +461,29 @@ namespace API_MEI.Migrations
 
             modelBuilder.Entity("API_MEI.Models.Trabalho_Empresa", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Trabalho_Id")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Empresa_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Protocolo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Trabalho_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("Trabalho_Id", "Empresa_Id");
 
                     b.HasIndex("Empresa_Id");
 
-                    b.HasIndex("Trabalho_Id");
-
                     b.ToTable("Trabalho_Empresa");
+                });
+
+            modelBuilder.Entity("API_MEI.Models.Equipa_Orientadores", b =>
+                {
+                    b.HasOne("API_MEI.Models.Especialistas", "Especialistas")
+                        .WithMany("Equipa_Orientadores")
+                        .HasForeignKey("Especialista_Id");
+
+                    b.Navigation("Especialistas");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Especialistas", b =>
@@ -303,7 +501,9 @@ namespace API_MEI.Migrations
                 {
                     b.HasOne("API_MEI.Models.Docentes", "Docentes")
                         .WithMany("Membros")
-                        .HasForeignKey("Docente_Id");
+                        .HasForeignKey("Docente_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API_MEI.Models.Equipa_Orientadores", "Equipa_Orientadores")
                         .WithMany("Membros")
@@ -311,15 +511,9 @@ namespace API_MEI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API_MEI.Models.Especialistas", "Especialistas")
-                        .WithMany("Membros")
-                        .HasForeignKey("Especialista_Id");
-
                     b.Navigation("Docentes");
 
                     b.Navigation("Equipa_Orientadores");
-
-                    b.Navigation("Especialistas");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Trabalho", b =>
@@ -395,7 +589,7 @@ namespace API_MEI.Migrations
 
             modelBuilder.Entity("API_MEI.Models.Especialistas", b =>
                 {
-                    b.Navigation("Membros");
+                    b.Navigation("Equipa_Orientadores");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Juri", b =>

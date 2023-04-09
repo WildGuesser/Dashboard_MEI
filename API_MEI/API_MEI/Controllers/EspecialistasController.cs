@@ -36,7 +36,7 @@ namespace API_MEI.Controllers
 
         // GET: Especialistas/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEspecialista(string id)
+        public async Task<IActionResult> GetEspecialista(int id)
         {
             var especialista = await _context.Especialistas.Include(e => e.Empresas).FirstOrDefaultAsync(e => e.Id == id);
 
@@ -75,7 +75,7 @@ namespace API_MEI.Controllers
 
         // PUT: Especialistas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEspecialista(string id, EspecialistasDTO especialistaDto)
+        public async Task<IActionResult> UpdateEspecialista(int id, EspecialistasDTO especialistaDto)
         {
             if (id != especialistaDto.Id)
             {
@@ -107,7 +107,7 @@ namespace API_MEI.Controllers
         }
         // DELETE: api/especialistas/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEspecialista(string id)
+        public async Task<IActionResult> DeleteEspecialista(int id)
         {
             var especialista = await _context.Especialistas.FindAsync(id);
 

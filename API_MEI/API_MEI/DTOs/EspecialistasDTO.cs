@@ -1,21 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API_MEI.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_MEI.DTOs
 {
     public class EspecialistasDTO
     {
-        [Required]
-        public string Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "O campo 'nome' é obrigatório.")]
+        [Required]
         public string Nome { get; set; }
 
         public string? Email { get; set; }
 
         public string? Contacto { get; set; }
 
-        [Required(ErrorMessage = "O campo 'empresa_ID' é obrigatório.")]
+        [Required]
         public int Empresa_ID { get; set; }
+
+        [JsonIgnore]
+        [InverseProperty("Especialistas")]
+        public ICollection<Equipa_OrientadoresDTO> Equipa_Orientadores { get; set; }
+
+
+        [ForeignKey("Empresa_ID")]
+        [InverseProperty("Especialistas")]
+        public virtual Empresas? Empresas { get; set; }
     }
 }

@@ -6,13 +6,12 @@ namespace API_MEI.Models
 {
     public class Trabalho_Empresa
     {
-
-        [Key]
-        public int Id { get; set; }
-        public string Protocolo { get; set; }   
-
-        public int Empresa_Id { get; set; }
+        [Required]
         public int Trabalho_Id { get; set; }
+
+        [Required]
+        public int Empresa_Id { get; set; }
+        public string? Protocolo { get; set; }
 
         [JsonIgnore]
         [ForeignKey("Empresa_Id")]

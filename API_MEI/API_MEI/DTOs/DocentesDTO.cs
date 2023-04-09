@@ -9,12 +9,13 @@ namespace API_MEI.DTOs
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Nome { get; set; }
 
-        public string? Email { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         public string? Contacto { get; set; }
 
