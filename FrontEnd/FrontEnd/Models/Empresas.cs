@@ -18,6 +18,9 @@ namespace FrontEnd.Models
         [Required]
         public string Local { get; set; }
 
+        [EmailAddress]
+        public string Email_empresa { get; set; }
+
 
         [InverseProperty("Empresas")]
         public virtual ICollection <Especialistas>? Especialistas { get; set; }

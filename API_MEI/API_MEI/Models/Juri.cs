@@ -24,7 +24,7 @@ namespace API_MEI.Models
 
         [JsonIgnore]
         [InverseProperty("Juri")]
-        public virtual Trabalho Trabalho { get; set; }  
+        public virtual Trabalho? Trabalho { get; set; }  
 
     }
 }

@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
-using AutoMapper;
-using API_MEI.DTOs;
-
 
 namespace API_MEI.Controllers
 {
@@ -17,50 +14,45 @@ namespace API_MEI.Controllers
     public class EspecialistasController : ControllerBase
     {
         private readonly API_MEIContext _context;
-        private readonly IMapper _mapper;
 
-        public EspecialistasController(API_MEIContext context, IMapper mapper)
+        public EspecialistasController(API_MEIContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 
         // GET: Especialistas
-        [HttpGet]
-        public async Task<IActionResult> GetEspecialistas()
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
         {
-            var especialistas = await _context.Especialistas.Include(e => e.Empresas).ToListAsync();
-            var especialistasDto = _mapper.Map<List<EspecialistasDTO>>(especialistas);
-            return Ok(especialistasDto);
+            var especialistas = await _context.Especialistas.ToListAsync();
+            return Ok(especialistas);
         }
 
         // GET: Especialistas/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEspecialista(int id)
         {
-            var especialista = await _context.Especialistas.Include(e => e.Empresas).FirstOrDefaultAsync(e => e.Id == id);
+            var especialista = await _context.Especialistas.FindAsync(id);
 
             if (especialista == null)
             {
-                return NotFound();
+                return NotFound($"Especialista com ID {id} não encontrado.");
             }
 
-            var especialistaDto = _mapper.Map<EspecialistasDTO>(especialista);
-            return Ok(especialistaDto);
+            return Ok(especialista);
         }
 
         // POST: Especialistas
-        [HttpPost]
-        public async Task<IActionResult> CreateEspecialista(EspecialistasDTO especialistaDto)
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateEspecialista(Especialistas especialista)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var especialista = _mapper.Map<Especialistas>(especialistaDto);
                     _context.Add(especialista);
                     await _context.SaveChangesAsync();
-                    return CreatedAtAction(nameof(GetEspecialista), new { id = especialista.Id }, _mapper.Map<EspecialistasDTO>(especialista));
+                    return Ok("Especialista criado com sucesso!");
                 }
                 catch (Exception ex)
                 {
@@ -75,29 +67,31 @@ namespace API_MEI.Controllers
 
         // PUT: Especialistas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEspecialista(int id, EspecialistasDTO especialistaDto)
+        public async Task<IActionResult> Edit(int id, Especialistas especialista)
         {
-            if (id != especialistaDto.Id)
+            if (id != especialista.Id)
             {
-                return BadRequest();
+                return BadRequest("O ID do especialista a ser atualizado não corresponde ao ID fornecido.");
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var especialista = _mapper.Map<Especialistas>(especialistaDto);
                     _context.Update(especialista);
                     await _context.SaveChangesAsync();
-                    return NoContent();
+                    return Ok("Especialista atualizado com sucesso!");
                 }
-                catch (DbUpdateException ex)
+                catch (DbUpdateConcurrencyException)
                 {
-                    return BadRequest($"Erro ao atualizar especialista: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Erro interno: {ex.Message}");
+                    if (!EspecialistaExists(id))
+                    {
+                        return NotFound($"Especialista com ID {id} não encontrado.");
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
             else
@@ -105,30 +99,52 @@ namespace API_MEI.Controllers
                 return BadRequest($"Erro ao atualizar especialista: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
             }
         }
-        // DELETE: api/especialistas/{id}
+
+        // DELETE: Especialistas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEspecialista(int id)
         {
             var especialista = await _context.Especialistas.FindAsync(id);
-
             if (especialista == null)
             {
-                return NotFound();
+                return NotFound($"Especialista com ID {id} não encontrado.");
+            }
+
+            _context.Especialistas.Remove(especialista);
+            await _context.SaveChangesAsync();
+
+            return Ok("Especialista excluído com sucesso!");
+        }
+
+        private bool EspecialistaExists(int id)
+        {
+            return _context.Especialistas.Any(e => e.Id == id);
+        }
+
+        [HttpPost("DeleteMultiple")]
+        public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                return BadRequest("Nenhum ID de aluno foi fornecido para exclusão múltipla.");
+            }
+
+            var especialistasToDelete = await _context.Especialistas.Where(a => ids.Contains(a.Id)).ToListAsync();
+
+            if (especialistasToDelete == null || especialistasToDelete.Count == 0)
+            {
+                return NotFound("Nenhum aluno encontrado com os IDs fornecidos para exclusão múltipla.");
             }
 
             try
             {
-                _context.Especialistas.Remove(especialista);
+                _context.Especialistas.RemoveRange(especialistasToDelete);
                 await _context.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest($"Erro ao excluir especialista: {ex.Message}");
+                return Ok($"Exclusão múltipla de {especialistasToDelete.Count} alunos concluída com sucesso.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, $"Erro interno ao excluir múltiplos alunos: {ex.Message}");
             }
         }
     }

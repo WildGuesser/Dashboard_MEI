@@ -10,11 +10,8 @@ namespace FrontEnd.Models
         public int Id { get; set; }
 
         [Required]
-        public string Orientador1 { get; set; }
-
-        public string? Orientador2 { get; set; }
-
-        public string? Orientador3 { get; set; }
+        public int Membros_Id { get; set; }
+        public int? Especialista_Id { get; set; }
 
         [JsonIgnore]
         [InverseProperty("Equipa_Orientadores")]
@@ -23,6 +20,8 @@ namespace FrontEnd.Models
         [InverseProperty("Equipa_Orientadores")]
         public virtual ICollection <Membros> Membros { get; set; }
 
-
+        [ForeignKey("Especialista_Id")]
+        [InverseProperty("Equipa_Orientadores")]
+        public virtual Especialistas Especialistas { get; set; }
     }
 }

@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
-using AutoMapper;
-using API_MEI.DTOs;
 
 namespace API_MEI.Controllers
 {
@@ -16,21 +14,18 @@ namespace API_MEI.Controllers
     public class DocentesController : ControllerBase
     {
         private readonly API_MEIContext _context;
-        private readonly IMapper _mapper;
 
-        public DocentesController(API_MEIContext context, IMapper mapper)
+        public DocentesController(API_MEIContext context)
         {
-            _mapper = mapper;
             _context = context;
         }
 
         // GET: Docentes
-        [HttpGet]
-        public async Task<IActionResult> GetDocentes()
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
         {
             var docentes = await _context.Docentes.ToListAsync();
-            var docentesDTO = _mapper.Map<List<DocentesDTO>>(docentes);
-            return Ok(docentesDTO);
+            return Ok(docentes);
         }
 
         // GET: Docentes/5
@@ -41,26 +36,23 @@ namespace API_MEI.Controllers
 
             if (docente == null)
             {
-                return NotFound();
+                return NotFound($"Docente com ID {id} não encontrado.");
             }
 
-            var docenteDTO = _mapper.Map<DocentesDTO>(docente);
-            return Ok(docenteDTO);
+            return Ok(docente);
         }
 
         // POST: Docentes
-        [HttpPost]
-        public async Task<IActionResult> CreateDocente(DocentesDTO docenteDTO)
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateDocente(Docentes docente)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var docente = _mapper.Map<Docentes>(docenteDTO);
                     _context.Add(docente);
                     await _context.SaveChangesAsync();
-                    var createdDocenteDTO = _mapper.Map<DocentesDTO>(docente);
-                    return CreatedAtAction(nameof(GetDocente), new { id = createdDocenteDTO.Id }, createdDocenteDTO);
+                    return Ok("Docente criado com sucesso!");
                 }
                 catch (Exception ex)
                 {
@@ -75,29 +67,31 @@ namespace API_MEI.Controllers
 
         // PUT: Docentes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocente(int id, DocentesDTO docenteDTO)
+        public async Task<IActionResult> Edit(int id, Docentes docente)
         {
-            if (id != docenteDTO.Id)
+            if (id != docente.Id)
             {
-                return BadRequest();
+                return BadRequest("O ID do docente a ser atualizado não corresponde ao ID fornecido.");
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var docente = _mapper.Map<Docentes>(docenteDTO);
                     _context.Update(docente);
                     await _context.SaveChangesAsync();
-                    return NoContent();
+                    return Ok("Docente atualizado com sucesso!");
                 }
-                catch (DbUpdateException ex)
+                catch (DbUpdateConcurrencyException)
                 {
-                    return BadRequest($"Erro ao atualizar docente: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Erro interno: {ex.Message}");
+                    if (!DocenteExists(id))
+                    {
+                        return NotFound($"Docente com ID {id} não encontrado.");
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
             else
@@ -111,25 +105,46 @@ namespace API_MEI.Controllers
         public async Task<IActionResult> DeleteDocente(int id)
         {
             var docente = await _context.Docentes.FindAsync(id);
-
             if (docente == null)
             {
-                return NotFound();
+                return NotFound($"Docente com ID {id} não encontrado.");
+            }
+
+            _context.Docentes.Remove(docente);
+            await _context.SaveChangesAsync();
+
+            return Ok("Docente excluído com sucesso!");
+        }
+
+        private bool DocenteExists(int id)
+        {
+            return _context.Docentes.Any(e => e.Id == id);
+        }
+
+        [HttpPost("DeleteMultiple")]
+        public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                return BadRequest("Nenhum ID de aluno foi fornecido para exclusão múltipla.");
+            }
+
+            var docentesToDelete = await _context.Docentes.Where(a => ids.Contains(a.Id)).ToListAsync();
+
+            if (docentesToDelete == null || docentesToDelete.Count == 0)
+            {
+                return NotFound("Nenhum aluno encontrado com os IDs fornecidos para exclusão múltipla.");
             }
 
             try
             {
-                _context.Docentes.Remove(docente);
+                _context.Docentes.RemoveRange(docentesToDelete);
                 await _context.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest($"Erro ao excluir docente: {ex.Message}");
+                return Ok($"Exclusão múltipla de {docentesToDelete.Count} alunos concluída com sucesso.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, $"Erro interno ao excluir múltiplos alunos: {ex.Message}");
             }
         }
     }

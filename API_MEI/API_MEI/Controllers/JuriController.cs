@@ -1,20 +1,22 @@
-﻿using API_MEI.DTOs;
-using API_MEI.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
+using API_MEI.DTOs;
+using API_MEI.Models;
+using AutoMapper;
 
 namespace API_MEI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class JuriController : ControllerBase
     {
         private readonly API_MEIContext _context;
-        private readonly IMapper _mapper;        
-        
+        private readonly IMapper _mapper;
 
         public JuriController(API_MEIContext context, IMapper mapper)
         {
@@ -22,85 +24,143 @@ namespace API_MEI.Controllers
             _mapper = mapper;
         }
 
-        // Retorna todos os Juri 
-        [HttpGet]
-        public ActionResult<IEnumerable<JuriDTO>> GetAllJuri()
+        // GET: Juri
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
         {
-            var juri = _context.Juri.ToList();
-            var juriDTOs = _mapper.Map<List<JuriDTO>>(juri);
-            return Ok(juriDTOs);
+            var juriList = await _context.Juri.ToListAsync();
+
+            if (juriList == null || juriList.Count == 0)
+            {
+                return NotFound("Nenhum júri encontrado.");
+            }
+
+            var juriDTOList = _mapper.Map<List<JuriDTO>>(juriList);
+
+            return Ok(juriDTOList);
         }
 
-        // Retorna um Juri específico pelo Id
+        // GET: Juri/5
         [HttpGet("{id}")]
-        public ActionResult<JuriDTO> GetJuriById(int id)
+        public async Task<IActionResult> GetJuriById(int id)
         {
-            var juri = _context.Juri.FirstOrDefault(j => j.Id == id);
+            var juri = await _context.Juri.FindAsync(id);
 
             if (juri == null)
             {
-                return NotFound();
+                return NotFound($"Júri com ID {id} não encontrado.");
             }
 
             var juriDTO = _mapper.Map<JuriDTO>(juri);
+
             return Ok(juriDTO);
         }
 
-        // Cria um novo Juri
-        [HttpPost]
-        public ActionResult<JuriDTO> CreateJuri(JuriDTO juriDTO)
+        // POST: Juri/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(Juri juri)
         {
-            if (!ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                try
+                {
+                    _context.Add(juri);
+                    await _context.SaveChangesAsync();
+                    return Ok("Júri criado com sucesso!"); // retorna uma mensagem de sucesso
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Erro ao criar júri: {ex.Message}"); // retorna uma mensagem de erro com a exceção
+                }
             }
-
-            var juri = _mapper.Map<Juri>(juriDTO);
-
-            _context.Juri.Add(juri);
-            _context.SaveChanges();
-
-            var juriDTOCreated = _mapper.Map<JuriDTO>(juri);
-
-            return CreatedAtAction(nameof(GetJuriById), new { id = juriDTOCreated.Id }, juriDTOCreated);
+            else
+            {
+                // retorna uma mensagem de erro com os detalhes do modelo inválido
+                return BadRequest($"Erro ao criar júri: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
+            }
         }
 
         [HttpPut("{id}")]
-        public ActionResult<JuriDTO> UpdateJuri(int id, JuriDTO juriDTO)
+        public async Task<IActionResult> Edit(int id, Juri juri)
         {
-            if (!ModelState.IsValid)
+            var existingJuri = await _context.Juri.FindAsync(id);
+            if (existingJuri == null)
             {
-                return BadRequest(ModelState);
+                return NotFound($"Juri com ID {id} não encontrado.");
             }
 
-            var juri = _context.Juri.FirstOrDefault(j => j.Id == id);
-
-            if (juri == null)
+            try
             {
-                return NotFound();
+
+                _context.Entry(existingJuri).State = EntityState.Detached;
+
+                _context.Update(juri);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(juri);
             }
-
-            _mapper.Map(juriDTO, juri);
-
-            _context.SaveChanges();
-
-            return Ok(juriDTO);
+            catch (DbUpdateException ex)
+            {
+                return BadRequest($"Erro ao salvar no banco de dados: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult DeleteJuri(int id)
-        {
-            var juri = _context.Juri.FirstOrDefault(j => j.Id == id);
 
-            if (juri == null)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (_context.Juri == null)
             {
-                return NotFound();
+                return Problem("Entity set 'API_MEIContext.Juris' is null.");
+            }
+            var juri = await _context.Juri.FindAsync(id);
+
+            if (juri != null)
+            {
+                _context.Juri.Remove(juri);
+                await _context.SaveChangesAsync();
+                return Ok("Eliminado com sucesso");
             }
 
-            _context.Juri.Remove(juri);
-            _context.SaveChanges();
+            return NotFound("ERRO - Não foi encontrada nenhum Juri");
+        }
 
-            return NoContent();
+
+        [HttpPost("DeleteMultiple")]
+        public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                return BadRequest("Nenhum ID de juri foi fornecido para exclusão múltipla.");
+            }
+
+            var jurisNew = await _context.Juri.Where(j => ids.Contains(j.Id)).ToListAsync();
+
+            if (jurisNew == null || jurisNew.Count == 0)
+            {
+                return NotFound("Nenhum juri encontrado com os IDs fornecidos para exclusão múltipla.");
+            }
+
+            try
+            {
+                _context.Juri.RemoveRange(jurisNew);
+                await _context.SaveChangesAsync();
+                return Ok($"Exclusão múltipla de {jurisNew.Count} jurisdicionados concluída com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir múltiplos jurisdicionados: {ex.Message}");
+            }
         }
     }
 }
+
+
