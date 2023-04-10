@@ -18,7 +18,9 @@
                 <input type="text" class="form-control text" id="search-input" placeholder="Search">
                 <button class="btn btn-primary" id="search-btn">Search</button>
             </div>
-
+            <div>
+                @await Html.PartialAsync("Create_Aluno.cshtml", new API_MEI.Models.Juri())
+            </div>
             <div>
                 <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
                     <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
@@ -73,10 +75,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-
-    </script>
     
     </body>
     </html>

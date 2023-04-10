@@ -67,3 +67,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+//Selecionar todas as entradas
+document.addEventListener('DOMContentLoaded', function () {
+    var deleteBtn = document.getElementById('select-all-checkbox');
+    var cboxes = document.getElementsByClassName('select-checkbox');
+
+    deleteBtn.addEventListener('click', function () {
+        for (var i = 0; i < cboxes.length; i++) {
+            cboxes[i].checked = deleteBtn.checked;
+        }
+    });
+});

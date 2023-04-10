@@ -8,6 +8,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 :root {
     /* ===== Colors ===== */
     --body-color: #E4E9F7;
@@ -27,6 +28,7 @@ body {
     min-height: 100vh;
     background-color: var(--body-color);
     transition: var(--tran-05);
+    font-size:smaller;
 }
 
 ::selection {
@@ -322,3 +324,5 @@ body.dark .switch::before {
 body.dark .home .text {
     color: var(--text-color);
 }
+
+

@@ -1,0 +1,57 @@
+﻿@model API_MEI.Models.Juri
+
+@if (TempData["NoSuccess"] != null)
+{
+    <div class="alert warning">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span style="font-weight:bold">@TempData["NoSuccess"]</span>
+    </div>
+}
+<h4>Juri</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create_Juri">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Presidente" class="control-label"></label>
+                <input asp-for="Presidente" class="form-control" />
+                <span asp-validation-for="Presidente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vogal_Arguente1" class="control-label"></label>
+                <input asp-for="Vogal_Arguente1" class="form-control" />
+                <span asp-validation-for="Vogal_Arguente1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vogal_Arguente2" class="control-label"></label>
+                <input asp-for="Vogal_Arguente2" class="form-control" />
+                <span asp-validation-for="Vogal_Arguente2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vogal_Orientador" class="control-label"></label>
+                <input asp-for="Vogal_Orientador" class="form-control" />
+                <span asp-validation-for="Vogal_Orientador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data_Defesa" class="control-label"></label>
+                <input asp-for="Data_Defesa" class="form-control" />
+                <span asp-validation-for="Data_Defesa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

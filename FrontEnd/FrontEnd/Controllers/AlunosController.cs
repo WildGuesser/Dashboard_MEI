@@ -16,7 +16,6 @@ namespace FrontEnd.Controllers
 {
     public class AlunosController : Controller
     {
-        private readonly FrontEndContext _context;
 
         private readonly ILogger<AlunosController> _logger;
         private readonly string _APIserver;
@@ -119,7 +118,7 @@ namespace FrontEnd.Controllers
                     return NotFound();
                 }
 
-                return PartialView(alunos);
+                return View(alunos);
             }
             catch (HttpRequestException ex)
             {

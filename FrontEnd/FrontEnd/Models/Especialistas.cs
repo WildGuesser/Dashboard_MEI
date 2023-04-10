@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace FrontEnd.Models
+namespace API_MEI.Models
 {
     public class Especialistas
     {

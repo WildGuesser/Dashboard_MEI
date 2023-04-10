@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FrontEnd.Models;
+using API_MEI.Models;
 
 namespace FrontEnd.Data
 {
@@ -15,5 +16,9 @@ namespace FrontEnd.Data
         }
 
         public DbSet<FrontEnd.Models.Alunos> Alunos { get; set; } = default!;
+
+        public DbSet<API_MEI.Models.Juri>? Juri { get; set; }
+
+        public DbSet<API_MEI.Models.Docentes>? Docentes { get; set; }
     }
 }

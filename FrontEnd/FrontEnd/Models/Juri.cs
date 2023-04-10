@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace FrontEnd.Models
+namespace API_MEI.Models
 {
     public class Juri
     {

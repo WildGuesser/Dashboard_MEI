@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FrontEnd.Models
+namespace API_MEI.Models
 {
     public class Empresas
     {
