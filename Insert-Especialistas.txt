@@ -1,0 +1,22 @@
+INSERT INTO Especialistas (Nome, Email_especialista, Contacto, Empresa_ID)
+VALUES
+('John Doe', 'johndoe@example.com', '123-456-7890', 1),
+('Jane Smith', 'janesmith@example.com', '555-555-5555', 1),
+('Bob Johnson', 'bjohnson@example.com', NULL, 2),
+('Alice Lee', 'alicelee@example.com', '111-111-1111', 2),
+('Mike Miller', 'mikemiller@example.com', '555-123-4567', 3),
+('Sarah Lee', 'sarahlee@example.com', NULL, 3),
+('David Lee', 'davidlee@example.com', '888-888-8888', 4),
+('Jasmine Patel', 'jasminepatel@example.com', '777-777-7777', 4),
+('Daniel Kim', 'danielkim@example.com', '999-999-9999', 5),
+('Stephanie Chen', 'stephaniechen@example.com', '111-222-3333', 5),
+('Samantha Johnson', 'samanthajohnson@example.com', '555-789-1234', 6),
+('Michael Chang', 'michaelchang@example.com', NULL, 6),
+('Emily Davis', 'emilydavis@example.com', '333-333-3333', 7),
+('Andrew Lee', 'andrewlee@example.com', '444-444-4444', 7),
+('Rebecca Smith', 'rebeccasmith@example.com', '555-432-1234', 8),
+('Brandon Kim', 'brandonkim@example.com', NULL, 8),
+('Christina Lee', 'christinalee@example.com', '777-888-9999', 9),
+('Jared Patel', 'jaredpatel@example.com', '222-333-4444', 9),
+('Lauren Davis', 'laurendavis@example.com', '111-222-3333', 10),
+('Daniel Brown', 'danielbrown@example.com', '444-555-6666', 10);

@@ -20,5 +20,7 @@ namespace FrontEnd.Data
         public DbSet<API_MEI.Models.Juri>? Juri { get; set; }
 
         public DbSet<API_MEI.Models.Docentes>? Docentes { get; set; }
+
+        public DbSet<API_MEI.Models.Especialistas>? Especialistas { get; set; }
     }
 }

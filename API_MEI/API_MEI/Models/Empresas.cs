@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace API_MEI.Models
 {
@@ -21,11 +22,11 @@ namespace API_MEI.Models
         [EmailAddress]
         public string Email_empresa { get; set; }
 
-
+        [JsonIgnore]
         [InverseProperty("Empresas")]
         public virtual ICollection <Especialistas>? Especialistas { get; set; }
 
-
+        [JsonIgnore]
         [InverseProperty("Empresas")]
         public virtual ICollection <Trabalho_Empresa> Trabalho_Empresa{ get; set; }
     }

@@ -24,7 +24,7 @@ namespace API_MEI.Controllers
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            var especialistas = await _context.Especialistas.ToListAsync();
+            var especialistas = await _context.Especialistas.Include(e => e.Empresas).ToListAsync();
             return Ok(especialistas);
         }
 
@@ -32,7 +32,7 @@ namespace API_MEI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEspecialista(int id)
         {
-            var especialista = await _context.Especialistas.FindAsync(id);
+            var especialista = await _context.Especialistas.Include(e => e.Empresas).SingleOrDefaultAsync(e => e.Empresa_ID == id);
 
             if (especialista == null)
             {

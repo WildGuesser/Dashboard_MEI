@@ -1,0 +1,82 @@
+﻿@model IEnumerable<API_MEI.Models.Especialistas>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Table_Especialistas</title>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="">
+            <div class="">
+                <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                <button class="btn btn-primary" id="search-btn">Search</button>
+            </div>
+@*            <div>
+                @await Html.PartialAsync("Create_Especialista.cshtml", new API_MEI.Models.Especialistas())
+            </div>*@
+            <div>
+                <form method="post" action="/Especialistas/DeleteMultiple" id="delete-form">
+                    <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
+
+                    <table id="myTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="select-all-checkbox" />
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nome)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email_especialista)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Contacto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Empresas.Nome)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email_especialista)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Contacto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Empresas.Nome)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary text" asp-action="Edit_Especialista" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-danger text" asp-action="Delete_Especialista" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
