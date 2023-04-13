@@ -99,7 +99,7 @@ namespace FrontEnd.Controllers
                 ViewData["ErrorMessage"] += ex.Message;
 
                 // Handle the exception by returning the Especialistas Create view with the current object
-                return View(especialistas);
+                return RedirectToAction("Create_Especialista", especialistas);
             }
 
 

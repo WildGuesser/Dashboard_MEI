@@ -24,7 +24,7 @@ namespace API_MEI.Models
 
         [JsonIgnore]
         [InverseProperty("Especialistas")]
-        public ICollection <Equipa_Orientadores> Equipa_Orientadores { get; set; }
+        public ICollection <Equipa_Orientadores>? Equipa_Orientadores { get; set; }
 
 
         [ForeignKey("Empresa_ID")]
