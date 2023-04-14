@@ -9,7 +9,7 @@ using API_MEI.Data;
 using API_MEI.Models;
 using AutoMapper;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using API_MEI.DTOs;
+
 
 namespace API_MEI.Controllers
 {
@@ -44,9 +44,7 @@ namespace API_MEI.Controllers
                 return NotFound($"Aluno com ID {id} não encontrado.");
             }
 
-            var alunoDTO = _mapper.Map<AlunosDTO>(aluno);
-
-            return Ok(alunoDTO);
+            return Ok(aluno);
         }
 
         // POST: Alunos/Create
@@ -54,9 +52,8 @@ namespace API_MEI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("Create")]
      
-        public async Task<IActionResult> Create(AlunosDTO alunosDTO)
+        public async Task<IActionResult> Create(Alunos alunos)
         {
-            var alunos = _mapper.Map<Alunos>(alunosDTO);    
 
             if (ModelState.IsValid) 
             {

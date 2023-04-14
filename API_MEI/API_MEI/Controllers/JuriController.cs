@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
-using API_MEI.DTOs;
 using API_MEI.Models;
 using AutoMapper;
 
@@ -35,9 +34,7 @@ namespace API_MEI.Controllers
                 return NotFound("Nenhum júri encontrado.");
             }
 
-            var juriDTOList = _mapper.Map<List<JuriDTO>>(juriList);
-
-            return Ok(juriDTOList);
+            return Ok(juriList);
         }
 
         // GET: Juri/5
@@ -51,9 +48,7 @@ namespace API_MEI.Controllers
                 return NotFound($"Júri com ID {id} não encontrado.");
             }
 
-            var juriDTO = _mapper.Map<JuriDTO>(juri);
-
-            return Ok(juriDTO);
+            return Ok(juri);
         }
 
         // POST: Juri/Create

@@ -6,54 +6,55 @@ namespace API_MEI.Models
 {
     public class Trabalho
     {
-
-        public Trabalho() 
-        {
-            Trabalho_Empresa = new HashSet<Trabalho_Empresa>();
-        }
-
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O título do trabalho é obrigatório.")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "O título deve ter entre 2 e 50 caracteres.")]
         public string Titulo { get; set; }
 
         public string? Referencia { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O tipo do trabalho é obrigatório.")]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "O tipo deve conter apenas letras e números.")]
         public string Tipo { get; set; }
 
+        [Range(0, 20, ErrorMessage = "A nota deve estar entre 0 e 20.")]
         public string? Nota { get; set; }
 
+        [Display(Name = "Observação")]
         public string? Observacao { get; set; }
 
+        [Required(ErrorMessage = "O ID do aluno é obrigatório.")]
+        public int Aluno_Id { get; set; }
 
-        public int Alunos_Id { get; set; }
-
-
+        [Required(ErrorMessage = "O ID do júri é obrigatório.")]
         public int Juri_Id { get; set; }
 
-        public int Equipa_Orientadores_Id { get; set; }
+        [Required(ErrorMessage = "O ID do orientador é obrigatório.")]
+        public int Orientadores_Id { get; set; }
 
-        
-        [ForeignKey("Alunos_Id")]
+        [Required(ErrorMessage = "O ID da empresa é obrigatório.")]
+        [ForeignKey("Empresa")]
+        public int Empresa_Id { get; set; }
+
+        [ForeignKey("Aluno_Id")]
         [InverseProperty("Trabalho")]
         public virtual Alunos Alunos { get; set; }
 
-        
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Juri_Id")]
         [InverseProperty("Trabalho")]
-        public virtual Juri Juri { get; set; }
+        public virtual Juri? Juri { get; set; }
 
-        
-        [ForeignKey("Equipa_Orientadores_Id")]
+        [ForeignKey("Orientadores_Id")]
         [InverseProperty("Trabalho")]
-        public virtual Equipa_Orientadores Equipa_Orientadores { get; set; }
+        public virtual Orientadores Orientadores { get; set; }
 
-
-    
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [ForeignKey("Empresa_Id")]
         [InverseProperty("Trabalho")]
-        public virtual ICollection <Trabalho_Empresa> Trabalho_Empresa { get; set; }
-
+        public virtual Empresas? Empresas { get; set; }
     }
 }

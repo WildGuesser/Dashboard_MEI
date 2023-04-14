@@ -1,30 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace API_MEI.Models
 {
     public class Juri
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public string Presidente { get; set; }
-
-        public string? Vogal_Arguente1 { get; set; }
-
-        public string? Vogal_Arguente2 { get; set; }
-
-        [Required]
-        public string Vogal_Orientador { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "O campo Data de Defesa é obrigatório.")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
         public DateTime Data_Defesa { get; set; }
 
-        [JsonIgnore]
         [InverseProperty("Juri")]
-        public virtual Trabalho? Trabalho { get; set; }  
+        public virtual Trabalho? Trabalho { get; set; }
 
+        [InverseProperty("Juri")]
+        public virtual ICollection<JuriMembros> JuriMembros { get; set; }
     }
 }

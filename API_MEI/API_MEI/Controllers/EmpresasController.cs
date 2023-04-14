@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
 using AutoMapper;
-using API_MEI.DTOs;
+
 
 namespace API_MEI.Controllers
 {
@@ -48,9 +48,8 @@ namespace API_MEI.Controllers
 
         // POST: Empresas
         [HttpPost]
-        public async Task<IActionResult> CreateEmpresa(EmpresasDTO empresaDto)
+        public async Task<IActionResult> CreateEmpresa(Empresas empresa)
         {
-            var empresa = _mapper.Map<Empresas>(empresaDto);
 
             if (ModelState.IsValid)
             {
@@ -73,12 +72,8 @@ namespace API_MEI.Controllers
 
         // PUT: Empresas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmpresa(int id, EmpresasDTO empresaDto)
+        public async Task<IActionResult> UpdateEmpresa(int id, Empresas Empresa)
         {
-            if (id != empresaDto.Id)
-            {
-                return BadRequest();
-            }
 
             var empresa = await _context.Empresas.FindAsync(id);
 
@@ -87,7 +82,7 @@ namespace API_MEI.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(empresaDto, empresa);
+            _mapper.Map(Empresa, empresa);
 
             if (ModelState.IsValid)
             {

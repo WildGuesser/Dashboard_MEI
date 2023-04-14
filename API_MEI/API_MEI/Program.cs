@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using API_MEI.Data;
-using API_MEI.Mappings;
 using API_MEI.Models;
 using API_MEI.Controllers;
 
@@ -25,7 +24,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddScoped<TrabalhoesController>();
+
 
 
 
@@ -41,8 +40,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(typeof(EntitiesToDTOMappingProfile));
 
 var app = builder.Build();
 
