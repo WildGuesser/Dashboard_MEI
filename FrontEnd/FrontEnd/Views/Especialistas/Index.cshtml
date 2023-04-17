@@ -1,4 +1,4 @@
-﻿@model IEnumerable<API_MEI.Models.Especialistas>
+﻿@model IEnumerable<FrontEnd.Models.Especialistas>
 
 <!DOCTYPE html>
 <html>
@@ -33,13 +33,13 @@
                                     <input type="checkbox" id="select-all-checkbox" />
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Nome)
+                                    @Html.DisplayNameFor(model => model.Membros.Nome)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Email_especialista)
+                                    @Html.DisplayNameFor(model => model.Membros.Email)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Contacto)
+                                    @Html.DisplayNameFor(model => model.Membros.Contacto)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Empresas.Nome)
@@ -54,13 +54,13 @@
                                     <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Nome)
+                                        @Html.DisplayFor(modelItem => item.Membros.Nome)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Email_especialista)
+                                        @Html.DisplayFor(modelItem => item.Membros.Email)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Contacto)
+                                        @Html.DisplayFor(modelItem => item.Membros.Contacto)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Empresas.Nome)

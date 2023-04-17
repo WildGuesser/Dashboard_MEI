@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 
-namespace FrontEnd.Models
+namespace API_MEI.DTOs.Tabela_Docente
 {
-    public class Membros
+    public class MembrosDTO_D
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,20 +22,6 @@ namespace FrontEnd.Models
         [RegularExpression(@"^(9[1236]|2\d)\d{7}$", ErrorMessage = "Insira um número de telefone português válido.")]
         public string? Contacto { get; set; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Membros")]
-        public virtual Especialistas? Especialistas { get; set; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Membros")]
-        public virtual Docentes? Docentes { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Membros")]
-        public virtual ICollection<JuriMembros>? JuriMembros { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Membros")]
-        public virtual ICollection<OrientadoresMembros>? OrientadoresMembros { get; set; }
     }
 }

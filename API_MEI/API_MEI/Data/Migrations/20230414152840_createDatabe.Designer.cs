@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_MEI.Data.Migrations
 {
     [DbContext(typeof(API_MEIContext))]
-    [Migration("20230414013851_createDatabase")]
-    partial class createDatabase
+    [Migration("20230414152840_createDatabe")]
+    partial class createDatabe
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,18 +70,12 @@ namespace API_MEI.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Docente_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Filiacao")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Docente_Id")
-                        .IsUnique();
 
                     b.ToTable("Docentes");
                 });
@@ -121,15 +115,9 @@ namespace API_MEI.Data.Migrations
                     b.Property<int>("Empresa_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Especialista_Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Empresa_ID");
-
-                    b.HasIndex("Especialista_Id")
-                        .IsUnique();
 
                     b.ToTable("Especialistas");
                 });
@@ -285,7 +273,7 @@ namespace API_MEI.Data.Migrations
                 {
                     b.HasOne("API_MEI.Models.Membros", "Membros")
                         .WithOne("Docentes")
-                        .HasForeignKey("API_MEI.Models.Docentes", "Docente_Id")
+                        .HasForeignKey("API_MEI.Models.Docentes", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -302,7 +290,7 @@ namespace API_MEI.Data.Migrations
 
                     b.HasOne("API_MEI.Models.Membros", "Membros")
                         .WithOne("Especialistas")
-                        .HasForeignKey("API_MEI.Models.Especialistas", "Especialista_Id")
+                        .HasForeignKey("API_MEI.Models.Especialistas", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

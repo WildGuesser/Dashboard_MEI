@@ -1,28 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using FrontEnd.Models;
 
-namespace API_MEI.Models
+namespace FrontEnd.Models
 {
     public class Docentes
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        [Required]
-        public string Nome { get; set; }
+        [Required(ErrorMessage = "A filiação do docente é obrigatória.")]
+        [StringLength(100, ErrorMessage = "A filiação do docente não pode ter mais do que 100 caracteres.")]
 
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Filiação")]
+        public string Filiacao { get; set; }
 
-        public string? Contacto { get; set; }
-
-        public string? Filiacao { get; set; }
-
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [ForeignKey("Id")]
         [InverseProperty("Docentes")]
-        public virtual ICollection <Membros>? Membros { get; set; }
-
+        public virtual Membros Membros { get; set; }
     }
 }

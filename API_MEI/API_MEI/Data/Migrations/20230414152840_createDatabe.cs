@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API_MEI.Data.Migrations
 {
-    public partial class createDatabase : Migration
+    public partial class createDatabe : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,15 +88,14 @@ namespace API_MEI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Filiacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Docente_Id = table.Column<int>(type: "int", nullable: false)
+                    Filiacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Docentes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Docentes_Membros_Docente_Id",
-                        column: x => x.Docente_Id,
+                        name: "FK_Docentes_Membros_Id",
+                        column: x => x.Id,
                         principalTable: "Membros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -107,8 +106,7 @@ namespace API_MEI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Empresa_ID = table.Column<int>(type: "int", nullable: false),
-                    Especialista_Id = table.Column<int>(type: "int", nullable: false)
+                    Empresa_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,8 +118,8 @@ namespace API_MEI.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Especialistas_Membros_Especialista_Id",
-                        column: x => x.Especialista_Id,
+                        name: "FK_Especialistas_Membros_Id",
+                        column: x => x.Id,
                         principalTable: "Membros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -223,21 +221,9 @@ namespace API_MEI.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Docentes_Docente_Id",
-                table: "Docentes",
-                column: "Docente_Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Especialistas_Empresa_ID",
                 table: "Especialistas",
                 column: "Empresa_ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Especialistas_Especialista_Id",
-                table: "Especialistas",
-                column: "Especialista_Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_JuriMembros_Membros_Id",

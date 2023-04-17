@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace API_MEI.Models
+namespace API_MEI.DTOs.Tabela_Docente
 {
-    public class Docentes
+    public class DocentesDTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -19,6 +19,6 @@ namespace API_MEI.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Id")]
         [InverseProperty("Docentes")]
-        public virtual Membros Membros { get; set; }
+        public virtual MembrosDTO_D Membros { get; set; }
     }
 }

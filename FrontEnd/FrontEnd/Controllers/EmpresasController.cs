@@ -12,39 +12,38 @@ using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
 
-
 namespace FrontEnd.Controllers
 {
-    public class DocentesController : Controller
+    public class EmpresasController : Controller
     {
 
-        private readonly ILogger<DocentesController> _logger;
+        private readonly ILogger<EmpresasController> _logger;
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
-        private List<Docentes> list;
+        private List<Empresas> list;
 
 
-        public DocentesController(ILogger<DocentesController> logger, IConfiguration configuration)
+        public EmpresasController(ILogger<EmpresasController> logger, IConfiguration configuration)
         {
             _logger = logger;
             _APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
             _InternalClient = new HttpClient();
         }
 
-        // GET: Docentes
+        // GET: Empresas
         public async Task<IActionResult> Index()
         {
             try
             {
-                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Docentes/Index");
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Empresas/Index");
 
                 string body = await message.Content.ReadAsStringAsync();
 
-                list = JsonConvert.DeserializeObject<List<Docentes>>(body);
+                list = JsonConvert.DeserializeObject<List<Empresas>>(body);
 
                 if (list == null)
                 {
-                    list = new List<Docentes>();
+                    list = new List<Empresas>();
                 }
                 return View(list);
             }
@@ -52,31 +51,31 @@ namespace FrontEnd.Controllers
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
-                // handle the exception by returning the Docentes Index view without making the API call
-                List<Docentes> list = new List<Docentes>();
+                // handle the exception by returning the Empresas Index view without making the API call
+                List<Empresas> list = new List<Empresas>();
                 return View(list);
             }
         }
 
-        // GET: Docentes/Create
-        public IActionResult Create_Docente()
+        // GET: Empresas/Create
+        public IActionResult Create_Empresa()
         {
             return View();
         }
 
-        // POST: Docentes/Create
+        // POST: Empresas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create_Docente(Docentes docentes)
+        public async Task<IActionResult> Create_Empresa(Empresas empresas)
         {
 
             try
             {
-                // Serialize the Docentes object to JSON
-                string json = JsonConvert.SerializeObject(docentes);
+                // Serialize the Empresas object to JSON
+                string json = JsonConvert.SerializeObject(empresas);
 
-                // Send a POST request to the API to create a new Docentes object
-                var response = await _InternalClient.PostAsync(_APIserver + "/Docentes/Create",
+                // Send a POST request to the API to create a new Empresas object
+                var response = await _InternalClient.PostAsync(_APIserver + "/Empresas/Create",
                     new StringContent(json, Encoding.UTF8, "application/json"));
 
                 response.EnsureSuccessStatusCode();
@@ -86,19 +85,19 @@ namespace FrontEnd.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Error creating new Docentes object");
+                _logger.LogError(ex, "Error creating new Empresas object");
                 ViewData["ErrorMessage"] += ex.Message;
 
-                // Handle the exception by returning the Docentes Create view with the current object
-                return View(docentes);
+                // Handle the exception by returning the Empresas Create view with the current object
+                return View(empresas);
             }
 
 
-            return View(docentes);
+            return View(empresas);
         }
 
-        // GET: Docentes/Edit/5
-        public async Task<IActionResult> Edit_Docente(int? id)
+        // GET: Empresas/Edit/5
+        public async Task<IActionResult> Edit_Empresa(int? id)
         {
             if (id == null)
             {
@@ -107,46 +106,46 @@ namespace FrontEnd.Controllers
 
             try
             {
-                // Send a GET request to the API to retrieve the Docentes object with the specified ID
-                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Docentes/{id}");
+                // Send a GET request to the API to retrieve the Empresas object with the specified ID
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Empresas/{id}");
 
                 string body = await message.Content.ReadAsStringAsync();
 
-                Docentes docentes = JsonConvert.DeserializeObject<Docentes>(body);
+                Empresas empresas = JsonConvert.DeserializeObject<Empresas>(body);
 
-                if (docentes == null)
+                if (empresas == null)
                 {
                     return NotFound();
                 }
 
-                return View(docentes);
+                return View(empresas);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
-                // Handle the exception by returning the Docentes Index view
+                // Handle the exception by returning the Empresas Index view
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: Docentes/Edit/5
+        // POST: Empresas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_Docente(int id, Docentes docentes)
+        public async Task<IActionResult> Edit_Empresa(int id, Empresas empresas)
         {
-            if (id != docentes.Id)
+            if (id != empresas.Id)
             {
                 return NotFound();
             }
 
             try
             {
-                // Serialize the Docentes object to JSON
-                string json = JsonConvert.SerializeObject(docentes);
+                // Serialize the Empresas object to JSON
+                string json = JsonConvert.SerializeObject(empresas);
 
-                // Send a PUT request to the API to update the Docentes object with the specified ID
-                var response = await _InternalClient.PutAsync(_APIserver + $"/Docentes/{id}",
+                // Send a PUT request to the API to update the Empresas object with the specified ID
+                var response = await _InternalClient.PutAsync(_APIserver + $"/Empresas/{id}",
                     new StringContent(json, Encoding.UTF8, "application/json"));
 
                 response.EnsureSuccessStatusCode();
@@ -156,19 +155,19 @@ namespace FrontEnd.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Error updating Docentes object");
+                _logger.LogError(ex, "Error updating Empresas object");
 
-                // Handle the exception by returning the Docentes Edit view with the current object
-                return View(docentes);
+                // Handle the exception by returning the Empresas Edit view with the current object
+                return View(empresas);
             }
 
 
-            return View(docentes);
+            return View(empresas);
         }
 
 
-        // GET: Docentes/Delete/5
-        public async Task<IActionResult> Delete_Docente(int? id)
+        // GET: Empresas/Delete/5
+        public async Task<IActionResult> Delete_Empresa(int? id)
         {
             if (id == null)
             {
@@ -177,38 +176,38 @@ namespace FrontEnd.Controllers
 
             try
             {
-                // Send a GET request to the API to retrieve the Docentes object with the specified ID
-                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Docentes/{id}");
+                // Send a GET request to the API to retrieve the Empresas object with the specified ID
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Empresas/{id}");
 
                 string body = await message.Content.ReadAsStringAsync();
 
-                Docentes docentes = JsonConvert.DeserializeObject<Docentes>(body);
+                Empresas empresas = JsonConvert.DeserializeObject<Empresas>(body);
 
-                if (docentes == null)
+                if (empresas == null)
                 {
                     return NotFound();
                 }
 
-                return View(docentes);
+                return View(empresas);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
-                // Handle the exception by returning the Docentes Index view
+                // Handle the exception by returning the Empresas Index view
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: Docentes/Delete/5
+        // POST: Empresas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed_Docente(int id)
+        public async Task<IActionResult> DeleteConfirmed_Empresa(int id)
         {
             try
             {
-                // Send a DELETE request to the API to delete the Docentes object with the specified ID
-                var response = await _InternalClient.DeleteAsync(_APIserver + $"/Docentes/{id}");
+                // Send a DELETE request to the API to delete the Empresas object with the specified ID
+                var response = await _InternalClient.DeleteAsync(_APIserver + $"/Empresas/{id}");
 
                 response.EnsureSuccessStatusCode();
 
@@ -217,21 +216,21 @@ namespace FrontEnd.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Error deleting Docentes object");
+                _logger.LogError(ex, "Error deleting Empresas object");
 
-                // Handle the exception by returning the Docentes Delete view with the current object
-                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Docentes/{id}");
+                // Handle the exception by returning the Empresas Delete view with the current object
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Empresas/{id}");
 
                 string body = await message.Content.ReadAsStringAsync();
 
-                Docentes docentes = JsonConvert.DeserializeObject<Docentes>(body);
+                Empresas empresas = JsonConvert.DeserializeObject<Empresas>(body);
 
-                return View(docentes);
+                return View(empresas);
             }
         }
 
 
-        // POST: Docentes/DeleteMultiple
+        // POST: Empresas/DeleteMultiple
         [HttpPost]
         public async Task<IActionResult> DeleteMultiple(List<int> ids)
         {
@@ -242,8 +241,8 @@ namespace FrontEnd.Controllers
                 // Serialize the list of IDs to JSON
                 string json = JsonConvert.SerializeObject(ids);
 
-                // Send a DELETE request to the API to delete the Docentes objects with the specified IDs
-                var response = await _InternalClient.PostAsync(_APIserver + "/Docentes/DeleteMultiple",
+                // Send a DELETE request to the API to delete the Empresas objects with the specified IDs
+                var response = await _InternalClient.PostAsync(_APIserver + "/Empresas/DeleteMultiple",
                     new StringContent(json, Encoding.UTF8, "application/json"));
 
                 response.EnsureSuccessStatusCode();
@@ -253,10 +252,10 @@ namespace FrontEnd.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Error deleting Docentes objects");
+                _logger.LogError(ex, "Error deleting Empresas objects");
                 ViewData["ErrorMessage"] += ex.Message;
 
-                // Handle the exception by returning the Docentes Index view
+                // Handle the exception by returning the Empresas Index view
                 return RedirectToAction(nameof(Index));
             }
 

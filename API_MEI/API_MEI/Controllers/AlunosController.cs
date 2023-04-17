@@ -9,29 +9,30 @@ using API_MEI.Data;
 using API_MEI.Models;
 using AutoMapper;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
+using API_MEI.DTOs;
 
 namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AlunosController : Controller
+    public class AlunosController : ControllerBase
     {
         private readonly API_MEIContext _context;
         private readonly IMapper _mapper;
 
         public AlunosController(API_MEIContext context, IMapper mapper)
         {
-            _mapper = mapper;
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Alunos
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            var aPI_MEIContext = _context.Alunos;
-            return Ok(await aPI_MEIContext.ToListAsync());
+            var alunos = await _context.Alunos.ToListAsync();
+            var alunosDTO = _mapper.Map<List<AlunosDTO>>(alunos);
+            return Ok(alunosDTO);
         }
 
         [HttpGet("{id}")]
@@ -44,44 +45,40 @@ namespace API_MEI.Controllers
                 return NotFound($"Aluno com ID {id} não encontrado.");
             }
 
-            return Ok(aluno);
+            var alunoDTO = _mapper.Map<AlunosDTO>(aluno);
+            return Ok(alunoDTO);
         }
 
         // POST: Alunos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("Create")]
-     
-        public async Task<IActionResult> Create(Alunos alunos)
+        public async Task<IActionResult> Create(AlunosDTO alunosDTO)
         {
-
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-
                 try
                 {
-                    _context.Add(alunos);
+                    var aluno = _mapper.Map<Alunos>(alunosDTO);
+                    _context.Add(aluno);
                     await _context.SaveChangesAsync();
                     return Ok("Aluno criado com sucesso!"); // retorna uma mensagem de sucesso
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest($"Erro ao criar atividade: {ex.Message}"); // retorna uma mensagem de erro com a exceção
+                    return BadRequest($"Erro ao criar aluno: {ex.Message}"); // retorna uma mensagem de erro com a exceção
                 }
             }
             else
             {
                 // retorna uma mensagem de erro com os detalhes do modelo inválido
-                return BadRequest($"Erro ao criar atividade: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
+                return BadRequest($"Erro ao criar aluno: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
             }
         }
 
-
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int id, Alunos alunos)
+        public async Task<IActionResult> Edit(int id, AlunosDTO alunosDTO)
         {
-            // Here, we retrieve the existing student from the database by ID.
             var existingStudent = await _context.Alunos.FindAsync(id);
             if (existingStudent == null)
             {
@@ -90,53 +87,50 @@ namespace API_MEI.Controllers
 
             try
             {
-                if (existingStudent.Numero_Aluno == alunos.Numero_Aluno && existingStudent.Id != id)
+                if (existingStudent.Numero_Aluno == alunosDTO.Numero_Aluno && existingStudent.Id != id)
                 {
-                    return BadRequest($"O número do aluno '{alunos.Numero_Aluno}' já está em uso.");
+                    return BadRequest($"O número do aluno '{alunosDTO.Numero_Aluno}' já está em uso.");
                 }
-                // Then, we create a new student entity with the updated key value.
-                _context.Entry(existingStudent).State = EntityState.Detached;
 
-                _context.Update(alunos);
+                existingStudent.Nome = alunosDTO.Nome;
+                existingStudent.Numero_Aluno = alunosDTO.Numero_Aluno;
+                existingStudent.Email = alunosDTO.Email;
 
-                // Finally, we save the changes to the database.
+                _context.Update(existingStudent);
                 await _context.SaveChangesAsync();
 
-                // Return a success message with the updated student entity.
-                return Ok(alunos);
+                return Ok(existingStudent);
             }
             catch (DbUpdateException ex)
             {
-                // Se houver um erro ao salvar no banco de dados, retornamos um BadRequest com a mensagem de erro
                 return BadRequest($"Erro ao salvar no banco de dados: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // Se houver qualquer outro tipo de erro, retornamos um StatusCode 500 com a mensagem de erro
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (_context.Alunos == null)
-            {
-                return Problem("Entity set 'API_MEIContext.Alunos'  is null.");
-            }
             var alunos = await _context.Alunos.FindAsync(id);
+            if (alunos == null)
+            {
+                return NotFound("Aluno não encontrado.");
+            }
 
-            if (alunos != null)
+            try
             {
                 _context.Alunos.Remove(alunos);
                 await _context.SaveChangesAsync();
-                return Ok("Elimiado com sucesso");
+                return Ok("Aluno excluído com sucesso.");
             }
-
-            return NotFound("ERRO - Nao foi encontrada nenhum Aluno");
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir o aluno: {ex.Message}");
+            }
         }
-
 
         [HttpPost("DeleteMultiple")]
         public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
@@ -164,5 +158,6 @@ namespace API_MEI.Controllers
                 return StatusCode(500, $"Erro interno ao excluir múltiplos alunos: {ex.Message}");
             }
         }
+
     }
 }

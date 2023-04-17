@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FrontEnd.Models;
-using API_MEI.Models;
+
 
 namespace FrontEnd.Data
 {
@@ -15,12 +15,28 @@ namespace FrontEnd.Data
         {
         }
 
-        public DbSet<FrontEnd.Models.Alunos> Alunos { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Trabalho> Trabalho { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Alunos>? Alunos { get; set; }
+        public DbSet<FrontEnd.Models.Docentes> Docentes { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Empresas> Empresas { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Orientadores> Orientadores { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Especialistas> Especialistas { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Juri> Juri { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Membros> Membros { get; set; } = default!;
+        public DbSet<FrontEnd.Models.JuriMembros> JuriMembros { get; set; } = default!;
+        public DbSet<FrontEnd.Models.OrientadoresMembros> OrientadoresMembros { get; set; } = default!;
 
-        public DbSet<API_MEI.Models.Juri>? Juri { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        public DbSet<API_MEI.Models.Docentes>? Docentes { get; set; }
+            modelBuilder.Entity<JuriMembros>()
+                .HasKey(o => new { o.Juri_Id, o.Membros_Id });
 
-        public DbSet<API_MEI.Models.Especialistas>? Especialistas { get; set; }
+            modelBuilder.Entity<OrientadoresMembros>()
+                .HasKey(o => new { o.OrientadorId, o.MembrosId });
+
+        }
+
     }
 }

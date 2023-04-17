@@ -1,34 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-namespace API_MEI.Models
+namespace   FrontEnd.Models
 {
     public class Especialistas
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        [Required]
-        public string Nome { get; set; }
-
-        [EmailAddress]
-        public string Email_especialista { get; set; }
-
-        public string? Contacto { get; set; }
-
-
-        [Required]
+        [Required(ErrorMessage = "O ID da empresa é obrigatório.")]
         public int Empresa_ID { get; set; }
 
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [ForeignKey("Id")]
         [InverseProperty("Especialistas")]
-        public ICollection <Equipa_Orientadores> Equipa_Orientadores { get; set; }
+        public virtual Membros Membros { get; set; }
 
-
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Empresa_ID")]
         [InverseProperty("Especialistas")]
         public virtual Empresas? Empresas { get; set; }
     }
+
 }

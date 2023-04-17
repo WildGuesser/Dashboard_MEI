@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using API_MEI.Data;
 using API_MEI.Models;
 using API_MEI.Controllers;
+using API_MEI.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<API_MEIContext>(options =>
@@ -26,6 +27,7 @@ builder.Services.AddCors(options =>
 
 
 
+builder.Services.AddScoped<AlunosController>();
 
 
 //app.MapGet("/TodosTrabalhos", async (TrabalhoesController controller) => await controller.Index());
@@ -40,6 +42,8 @@ builder.Services.AddControllers().AddNewtonsoftJson(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(typeof(EntitiesToDTOMappingProfile));
 
 var app = builder.Build();
 

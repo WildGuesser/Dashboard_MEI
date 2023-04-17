@@ -14,7 +14,7 @@ namespace API_MEI.Models
         public int Empresa_ID { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [ForeignKey("Especialista_Id")]
+        [ForeignKey("Id")]
         [InverseProperty("Especialistas")]
         public virtual Membros Membros { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@model API_MEI.Models.Especialistas
+﻿@model FrontEnd.Models.Especialistas
 
 <h4>Especialistas</h4>
 <hr />
@@ -7,19 +7,19 @@
         <form asp-action="Create_Especialista">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="Membros.Nome" class="control-label"></label>
+                <input asp-for="Membros.Nome" class="form-control" />
+                <span asp-validation-for="Membros.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email_especialista" class="control-label"></label>
-                <input asp-for="Email_especialista" class="form-control" />
-                <span asp-validation-for="Email_especialista" class="text-danger"></span>
+                <label asp-for="Membros.Email" class="control-label"></label>
+                <input asp-for="Membros.Email" class="form-control" />
+                <span asp-validation-for="Membros.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contacto" class="control-label"></label>
-                <input asp-for="Contacto" class="form-control" />
-                <span asp-validation-for="Contacto" class="text-danger"></span>
+                <label asp-for="Membros.Contacto" class="control-label"></label>
+                <input asp-for="Membros.Contacto" class="form-control" />
+                <span asp-validation-for="Membros.Contacto" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Empresa_ID" class="control-label"></label>

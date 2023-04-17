@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Table_Alunos</title>
+    <title>Table_Empresas</title>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    @model IEnumerable<FrontEnd.Models.Alunos>
+    @model IEnumerable<FrontEnd.Models.Empresas>
     <div class="container">
         <div class="">
             <div class="">
@@ -19,10 +19,10 @@
                 <button class="btn btn-primary" id="search-btn">Search</button>
             </div>
             <div>
-                @await Html.PartialAsync("Create_Aluno.cshtml", new FrontEnd.Models.Alunos())
+                @await Html.PartialAsync("Create_Empresa.cshtml", new FrontEnd.Models.Empresas())
             </div>
             <div>
-                <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
+                <form method="post" action="/Empresas/DeleteMultiple" id="delete-form">
                     <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
                     <table id="myTable" class="table">
                         <thead>
@@ -30,23 +30,14 @@
                                 <th class="text">
                                     <input type="checkbox" id="select-all-checkbox">
                                 </th>
-                                <th data-type="numeric" class="text">
-                                    @Html.DisplayNameFor(model => model.Numero_Aluno)
-                                </th>
                                 <th class="text">
                                     @Html.DisplayNameFor(model => model.Nome)
                                 </th>
                                 <th class="text">
-                                    @Html.DisplayNameFor(model => model.Curso)
+                                    @Html.DisplayNameFor(model => model.Local)
                                 </th>
                                 <th class="text">
-                                    @Html.DisplayNameFor(model => model.Email)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Instituicao)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Estado)
+                                    @Html.DisplayNameFor(model => model.Email_empresa)
                                 </th>
                                 <th data-type="text-long" class="text">
                                 </th>
@@ -57,15 +48,12 @@
                             {
                                 <tr>
                                     <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Numero_Aluno)</td>
                                     <td class="text">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Curso)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Email)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Estado)</td>
+                                    <td class="text">@Html.DisplayFor(modelItem => item.Local)</td>
+                                    <td class="text">@Html.DisplayFor(modelItem => item.Email_empresa)</td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id">Edit</a>
-                                        <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
+                                        <a class="btn btn-sm btn-primary text" asp-action="Edit_Empresa" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-danger text" asp-action="Delete_Empresa" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -75,7 +63,6 @@
             </div>
         </div>
     </div>
-    
-    </body>
-    </html>
 
+</body>
+</html>

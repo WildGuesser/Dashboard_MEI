@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
 using AutoMapper;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using API_MEI.DTOs;
 
 namespace API_MEI.Controllers
 {
@@ -20,117 +22,134 @@ namespace API_MEI.Controllers
 
         public EmpresasController(API_MEIContext context, IMapper mapper)
         {
-            _mapper = mapper;
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Empresas
-        [HttpGet]
-        public async Task<IActionResult> GetEmpresas()
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index()
         {
             var empresas = await _context.Empresas.ToListAsync();
-            return Ok(empresas);
+            var empresasDTO = _mapper.Map<List<EmpresasDTO>>(empresas);
+            return Ok(empresasDTO);
         }
 
-        // GET: Empresas/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmpresa(int id)
+        public async Task<IActionResult> GetEmpresaById(int id)
         {
             var empresa = await _context.Empresas.FindAsync(id);
 
             if (empresa == null)
             {
-                return NotFound();
+                return NotFound($"Empresa com ID {id} não encontrado.");
             }
 
-            return Ok(empresa);
+            var empresaDTO = _mapper.Map<EmpresasDTO>(empresa);
+            return Ok(empresaDTO);
         }
 
-        // POST: Empresas
-        [HttpPost]
-        public async Task<IActionResult> CreateEmpresa(Empresas empresa)
+        // POST: Empresas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(EmpresasDTO empresasDTO)
         {
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var empresa = _mapper.Map<Empresas>(empresasDTO);
                     _context.Add(empresa);
                     await _context.SaveChangesAsync();
-                    return CreatedAtAction(nameof(GetEmpresa), new { id = empresa.Id }, empresa);
+                    return Ok("Empresa criado com sucesso!"); // retorna uma mensagem de sucesso
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest($"Erro ao criar empresa: {ex.Message}");
+                    return BadRequest($"Erro ao criar empresa: {ex.Message}"); // retorna uma mensagem de erro com a exceção
                 }
             }
             else
             {
+                // retorna uma mensagem de erro com os detalhes do modelo inválido
                 return BadRequest($"Erro ao criar empresa: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
             }
         }
 
-        // PUT: Empresas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmpresa(int id, Empresas Empresa)
+        public async Task<IActionResult> Edit(int id, Empresas empresasDTO)
         {
-
-            var empresa = await _context.Empresas.FindAsync(id);
-
-            if (empresa == null)
+            var existingEmpresa = await _context.Empresas.FindAsync(id);
+            if (existingEmpresa == null)
             {
-                return NotFound();
-            }
-
-            _mapper.Map(Empresa, empresa);
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(empresa);
-                    await _context.SaveChangesAsync();
-                    return NoContent();
-                }
-                catch (DbUpdateException ex)
-                {
-                    return BadRequest($"Erro ao atualizar empresa: {ex.Message}");
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Erro interno: {ex.Message}");
-                }
-            }
-            else
-            {
-                return BadRequest($"Erro ao atualizar empresa: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
-            }
-        }
-        // DELETE: Empresas/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmpresa(int id)
-        {
-            var empresa = await _context.Empresas.FindAsync(id);
-
-            if (empresa == null)
-            {
-                return NotFound();
+                return NotFound($"Empresa com ID {id} não encontrado.");
             }
 
             try
             {
-                _context.Empresas.Remove(empresa);
+                _context.Entry(existingEmpresa).State = EntityState.Detached;
+                _context.Update(empresasDTO);
                 await _context.SaveChangesAsync();
-                return NoContent();
+
+                return Ok(empresasDTO);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest($"Erro ao excluir empresa: {ex.Message}");
+                return BadRequest($"Erro ao salvar no banco de dados: {ex.Message}");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var empresas = await _context.Empresas.FindAsync(id);
+            if (empresas == null)
+            {
+                return NotFound("Empresa não encontrado.");
+            }
+
+            try
+            {
+                _context.Empresas.Remove(empresas);
+                await _context.SaveChangesAsync();
+                return Ok("Empresa excluído com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir o empresa: {ex.Message}");
+            }
+        }
+
+        [HttpPost("DeleteMultiple")]
+        public async Task<IActionResult> DeleteMultiple([FromBody] List<int> ids)
+        {
+            if (ids == null || ids.Count == 0)
+            {
+                return BadRequest("Nenhum ID de empresa foi fornecido para exclusão múltipla.");
+            }
+
+            var empresasToDelete = await _context.Empresas.Where(a => ids.Contains(a.Id)).ToListAsync();
+
+            if (empresasToDelete == null || empresasToDelete.Count == 0)
+            {
+                return NotFound("Nenhum empresa encontrado com os IDs fornecidos para exclusão múltipla.");
+            }
+
+            try
+            {
+                _context.Empresas.RemoveRange(empresasToDelete);
+                await _context.SaveChangesAsync();
+                return Ok($"Exclusão múltipla de {empresasToDelete.Count} empresas concluída com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir múltiplos empresas: {ex.Message}");
+            }
+        }
+
     }
 }

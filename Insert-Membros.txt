@@ -1,0 +1,24 @@
+USE [API_MEI.Data]
+GO
+INSERT INTO [dbo].[Membros] (Nome, Email, Contacto)
+VALUES
+('João Silva', 'joao.silva@gmail.com', '912345678'),
+('Ana Santos', 'ana.santos@hotmail.com', '929876543'),
+('Miguel Costa', 'miguel.costa@yahoo.com', '914567890'),
+('Sofia Ferreira', 'sofia.ferreira@gmail.com', '919876543'),
+('Rui Oliveira', 'rui.oliveira@hotmail.com', '926543219'),
+('Marta Rodrigues', 'marta.rodrigues@gmail.com', NULL),
+('Pedro Alves', 'pedro.alves@yahoo.com', '936789012'),
+('Carla Dias', 'carla.dias@hotmail.com', '916543290'),
+('Nuno Santos', 'nuno.santos@gmail.com', NULL),
+('Inês Carvalho', 'ines.carvalho@yahoo.com', '925678901'),
+('Mário Pereira', 'mario.pereira@hotmail.com', '913456789'),
+('Sara Costa', 'sara.costa@gmail.com', '932109876'),
+('Vasco Silva', 'vasco.silva@yahoo.com', '927654321'),
+('Tânia Oliveira', 'tania.oliveira@hotmail.com', NULL),
+('Ricardo Costa', 'ricardo.costa@gmail.com', '911234567'),
+('Cristina Rodrigues', 'cristina.rodrigues@yahoo.com', '926789012'),
+('Bruno Santos', 'bruno.santos@hotmail.com', '936543219'),
+('Isabel Almeida', 'isabel.almeida@gmail.com', NULL),
+('Diogo Nunes', 'diogo.nunes@yahoo.com', '917654321'),
+('Lara Fernandes', 'lara.fernandes@hotmail.com', '935678901');

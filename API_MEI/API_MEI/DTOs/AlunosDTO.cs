@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using API_MEI.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace API_MEI.Models
+namespace API_MEI.DTOs
 {
-    public class Alunos
+    public class AlunosDTO
     {
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -37,8 +38,7 @@ namespace API_MEI.Models
         [Required(ErrorMessage = "O campo Estado é obrigatório.")]
         public bool Estado { get; set; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Alunos")]
-        public virtual Trabalho? Trabalho { get; set; } = null; 
     }
 }
+
+

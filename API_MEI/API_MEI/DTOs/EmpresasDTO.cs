@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using API_MEI.Models;
 
-namespace FrontEnd.Models
+namespace API_MEI.DTOs
 {
-    public class Empresas
+    public class EmpresasDTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,13 +20,5 @@ namespace FrontEnd.Models
 
         [EmailAddress(ErrorMessage = "O email da empresa deve ser um endereço de email válido.")]
         public string Email_empresa { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Empresas")]
-        public virtual ICollection<Especialistas>? Especialistas { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [InverseProperty("Empresas")]
-        public virtual ICollection<Trabalho>? Trabalho { get; set; }
     }
 }
