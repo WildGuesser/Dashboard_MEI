@@ -22,3 +22,5 @@ VALUES
 ('Isabel Almeida', 'isabel.almeida@gmail.com', NULL),
 ('Diogo Nunes', 'diogo.nunes@yahoo.com', '917654321'),
 ('Lara Fernandes', 'lara.fernandes@hotmail.com', '935678901');
+
+DBCC CHECKIDENT ('Membros', RESEED, 0);

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+    <script src="extensions/resizable/bootstrap-table-resizable.js"></script>
+
     <script src="~/js/tables.js" asp-append-version="true"></script>
 
 </head>
@@ -19,14 +21,14 @@
                 <input type="text" class="form-control text" id="search-input" placeholder="Search">
                 <button class="btn btn-primary" id="search-btn">Search</button>
             </div>
-@*            <div>
-                @await Html.PartialAsync("Create_Especialista.cshtml", new API_MEI.Models.Especialistas())
-            </div>*@
+            <div>
+                @await Html.PartialAsync("Create_Especialista.cshtml", new FrontEnd.Models.Especialistas())
+            </div>
             <div>
                 <form method="post" action="/Especialistas/DeleteMultiple" id="delete-form">
                     <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
 
-                    <table id="myTable" class="table">
+                    <table id="myTable" class="table" data-resizable="true">
                         <thead>
                             <tr>
                                 <th>

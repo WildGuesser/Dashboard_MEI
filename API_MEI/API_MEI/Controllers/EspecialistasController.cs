@@ -61,9 +61,8 @@ namespace API_MEI.Controllers
                         Email = input.Membros.Email,
                         Contacto = input.Membros.Contacto
                     };
-                    _context.Add(membros);
+                    _context.Membros.Add(membros);
                     await _context.SaveChangesAsync();
-
                     // create new Especialistas entity with same Id as Membros
                     var especialista = new Especialistas
                     {

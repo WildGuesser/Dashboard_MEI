@@ -45,7 +45,18 @@ namespace FrontEnd.Controllers
                 if (list == null)
                 {
                     list = new List<Especialistas>();
+                    return View(list);
                 }
+                HttpResponseMessage empresa = await _InternalClient.GetAsync(_APIserver + "/Empresas/Index");
+
+                string bodyEmpresa = await empresa.Content.ReadAsStringAsync();
+
+                ViewBag.Empresa_ID = new SelectList(
+                    Newtonsoft.Json.JsonConvert.DeserializeObject<List<Empresas>>(bodyEmpresa),
+                    "Id",
+                    "Nome");
+
+
                 return View(list);
             }
             catch (HttpRequestException ex)
@@ -61,7 +72,8 @@ namespace FrontEnd.Controllers
         // GET: Especialistas/Create
         public async Task<IActionResult> Create_Especialista()
         {
-            HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Empresas");
+            HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Empresas/Index");
+
             string body = await message.Content.ReadAsStringAsync();
 
             ViewBag.Empresa_ID = new SelectList(
@@ -116,6 +128,7 @@ namespace FrontEnd.Controllers
 
             try
             {
+
                 // Send a GET request to the API to retrieve the Especialistas object with the specified ID
                 HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Especialistas/{id}");
 
@@ -127,6 +140,15 @@ namespace FrontEnd.Controllers
                 {
                     return NotFound();
                 }
+
+                HttpResponseMessage empresa = await _InternalClient.GetAsync(_APIserver + "/Empresas/Index");
+
+                string bodyEmpresa = await empresa.Content.ReadAsStringAsync();
+
+                ViewBag.Empresa_ID = new SelectList(
+                    Newtonsoft.Json.JsonConvert.DeserializeObject<List<Empresas>>(bodyEmpresa),
+                    "Id",
+                    "Nome");
 
                 return View(especialistas);
             }
