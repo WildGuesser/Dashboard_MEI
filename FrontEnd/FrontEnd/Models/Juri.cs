@@ -13,10 +13,11 @@ namespace FrontEnd.Models
         [Required(ErrorMessage = "O campo Data de Defesa é obrigatório.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
+        [Display(Name = "Data da Defesa")]
         public DateTime Data_Defesa { get; set; }
 
         [InverseProperty("Juri")]
-        public virtual Trabalho? Trabalho { get; set; }
+        public virtual Trabalhos? Trabalho { get; set; }
 
         [InverseProperty("Juri")]
         public virtual ICollection<JuriMembros> JuriMembros { get; set; }

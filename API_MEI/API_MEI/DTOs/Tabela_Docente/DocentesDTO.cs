@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API_MEI.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -11,7 +12,7 @@ namespace API_MEI.DTOs.Tabela_Docente
         public int Id { get; set; }
 
         [Required(ErrorMessage = "A filiação do docente é obrigatória.")]
-        [StringLength(100, ErrorMessage = "A filiação do docente não pode ter mais do que 100 caracteres.")]
+        [StringLength(255, ErrorMessage = "A filiação do docente não pode ter mais do que 255 caracteres.")]
 
         [Display(Name = "Filiação")]
         public string Filiacao { get; set; }
@@ -19,6 +20,6 @@ namespace API_MEI.DTOs.Tabela_Docente
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Id")]
         [InverseProperty("Docentes")]
-        public virtual MembrosDTO_D Membros { get; set; }
+        public virtual Membros Membros { get; set; }
     }
 }

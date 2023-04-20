@@ -1,44 +1,48 @@
 ﻿@model FrontEnd.Models.Especialistas
 
-<h4>Especialistas</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create_Especialista">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Membros.Nome" class="control-label"></label>
-                <input asp-for="Membros.Nome" class="form-control" />
-                <span asp-validation-for="Membros.Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Membros.Email" class="control-label"></label>
-                <input asp-for="Membros.Email" class="form-control" />
-                <span asp-validation-for="Membros.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Membros.Contacto" class="control-label"></label>
-                <input asp-for="Membros.Contacto" class="form-control" />
-                <span asp-validation-for="Membros.Contacto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Empresa_ID" class="control-label"></label>
-                <select asp-for="Empresa_ID" class="form-control" asp-items="@ViewBag.Empresa_ID">
-                    <option value="">Escolha uma empresa</option>
-                </select>
-                <span asp-validation-for="Empresa_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<h4>Criar Especialistas</h4>
+<hr />
+
+    <form asp-action="Create_Especialista">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-10">
+            <div class="row">
+                <div class="col">
+                    <label asp-for="Membros.Nome" class="control-label"></label>
+                    <input asp-for="Membros.Nome" class="form-control" />
+                    <span asp-validation-for="Membros.Nome" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Membros.Email" class="control-label"></label>
+                    <input asp-for="Membros.Email" class="form-control" />
+                    <span asp-validation-for="Membros.Email" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Membros.Contacto" class="control-label"></label>
+                    <input asp-for="Membros.Contacto" class="form-control" />
+                    <span asp-validation-for="Membros.Contacto" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Empresas.Nome" class="control-label"></label>
+                    <select asp-for="Empresa_Id" class="form-control" asp-items="@ViewBag.Empresa_ID">
+                        <option value="">Escolha uma empresa</option>
+                    </select>
+                    <span asp-validation-for="Empresa_Id" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 p-4">
+            <input type="submit" value="Create" class="btn btn-primary mt-2" />
+        </div>
+    </div>
+
+    </form>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

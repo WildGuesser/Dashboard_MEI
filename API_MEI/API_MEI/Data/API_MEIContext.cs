@@ -16,8 +16,8 @@ namespace API_MEI.Data
         }
 
 
-        public DbSet<API_MEI.Models.Trabalho> Trabalho { get; set; } = default!;
-        public DbSet<API_MEI.Models.Alunos>? Alunos { get; set; }
+        public DbSet<API_MEI.Models.Trabalhos> Trabalho { get; set; } = default!;
+        public DbSet<API_MEI.Models.Alunos>? Alunos { get; set; } = default!;
         public DbSet<API_MEI.Models.Docentes> Docentes { get; set; } = default!;
         public DbSet<API_MEI.Models.Empresas> Empresas { get; set; } = default!;
         public DbSet<API_MEI.Models.Orientadores> Orientadores { get; set; } = default!;
@@ -25,17 +25,16 @@ namespace API_MEI.Data
         public DbSet<API_MEI.Models.Juri> Juri { get; set; } = default!;
         public DbSet<API_MEI.Models.Membros> Membros { get; set; } = default!;
         public DbSet<API_MEI.Models.JuriMembros> JuriMembros { get; set; } = default!;
-        public DbSet<API_MEI.Models.OrientadoresMembros> OrientadoresMembros { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<JuriMembros>()
-                .HasKey(o => new { o.Juri_Id, o.Membros_Id });
+                .HasKey(o => new { o.Juri_Id, o.Membro_Id });
 
-            modelBuilder.Entity<OrientadoresMembros>()
-                .HasKey(o => new { o.OrientadorId, o.MembrosId });
+            modelBuilder.Entity<Orientadores>()
+                .HasKey(o => new { o.Trabalho_Id, o.Membro_Id });
 
         }
 

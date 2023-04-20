@@ -15,8 +15,8 @@ namespace FrontEnd.Data
         {
         }
 
-        public DbSet<FrontEnd.Models.Trabalho> Trabalho { get; set; } = default!;
-        public DbSet<FrontEnd.Models.Alunos>? Alunos { get; set; }
+        public DbSet<FrontEnd.Models.Trabalhos> Trabalho { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Alunos>? Alunos { get; set; } = default!;
         public DbSet<FrontEnd.Models.Docentes> Docentes { get; set; } = default!;
         public DbSet<FrontEnd.Models.Empresas> Empresas { get; set; } = default!;
         public DbSet<FrontEnd.Models.Orientadores> Orientadores { get; set; } = default!;
@@ -24,17 +24,15 @@ namespace FrontEnd.Data
         public DbSet<FrontEnd.Models.Juri> Juri { get; set; } = default!;
         public DbSet<FrontEnd.Models.Membros> Membros { get; set; } = default!;
         public DbSet<FrontEnd.Models.JuriMembros> JuriMembros { get; set; } = default!;
-        public DbSet<FrontEnd.Models.OrientadoresMembros> OrientadoresMembros { get; set; } = default!;
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<JuriMembros>()
-                .HasKey(o => new { o.Juri_Id, o.Membros_Id });
+                .HasKey(o => new { o.Juri_Id, o.Membro_Id });
 
-            modelBuilder.Entity<OrientadoresMembros>()
-                .HasKey(o => new { o.OrientadorId, o.MembrosId });
+            modelBuilder.Entity<Orientadores>()
+                .HasKey(o => new { o.Trabalho_Id, o.Membro_Id });
 
         }
 

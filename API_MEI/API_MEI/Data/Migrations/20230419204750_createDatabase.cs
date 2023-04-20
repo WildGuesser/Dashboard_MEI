@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API_MEI.Data.Migrations
 {
-    public partial class createDatabe : Migration
+    public partial class createDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,11 +16,11 @@ namespace API_MEI.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero_Aluno = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Curso = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contacto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Instituicao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Curso = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Contacto = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Instituicao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -34,9 +34,10 @@ namespace API_MEI.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Local = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email_empresa = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Local = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Email_empresa = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Protocolo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,9 +63,9 @@ namespace API_MEI.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contacto = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Contacto = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,15 +73,40 @@ namespace API_MEI.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orientadores",
+                name: "Trabalho",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titulo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ReferenciaInfo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Tipo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Nota = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdendaProtocolo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Aluno_Id = table.Column<int>(type: "int", nullable: false),
+                    Juri_Id = table.Column<int>(type: "int", nullable: false),
+                    Empresa_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orientadores", x => x.Id);
+                    table.PrimaryKey("PK_Trabalho", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Trabalho_Alunos_Aluno_Id",
+                        column: x => x.Aluno_Id,
+                        principalTable: "Alunos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Trabalho_Empresas_Empresa_Id",
+                        column: x => x.Empresa_Id,
+                        principalTable: "Empresas",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Trabalho_Juri_Juri_Id",
+                        column: x => x.Juri_Id,
+                        principalTable: "Juri",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +114,7 @@ namespace API_MEI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Filiacao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Filiacao = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,14 +132,14 @@ namespace API_MEI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Empresa_ID = table.Column<int>(type: "int", nullable: false)
+                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Especialistas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Especialistas_Empresas_Empresa_ID",
-                        column: x => x.Empresa_ID,
+                        name: "FK_Especialistas_Empresas_Empresa_Id",
+                        column: x => x.Empresa_Id,
                         principalTable: "Empresas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -130,12 +156,12 @@ namespace API_MEI.Data.Migrations
                 columns: table => new
                 {
                     Juri_Id = table.Column<int>(type: "int", nullable: false),
-                    Membros_Id = table.Column<int>(type: "int", nullable: false),
-                    Funcao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Membro_Id = table.Column<int>(type: "int", nullable: false),
+                    Funcao = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JuriMembros", x => new { x.Juri_Id, x.Membros_Id });
+                    table.PrimaryKey("PK_JuriMembros", x => new { x.Juri_Id, x.Membro_Id });
                     table.ForeignKey(
                         name: "FK_JuriMembros_Juri_Juri_Id",
                         column: x => x.Juri_Id,
@@ -143,97 +169,52 @@ namespace API_MEI.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JuriMembros_Membros_Membros_Id",
-                        column: x => x.Membros_Id,
+                        name: "FK_JuriMembros_Membros_Membro_Id",
+                        column: x => x.Membro_Id,
                         principalTable: "Membros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrientadoresMembros",
+                name: "Orientadores",
                 columns: table => new
                 {
-                    OrientadorId = table.Column<int>(type: "int", nullable: false),
-                    MembrosId = table.Column<int>(type: "int", nullable: false),
-                    Funcao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Trabalho_Id = table.Column<int>(type: "int", nullable: false),
+                    Membro_Id = table.Column<int>(type: "int", nullable: false),
+                    Funcao = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrientadoresMembros", x => new { x.OrientadorId, x.MembrosId });
+                    table.PrimaryKey("PK_Orientadores", x => new { x.Trabalho_Id, x.Membro_Id });
                     table.ForeignKey(
-                        name: "FK_OrientadoresMembros_Membros_MembrosId",
-                        column: x => x.MembrosId,
+                        name: "FK_Orientadores_Membros_Membro_Id",
+                        column: x => x.Membro_Id,
                         principalTable: "Membros",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrientadoresMembros_Orientadores_OrientadorId",
-                        column: x => x.OrientadorId,
-                        principalTable: "Orientadores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Trabalho",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Titulo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Referencia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Nota = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Aluno_Id = table.Column<int>(type: "int", nullable: false),
-                    Juri_Id = table.Column<int>(type: "int", nullable: false),
-                    Orientadores_Id = table.Column<int>(type: "int", nullable: false),
-                    Empresa_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trabalho", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Trabalho_Alunos_Aluno_Id",
-                        column: x => x.Aluno_Id,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trabalho_Empresas_Empresa_Id",
-                        column: x => x.Empresa_Id,
-                        principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trabalho_Juri_Juri_Id",
-                        column: x => x.Juri_Id,
-                        principalTable: "Juri",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Trabalho_Orientadores_Orientadores_Id",
-                        column: x => x.Orientadores_Id,
-                        principalTable: "Orientadores",
+                        name: "FK_Orientadores_Trabalho_Trabalho_Id",
+                        column: x => x.Trabalho_Id,
+                        principalTable: "Trabalho",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Especialistas_Empresa_ID",
+                name: "IX_Especialistas_Empresa_Id",
                 table: "Especialistas",
-                column: "Empresa_ID");
+                column: "Empresa_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JuriMembros_Membros_Id",
+                name: "IX_JuriMembros_Membro_Id",
                 table: "JuriMembros",
-                column: "Membros_Id");
+                column: "Membro_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrientadoresMembros_MembrosId",
-                table: "OrientadoresMembros",
-                column: "MembrosId");
+                name: "IX_Orientadores_Membro_Id",
+                table: "Orientadores",
+                column: "Membro_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trabalho_Aluno_Id",
@@ -251,11 +232,6 @@ namespace API_MEI.Data.Migrations
                 table: "Trabalho",
                 column: "Juri_Id",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Trabalho_Orientadores_Id",
-                table: "Trabalho",
-                column: "Orientadores_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -270,13 +246,13 @@ namespace API_MEI.Data.Migrations
                 name: "JuriMembros");
 
             migrationBuilder.DropTable(
-                name: "OrientadoresMembros");
-
-            migrationBuilder.DropTable(
-                name: "Trabalho");
+                name: "Orientadores");
 
             migrationBuilder.DropTable(
                 name: "Membros");
+
+            migrationBuilder.DropTable(
+                name: "Trabalho");
 
             migrationBuilder.DropTable(
                 name: "Alunos");
@@ -286,9 +262,6 @@ namespace API_MEI.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Juri");
-
-            migrationBuilder.DropTable(
-                name: "Orientadores");
         }
     }
 }

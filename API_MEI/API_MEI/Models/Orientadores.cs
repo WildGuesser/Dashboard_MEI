@@ -6,15 +6,28 @@ namespace API_MEI.Models
 {
     public class Orientadores
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Display(Name = "ID do Trabalho")]
+        [Required(ErrorMessage = "O ID do Trabalho é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O ID do Trabalho deve ser maior que 0.")]
+        public int Trabalho_Id { get; set; }
 
+        [Display(Name = "ID do Membro")]
+        [Required(ErrorMessage = "O ID do Membro é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O ID do Membro deve ser maior que 0.")]
+        public int Membro_Id { get; set; }
+
+        [Required(ErrorMessage = "O campo Função é obrigatório.")]
+        [Display(Name = "Função")]
+        [StringLength(100, ErrorMessage = "O campo Função deve ter no máximo 100 caracteres.")]
+        public string Funcao { get; set; }
+
+        [ForeignKey("Trabalho_Id")]
         [InverseProperty("Orientadores")]
-        public virtual ICollection<Trabalho> Trabalho { get; set; }
+        public virtual Trabalhos Trabalho { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [ForeignKey("Membro_Id")]
         [InverseProperty("Orientadores")]
-        public virtual ICollection<OrientadoresMembros> OrientadoresMembros { get; set; }
-
+        public virtual Membros Membros { get; set; }
     }
 }

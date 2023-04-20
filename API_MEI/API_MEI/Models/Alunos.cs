@@ -16,29 +16,31 @@ namespace API_MEI.Models
         public int Numero_Aluno { get; set; }
 
         [Required(ErrorMessage = "O nome do aluno é obrigatório.")]
-        [StringLength(100, ErrorMessage = "O nome do aluno deve ter no máximo 100 caracteres.")]
+        [StringLength(200, ErrorMessage = "O nome do aluno deve ter no máximo 200 caracteres.")]
         public string Nome { get; set; }
 
-        [StringLength(100, ErrorMessage = "O curso do aluno deve ter no máximo 100 caracteres.")]
+        [StringLength(200, ErrorMessage = "O curso do aluno deve ter no máximo 200 caracteres.")]
         public string? Curso { get; set; }
 
         [Required(ErrorMessage = "O campo Email é obrigatório.")]
+        [StringLength(200, ErrorMessage = "O curso do aluno deve ter no máximo 200 caracteres.")]
         [EmailAddress(ErrorMessage = "O campo Email deve ser um endereço de email válido.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "O campo Contacto é obrigatório.")]
         [RegularExpression(@"^9[1236]\d{7}$", ErrorMessage = "O campo Contacto deve ser um número de telefone móvel válido em Portugal.")]
+        [StringLength(200, ErrorMessage = "O Contacto deve ter no máximo 200 caracteres.")]
         public string Contacto { get; set; }
 
-        [StringLength(100, ErrorMessage = "O nome da instituição deve ter no máximo 100 caracteres.")]
+        [StringLength(200, ErrorMessage = "O nome da instituição deve ter no máximo 200 caracteres.")]
         [Display(Name = "Instituição")]
-        public string Instituicao { get; set; }
+        public string? Instituicao { get; set; }
 
         [Required(ErrorMessage = "O campo Estado é obrigatório.")]
         public bool Estado { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Alunos")]
-        public virtual Trabalho? Trabalho { get; set; } = null; 
+        public virtual Trabalhos? Trabalho { get; set; } = null; 
     }
 }

@@ -11,7 +11,7 @@ namespace API_MEI.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O ID da empresa é obrigatório.")]
-        public int Empresa_ID { get; set; }
+        public int Empresa_Id { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Id")]
@@ -19,7 +19,7 @@ namespace API_MEI.Models
         public virtual Membros Membros { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [ForeignKey("Empresa_ID")]
+        [ForeignKey("Empresa_Id")]
         [InverseProperty("Especialistas")]
         public virtual Empresas? Empresas { get; set; }
     }

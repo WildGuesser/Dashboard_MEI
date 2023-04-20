@@ -67,7 +67,7 @@ namespace API_MEI.Controllers
                     var especialista = new Especialistas
                     {
                         Id = membros.Id,
-                        Empresa_ID = input.Empresa_ID,
+                        Empresa_Id = input.Empresa_Id,
                     };
                     _context.Add(especialista);
                     await _context.SaveChangesAsync();
@@ -128,7 +128,7 @@ namespace API_MEI.Controllers
                     var especialistaAtualizado = new Especialistas
                     {
                         Id = membros.Id,
-                        Empresa_ID = input.Empresa_ID,
+                        Empresa_Id = input.Empresa_Id,
                     };
                     _context.Update(especialistaAtualizado);
                     await _context.SaveChangesAsync();

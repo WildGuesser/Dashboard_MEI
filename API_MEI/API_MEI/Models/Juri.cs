@@ -16,7 +16,7 @@ namespace API_MEI.Models
         public DateTime Data_Defesa { get; set; }
 
         [InverseProperty("Juri")]
-        public virtual Trabalho? Trabalho { get; set; }
+        public virtual Trabalhos? Trabalho { get; set; }
 
         [InverseProperty("Juri")]
         public virtual ICollection<JuriMembros> JuriMembros { get; set; }

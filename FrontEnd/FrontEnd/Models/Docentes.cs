@@ -12,9 +12,9 @@ namespace FrontEnd.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "A filiação do docente é obrigatória.")]
-        [StringLength(100, ErrorMessage = "A filiação do docente não pode ter mais do que 100 caracteres.")]
+        [StringLength(255, ErrorMessage = "A filiação do docente não pode ter mais do que 255 caracteres.")]
 
-        [Display(Name = "Filiação")]
+        [Display(Name = "Filiação do Docente")]
         public string Filiacao { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

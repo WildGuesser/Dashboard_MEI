@@ -1,34 +1,33 @@
 ﻿@model IEnumerable<FrontEnd.Models.Especialistas>
 
-<!DOCTYPE html>
-<html>
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Table_Especialistas</title>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <script src="extensions/resizable/bootstrap-table-resizable.js"></script>
-
     <script src="~/js/tables.js" asp-append-version="true"></script>
-
 </head>
-<body>
-    <div class="container">
-        <div class="">
-            <div class="">
-                <input type="text" class="form-control text" id="search-input" placeholder="Search">
-                <button class="btn btn-primary" id="search-btn">Search</button>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <div class="row mt-5">
+                    <div class="col-6  mt-5">
+                            <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                    </div>
+                    <div class="col-6  mt-5">
+                            <button class="btn btn-primary" id="search-btn">Search</button>
+                    </div>
+                </div>
             </div>
-            <div>
+            <div class="col-10 mt-1">
                 @await Html.PartialAsync("Create_Especialista.cshtml", new FrontEnd.Models.Especialistas())
             </div>
+        </div>
+    </div>
+                        
             <div>
                 <form method="post" action="/Especialistas/DeleteMultiple" id="delete-form">
-                    <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
+                    <button type="submit" class="btn btn-danger" id="delete-btn">Delete Selected</button>
 
-                    <table id="myTable" class="table" data-resizable="true">
+                    <table id="myTable" class="table">
                         <thead>
                             <tr>
                                 <th>
@@ -68,8 +67,8 @@
                                         @Html.DisplayFor(modelItem => item.Empresas.Nome)
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary text" asp-action="Edit_Especialista" asp-route-id="@item.Id">Edit</a>
-                                        <a class="btn btn-sm btn-danger text" asp-action="Delete_Especialista" asp-route-id="@item.Id">Delete</a>
+                                        <a class="btn btn-sm btn-primary" asp-action="Edit_Especialista" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-danger" asp-action="Delete_Especialista" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -77,8 +76,7 @@
                     </table>
                 </form>
             </div>
-        </div>
-    </div>
 
-</body>
-</html>
+
+
+

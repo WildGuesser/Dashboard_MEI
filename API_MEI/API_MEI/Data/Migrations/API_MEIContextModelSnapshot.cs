@@ -32,28 +32,29 @@ namespace API_MEI.Data.Migrations
 
                     b.Property<string>("Contacto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Curso")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
                     b.Property<string>("Instituicao")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Numero_Aluno")
                         .HasColumnType("int");
@@ -70,8 +71,8 @@ namespace API_MEI.Data.Migrations
 
                     b.Property<string>("Filiacao")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -87,18 +88,22 @@ namespace API_MEI.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email_empresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Local")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Protocolo")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -110,12 +115,12 @@ namespace API_MEI.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Empresa_ID")
+                    b.Property<int>("Empresa_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Empresa_ID");
+                    b.HasIndex("Empresa_Id");
 
                     b.ToTable("Especialistas");
                 });
@@ -141,17 +146,17 @@ namespace API_MEI.Data.Migrations
                     b.Property<int>("Juri_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Membros_Id")
+                    b.Property<int>("Membro_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Funcao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Juri_Id", "Membros_Id");
+                    b.HasKey("Juri_Id", "Membro_Id");
 
-                    b.HasIndex("Membros_Id");
+                    b.HasIndex("Membro_Id");
 
                     b.ToTable("JuriMembros");
                 });
@@ -165,16 +170,17 @@ namespace API_MEI.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Contacto")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -183,38 +189,25 @@ namespace API_MEI.Data.Migrations
 
             modelBuilder.Entity("API_MEI.Models.Orientadores", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Trabalho_Id")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orientadores");
-                });
-
-            modelBuilder.Entity("API_MEI.Models.OrientadoresMembros", b =>
-                {
-                    b.Property<int>("OrientadorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MembrosId")
+                    b.Property<int>("Membro_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Funcao")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("OrientadorId", "MembrosId");
+                    b.HasKey("Trabalho_Id", "Membro_Id");
 
-                    b.HasIndex("MembrosId");
+                    b.HasIndex("Membro_Id");
 
-                    b.ToTable("OrientadoresMembros");
+                    b.ToTable("Orientadores");
                 });
 
-            modelBuilder.Entity("API_MEI.Models.Trabalho", b =>
+            modelBuilder.Entity("API_MEI.Models.Trabalhos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -222,10 +215,14 @@ namespace API_MEI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AdendaProtocolo")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<int>("Aluno_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Empresa_Id")
+                    b.Property<int?>("Empresa_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Juri_Id")
@@ -234,23 +231,19 @@ namespace API_MEI.Data.Migrations
                     b.Property<string>("Nota")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Observacao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Orientadores_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Referencia")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ReferenciaInfo")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -261,8 +254,6 @@ namespace API_MEI.Data.Migrations
 
                     b.HasIndex("Juri_Id")
                         .IsUnique();
-
-                    b.HasIndex("Orientadores_Id");
 
                     b.ToTable("Trabalho");
                 });
@@ -282,7 +273,7 @@ namespace API_MEI.Data.Migrations
                 {
                     b.HasOne("API_MEI.Models.Empresas", "Empresas")
                         .WithMany("Especialistas")
-                        .HasForeignKey("Empresa_ID")
+                        .HasForeignKey("Empresa_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -307,7 +298,7 @@ namespace API_MEI.Data.Migrations
 
                     b.HasOne("API_MEI.Models.Membros", "Membros")
                         .WithMany("JuriMembros")
-                        .HasForeignKey("Membros_Id")
+                        .HasForeignKey("Membro_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -316,48 +307,40 @@ namespace API_MEI.Data.Migrations
                     b.Navigation("Membros");
                 });
 
-            modelBuilder.Entity("API_MEI.Models.OrientadoresMembros", b =>
+            modelBuilder.Entity("API_MEI.Models.Orientadores", b =>
                 {
                     b.HasOne("API_MEI.Models.Membros", "Membros")
-                        .WithMany("OrientadoresMembros")
-                        .HasForeignKey("MembrosId")
+                        .WithMany("Orientadores")
+                        .HasForeignKey("Membro_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API_MEI.Models.Orientadores", "Orientadores")
-                        .WithMany("OrientadoresMembros")
-                        .HasForeignKey("OrientadorId")
+                    b.HasOne("API_MEI.Models.Trabalhos", "Trabalho")
+                        .WithMany("Orientadores")
+                        .HasForeignKey("Trabalho_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Membros");
 
-                    b.Navigation("Orientadores");
+                    b.Navigation("Trabalho");
                 });
 
-            modelBuilder.Entity("API_MEI.Models.Trabalho", b =>
+            modelBuilder.Entity("API_MEI.Models.Trabalhos", b =>
                 {
                     b.HasOne("API_MEI.Models.Alunos", "Alunos")
                         .WithOne("Trabalho")
-                        .HasForeignKey("API_MEI.Models.Trabalho", "Aluno_Id")
+                        .HasForeignKey("API_MEI.Models.Trabalhos", "Aluno_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API_MEI.Models.Empresas", "Empresas")
                         .WithMany("Trabalho")
-                        .HasForeignKey("Empresa_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Empresa_Id");
 
                     b.HasOne("API_MEI.Models.Juri", "Juri")
                         .WithOne("Trabalho")
-                        .HasForeignKey("API_MEI.Models.Trabalho", "Juri_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_MEI.Models.Orientadores", "Orientadores")
-                        .WithMany("Trabalho")
-                        .HasForeignKey("Orientadores_Id")
+                        .HasForeignKey("API_MEI.Models.Trabalhos", "Juri_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -366,8 +349,6 @@ namespace API_MEI.Data.Migrations
                     b.Navigation("Empresas");
 
                     b.Navigation("Juri");
-
-                    b.Navigation("Orientadores");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Alunos", b =>
@@ -397,14 +378,12 @@ namespace API_MEI.Data.Migrations
 
                     b.Navigation("JuriMembros");
 
-                    b.Navigation("OrientadoresMembros");
+                    b.Navigation("Orientadores");
                 });
 
-            modelBuilder.Entity("API_MEI.Models.Orientadores", b =>
+            modelBuilder.Entity("API_MEI.Models.Trabalhos", b =>
                 {
-                    b.Navigation("OrientadoresMembros");
-
-                    b.Navigation("Trabalho");
+                    b.Navigation("Orientadores");
                 });
 #pragma warning restore 612, 618
         }

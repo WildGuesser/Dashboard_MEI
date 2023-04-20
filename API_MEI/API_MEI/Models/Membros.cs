@@ -13,13 +13,15 @@ namespace API_MEI.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo Nome deve ter entre 2 e 100 caracteres.")]
+        [StringLength(200, MinimumLength = 2, ErrorMessage = "O campo Nome deve ter entre 2 e 200 caracteres.")]
         public string Nome { get; set; }
 
         [EmailAddress(ErrorMessage = "O email inserido não é válido.")]
-        public string Email { get; set; }
+        [StringLength(255, MinimumLength = 2, ErrorMessage = "O campo Email deve ter entre 2 e 255 caracteres.")]
+        public string? Email { get; set; }
 
         [RegularExpression(@"^(9[1236]|2\d)\d{7}$", ErrorMessage = "Insira um número de telefone português válido.")]
+        [StringLength(255, MinimumLength = 2, ErrorMessage = "O campo Contacto deve ter entre 2 e 255 caracteres.")]
         public string? Contacto { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -36,6 +38,6 @@ namespace API_MEI.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Membros")]
-        public virtual ICollection<OrientadoresMembros>? OrientadoresMembros { get; set; }
+        public virtual ICollection<Orientadores>? Orientadores { get; set; }
     }
 }

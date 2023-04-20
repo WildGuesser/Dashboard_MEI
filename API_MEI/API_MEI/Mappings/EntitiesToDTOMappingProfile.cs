@@ -9,7 +9,7 @@ namespace API_MEI.Mappings
     {
         public EntitiesToDTOMappingProfile()
         {
-            CreateMap<Trabalho, TrabalhoDTO>().ReverseMap();
+            CreateMap<Trabalhos, TrabalhoDTO>().ReverseMap();
             CreateMap<Juri, JuriDTO>().ReverseMap();
             CreateMap<Alunos, AlunosDTO>().ReverseMap();
             CreateMap<Docentes, DocentesDTO>().ReverseMap();

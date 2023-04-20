@@ -1,81 +1,83 @@
-﻿<!DOCTYPE html>
-<html>
+﻿    @model IEnumerable<FrontEnd.Models.Alunos>
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Table_Alunos</title>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <script src="~/js/tables.js" asp-append-version="true"></script>
-
+     <script src="~/js/tables.js" asp-append-version="true"></script>
 </head>
 <body>
-    @model IEnumerable<FrontEnd.Models.Alunos>
-    <div class="container">
-        <div class="">
-            <div class="">
-                <input type="text" class="form-control text" id="search-input" placeholder="Search">
-                <button class="btn btn-primary" id="search-btn">Search</button>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <div class="row mt-5">
+                    <div class="col-6  mt-5">
+                        <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                    </div>
+                    <div class="col-6  mt-5">
+                        <button class="btn btn-primary" id="search-btn">Search</button>
+                    </div>
+                </div>
             </div>
-            <div>
-                @await Html.PartialAsync("Create_Aluno.cshtml", new FrontEnd.Models.Alunos())
-            </div>
-            <div>
-                <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
-                    <button type="submit" class="btn btn-primary" id="delete-btn">Delete Selected</button>
-                    <table id="myTable" class="table">
-                        <thead>
-                            <tr>
-                                <th class="text">
-                                    <input type="checkbox" id="select-all-checkbox">
-                                </th>
-                                <th data-type="numeric" class="text">
-                                    @Html.DisplayNameFor(model => model.Numero_Aluno)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Nome)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Curso)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Email)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Instituicao)
-                                </th>
-                                <th class="text">
-                                    @Html.DisplayNameFor(model => model.Estado)
-                                </th>
-                                <th data-type="text-long" class="text">
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Numero_Aluno)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Curso)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Email)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
-                                    <td class="text">@Html.DisplayFor(modelItem => item.Estado)</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id">Edit</a>
-                                        <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </form>
+            <div class="col-10 mt-1">
+                  @await Html.PartialAsync("Create_Aluno.cshtml", new FrontEnd.Models.Alunos())
             </div>
         </div>
     </div>
-    
-    </body>
-    </html>
+
+
+              
+    <div>
+        <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
+            <button type="submit" class="btn btn-danger" id="delete-btn">Delete Selected</button>
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th class="text">
+                            <input type="checkbox" id="select-all-checkbox">
+                        </th>
+                        <th data-type="numeric" class="text">
+                            @Html.DisplayNameFor(model => model.Numero_Aluno)
+                        </th>
+                        <th class="text">
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th class="text">
+                            @Html.DisplayNameFor(model => model.Curso)
+                        </th>
+                        <th class="text">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th class="text">
+                            @Html.DisplayNameFor(model => model.Instituicao)
+                        </th>
+                        <th class="text">
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </th>
+                        <th data-type="text-long" class="text">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Numero_Aluno)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Curso)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Estado)</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+</body>
+
 
