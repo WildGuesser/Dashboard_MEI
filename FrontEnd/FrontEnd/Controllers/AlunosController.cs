@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
+using FrontEnd.Data.Paging_Models;
 
 namespace FrontEnd.Controllers
 {
@@ -21,7 +22,7 @@ namespace FrontEnd.Controllers
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
         private List<Alunos> list;
-
+        private PagingModel pageEmpresas;
 
         public AlunosController(ILogger<AlunosController> logger, IConfiguration configuration)
         {
@@ -31,7 +32,9 @@ namespace FrontEnd.Controllers
         }
 
         // GET: Alunos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            [FromQuery] int p = 1,
+            [FromQuery] int s = 10)
         {
             try
             {
@@ -45,15 +48,34 @@ namespace FrontEnd.Controllers
                 {
                     list = new List<Alunos>();
                 }
-                return View(list);
+                
+                AlunosPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+
+                //count records that returns after the search
+                model.TotalRecords = list.Count;
+
+                model.AlunosList = list
+                                        .Skip((p - 1) * s)
+                                        .Take(s)
+                                        .ToList();
+
+                return View(model);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
                 // handle the exception by returning the Alunos Index view without making the API call
-                List<Alunos> list = new List<Alunos>();
-                return View(list);
+                AlunosPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+                return View(model);
             }
         }
 

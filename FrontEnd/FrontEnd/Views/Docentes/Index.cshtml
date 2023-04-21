@@ -1,5 +1,4 @@
-﻿@model IEnumerable<FrontEnd.Models.Docentes>
-
+﻿@model FrontEnd.Data.Paging_Models.DocentesPagingModel
 <head>
 
     <script src="~/js/tables.js" asp-append-version="true"></script>
@@ -37,22 +36,22 @@
                             <input type="checkbox" id="select-all-checkbox" />
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Membros.Nome)
+                            @Html.DisplayNameFor(model => model.Docente.Membros.Nome)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Membros.Email)
+                            @Html.DisplayNameFor(model => model.Docente.Membros.Email)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Membros.Contacto)
+                            @Html.DisplayNameFor(model => model.Docente.Membros.Contacto)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Filiacao)
+                            @Html.DisplayNameFor(model => model.Docente.Filiacao)
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.DocentesList)
                     {
                         <tr>
                             <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
@@ -80,5 +79,37 @@
         </form>
     </div>
 
+    <!-- Paginação -->
+
+    <paging page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            NºElementos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Docentes/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Docentes/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Docentes/Index?s=40">40</a>
+        </div>
+
+    </div>
+
+
+    @section Scripts
+        {
+
+        <script>
+            $(function () {
+                $("#dropdownMenuButton").text('@Model.S');
+            })
+        </script>
+    }
 
 </body>

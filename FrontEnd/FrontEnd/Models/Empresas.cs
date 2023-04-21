@@ -1,6 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrontEnd.Models
 {
@@ -34,6 +39,7 @@ namespace FrontEnd.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Empresas")]
         public virtual ICollection<Trabalhos>? Trabalho { get; set; }
+
     }
 }
 

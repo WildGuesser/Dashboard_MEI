@@ -1,4 +1,4 @@
-﻿    @model IEnumerable<FrontEnd.Models.Alunos>
+﻿@model FrontEnd.Data.Paging_Models.AlunosPagingModel
 
 <head>
      <script src="~/js/tables.js" asp-append-version="true"></script>
@@ -35,29 +35,29 @@
                             <input type="checkbox" id="select-all-checkbox">
                         </th>
                         <th data-type="numeric" class="text">
-                            @Html.DisplayNameFor(model => model.Numero_Aluno)
+                            @Html.DisplayNameFor(model => model.Aluno.Numero_Aluno)
                         </th>
                         <th class="text">
-                            @Html.DisplayNameFor(model => model.Nome)
+                            @Html.DisplayNameFor(model => model.Aluno.Nome)
                         </th>
                         <th class="text">
-                            @Html.DisplayNameFor(model => model.Curso)
+                            @Html.DisplayNameFor(model => model.Aluno.Curso)
                         </th>
                         <th class="text">
-                            @Html.DisplayNameFor(model => model.Email)
+                            @Html.DisplayNameFor(model => model.Aluno.Email)
                         </th>
                         <th class="text">
-                            @Html.DisplayNameFor(model => model.Instituicao)
+                            @Html.DisplayNameFor(model => model.Aluno.Instituicao)
                         </th>
                         <th class="text">
-                            @Html.DisplayNameFor(model => model.Estado)
+                            @Html.DisplayNameFor(model => model.Aluno.Estado)
                         </th>
                         <th data-type="text-long" class="text">
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.AlunosList)
                     {
                         <tr>
                             <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
@@ -77,6 +77,38 @@
             </table>
         </form>
     </div>
+    
+    <!-- Paginação -->
+
+    <paging page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            NºElementos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Alunos/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>
+        </div>
+
+    </div>
+
+
+    @section Scripts {
+
+        <script>
+            $(function () {
+                $("#dropdownMenuButton").text('@Model.S');
+            })
+        </script>
+    }
 
 </body>
 

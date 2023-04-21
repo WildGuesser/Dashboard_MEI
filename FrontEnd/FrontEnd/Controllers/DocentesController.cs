@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
-
+using FrontEnd.Data.Paging_Models;
 
 namespace FrontEnd.Controllers
 {
@@ -32,7 +32,9 @@ namespace FrontEnd.Controllers
         }
 
         // GET: Docentes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            [FromQuery] int p = 1,
+            [FromQuery] int s = 10)
         {
             try
             {
@@ -46,15 +48,34 @@ namespace FrontEnd.Controllers
                 {
                     list = new List<Docentes>();
                 }
-                return View(list);
+                DocentesPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+
+                //count records that returns after the search
+                model.TotalRecords = list.Count;
+
+                model.DocentesList = list
+                                        .Skip((p - 1) * s)
+                                        .Take(s)
+                                        .ToList();
+
+                return View(model);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
                 // handle the exception by returning the Docentes Index view without making the API call
-                List<Docentes> list = new List<Docentes>();
-                return View(list);
+                DocentesPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+
+                return View(model);
             }
         }
 

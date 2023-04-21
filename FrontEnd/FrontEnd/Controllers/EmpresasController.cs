@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
+using FrontEnd.Data.Paging_Models;
 
 namespace FrontEnd.Controllers
 {
@@ -21,6 +22,7 @@ namespace FrontEnd.Controllers
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
         private List<Empresas> list;
+        private PagingModel pageEmpresas;
 
 
         public EmpresasController(ILogger<EmpresasController> logger, IConfiguration configuration)
@@ -31,7 +33,9 @@ namespace FrontEnd.Controllers
         }
 
         // GET: Empresas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            [FromQuery] int p = 1,
+            [FromQuery] int s = 10 )
         {
             try
             {
@@ -45,15 +49,34 @@ namespace FrontEnd.Controllers
                 {
                     list = new List<Empresas>();
                 }
-                return View(list);
+                
+                EmpresaPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+
+                //count records that returns after the search
+                model.TotalRecords = list.Count;
+
+                model.EmpresaList =  list
+                                        .Skip((p - 1) * s)
+                                        .Take(s)
+                                        .ToList();
+
+                return View(model);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
                 // handle the exception by returning the Empresas Index view without making the API call
-                List<Empresas> list = new List<Empresas>();
-                return View(list);
+                EmpresaPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+                return View(model);
             }
         }
 
@@ -92,8 +115,6 @@ namespace FrontEnd.Controllers
                 return View(empresas);
             }
 
-
-            return View(empresas);
         }
 
         // GET: Empresas/Edit/5
@@ -161,8 +182,6 @@ namespace FrontEnd.Controllers
                 return View(empresas);
             }
 
-
-            return View(empresas);
         }
 
 

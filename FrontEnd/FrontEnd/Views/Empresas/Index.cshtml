@@ -1,10 +1,10 @@
-﻿
+﻿@model FrontEnd.Data.Paging_Models.EmpresaPagingModel
+
 <head>
     <script src="~/js/tables.js" asp-append-version="true"></script>
 
 </head>
 <body>
-    @model IEnumerable<FrontEnd.Models.Empresas>
 
     <div class="container-fluid">
         <div class="row">
@@ -34,22 +34,22 @@
                                     <input type="checkbox" id="select-all-checkbox">
                                 </th>
                                 <th class="text">
-                                    @Html.DisplayNameFor(model => model.Nome)
+                                    @Html.DisplayNameFor(model => model.Empresas.Nome)
                                 </th>
                                 <th class="text">
-                                    @Html.DisplayNameFor(model => model.Local)
+                                    @Html.DisplayNameFor(model => model.Empresas.Local)
                                 </th>
                                 <th class="text">
-                                    @Html.DisplayNameFor(model => model.Email_empresa)
+                                    @Html.DisplayNameFor(model => model.Empresas.Email_empresa)
                                 </th>
                                 <th data-type="text-long" class="text">
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.EmpresaList)
                             {
-                                <tr>
+                                <tr id="paginated-list" aria-live="polite">
                                     <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
                                     <td class="text">@Html.DisplayFor(modelItem => item.Nome)</td>
                                     <td class="text">@Html.DisplayFor(modelItem => item.Local)</td>
@@ -64,6 +64,40 @@
                     </table>
                 </form>
             </div>
+    <!-- Paginação -->
+
+    <paging
+            page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5"
+    >
+    </paging>
+
+<div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        NºElementos
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Empresas/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Empresas/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Empresas/Index?s=40">40</a>
+      </div>
+        
+</div>
+
+
+    @section Scripts 
+    {
+
+            <script>
+                $(function () {
+                    $("#dropdownMenuButton").text('@Model.S');
+                })
+            </script>
+    }
 
 
 </body>

@@ -1,6 +1,5 @@
-﻿body {
-    margin:  0px;
-    padding: 0px;
+﻿body{
+    margin: 0;
 }
 
 
@@ -34,11 +33,12 @@
 .content {
     width: 100%;
     transition: all 0.3s;
-    margin: 10% 2%
+    margin: 0;
 }
 
 
 /***** Dark overlay *****/
+
 .overlay {
     display: none;
     position: fixed;
@@ -50,10 +50,10 @@
     transition: all .5s ease-in-out;
 }
 
-.overlay.active {
-    display: block;
-    opacity: 1;
-}
+    .overlay.active {
+        display: block;
+        opacity: 1;
+    }
 
 
 .open-menu {

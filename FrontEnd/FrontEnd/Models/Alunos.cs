@@ -41,7 +41,7 @@ namespace FrontEnd.Models
         public string? Instituicao { get; set; }
 
         [Required(ErrorMessage = "O campo Estado é obrigatório.")]
-        public bool Estado { get; set; }
+        public bool Estado { get; set; } = true;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Alunos")]
