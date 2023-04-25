@@ -139,7 +139,7 @@ namespace FrontEnd.Controllers
                     return NotFound();
                 }
 
-                return View(empresas);
+                return PartialView("Edit_Empresa", empresas);
             }
             catch (HttpRequestException ex)
             {

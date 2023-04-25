@@ -49,6 +49,7 @@ namespace API_MEI.Models
         [InverseProperty("Trabalho")]
         public virtual Juri? Juri { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Trabalho")]
         public virtual ICollection<Orientadores> Orientadores { get; set; }
 

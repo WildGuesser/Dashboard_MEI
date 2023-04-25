@@ -140,7 +140,7 @@ namespace FrontEnd.Controllers
                     return NotFound();
                 }
 
-                return View(docentes);
+                return PartialView("Edit_Docente",docentes);
             }
             catch (HttpRequestException ex)
             {

@@ -1,8 +1,5 @@
 ﻿@model FrontEnd.Data.Paging_Models.AlunosPagingModel
 
-<head>
-     <script src="~/js/tables.js" asp-append-version="true"></script>
-</head>
 <body>
     
     <div class="container-fluid">
@@ -68,7 +65,9 @@
                             <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
                             <td class="text">@Html.DisplayFor(modelItem => item.Estado)</td>
                             <td>
-                                <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id"data-ajax="true" data-ajax-method="get"
+                                            data-ajax-mode="replace" data-ajax-update="#target"
+                                            data-toggle="modal" data-target="#exampleModal">Edit</a>
                                 <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
@@ -95,15 +94,35 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="/Alunos/Index?s=10">10</a>
             <a class="dropdown-item" href="/Alunos/Index?s=20">20</a>
-            <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>            
+            <a class="dropdown-item" href="/Alunos/Index?s=@Model.TotalRecords">Tudo</a>
         </div>
 
     </div>
 
+        <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Aluno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="target">
+                    @await Html.PartialAsync("Edit_Aluno.cshtml", new FrontEnd.Models.Alunos())
+                </div>
+            </div>
+        </div>
+    </div>
 
-    @section Scripts {
+    @section Scripts
+    {
 
+        <script src="~/js/tables.js" asp-append-version="true"></script>
         <script>
+
             $(function () {
                 $("#dropdownMenuButton").text('@Model.S');
             })

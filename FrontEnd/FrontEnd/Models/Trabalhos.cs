@@ -56,5 +56,8 @@ namespace FrontEnd.Models
         [ForeignKey("Empresa_Id")]
         [InverseProperty("Trabalho")]
         public virtual Empresas? Empresas { get; set; } = null;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public virtual Orientadores? Orientador { get; set; }
     }
 }

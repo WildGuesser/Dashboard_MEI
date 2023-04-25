@@ -15,7 +15,7 @@ namespace FrontEnd.Data
         {
         }
 
-        public DbSet<FrontEnd.Models.Trabalhos> Trabalho { get; set; } = default!;
+        public DbSet<FrontEnd.Models.Trabalhos> Trabalhos { get; set; } = default!;
         public DbSet<FrontEnd.Models.Alunos>? Alunos { get; set; } = default!;
         public DbSet<FrontEnd.Models.Docentes> Docentes { get; set; } = default!;
         public DbSet<FrontEnd.Models.Empresas> Empresas { get; set; } = default!;

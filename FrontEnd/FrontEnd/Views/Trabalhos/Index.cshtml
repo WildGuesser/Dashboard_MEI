@@ -1,0 +1,260 @@
+﻿@model FrontEnd.Data.Paging_Models.TrabalhosPagingModel
+
+
+
+<div class ="table-responsive-xxl">
+    <form method="post" action="/Trabalhos/DeleteMultiple" id="delete-form">
+    
+        <div class="d-flex flex-row">
+
+            <div class="mr-auto p-2">
+                <button type="submit" class="btn btn-danger" id="delete-btn">Delete Selected</button>
+            </div>
+    
+            <div class="p-2">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                    <button class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+  
+            <div class="p-2">
+                <a class="btn btn-primary" asp-action="Create_Trabalho" data-ajax="true" data-ajax-method="get"
+                    data-ajax-mode="replace" data-ajax-update="#target"
+                    data-toggle="modal" data-target="#Create_Modal">Criar Trabalho</a>
+            </div>
+        
+        </div>
+
+
+
+        <table id="myTable" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="select-all-checkbox" />
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Titulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.ReferenciaInfo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Tipo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Nota)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.AdendaProtocolo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Alunos.Nome)
+                    </th>                    
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Alunos.Numero_Aluno)
+                    </th>
+                    <th>
+                        Orientadores
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Juri.Data_Defesa)
+                    </th>                    
+                    <th>
+                        Juri
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Trabalho.Empresas.Nome)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TrabalhosList)
+                {
+                    <tr>
+                        <td class="text"><input type="checkbox" class="select-checkbox" name="ids" value="@item.Id"></td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReferenciaInfo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tipo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nota)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdendaProtocolo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Alunos.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Alunos.Numero_Aluno)
+                        </td>
+                        <td>
+                            <div class="accordion" id="accordion_Orientadores@(item.Id)">
+                                <div class="accordion-item">
+
+                                    <h5 class="accordion-header">
+                                        <button class="accordion-button btn btn-info position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_Orientadores@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                            Orientadores
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                @item.Orientadores.Count()
+                                                <span class="visually-hidden"></span>
+                                            </span>
+                                        </button>
+                                    </h5>
+
+                                    <div id="collapse_Orientadores@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Orientadores@(item.Id)">
+                                        <div class="list-group">
+                                            @foreach (var orientador in item.Orientadores)
+                                            {
+                                                    <a class="list-group-item list-group-item-action list-group-item-info"
+                                                        asp-action="Info_Membro" asp-route-id="@orientador.Membros.Id"data-ajax="true" data-ajax-method="get"
+                                                        data-ajax-mode="replace" data-ajax-update="#target"
+                                                        data-toggle="modal" data-target="#Membros_Modal">
+                                                        
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1"> @Html.DisplayFor(modelItem => orientador.Membros.Nome) </h5>
+                                                        </div>
+                                                        <small> @Html.DisplayFor(modelItem => orientador.Funcao)</small>
+                                                    </a>
+                                                      
+                                                       
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Juri.Data_Defesa)
+                        </td>
+
+                        <td>
+                            <div class="accordion" id="accordion_Juri@(item.Id)">
+                                <div class="accordion-item">
+
+                                    <h5 class="accordion-header">
+                                        <button class="accordion-button btn btn-info position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_Juri@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                            Juri
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                @item.Juri.JuriMembros.Count()
+                                                <span class="visually-hidden"></span>
+                                            </span>
+                                        </button>
+                                    </h5>
+
+                                    <div id="collapse_Juri@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Juri@(item.Id)">
+                                        <div class="list-group">
+                                            @foreach (var juriMembro in item.Juri.JuriMembros)
+                                            {
+                                                <a class="list-group-item list-group-item-action list-group-item-info"
+                                                    asp-action="Info_Membro" asp-route-id="@juriMembro.Membros.Id" data-ajax="true" data-ajax-method="get"
+                                                    data-ajax-mode="replace" data-ajax-update="#target"
+                                                    data-toggle="modal" data-target="#Membros_Modal">
+
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1"> @Html.DisplayFor(modelItem => juriMembro.Membros.Nome) </h5>
+                                                    </div>
+                                                    <small> @Html.DisplayFor(modelItem => juriMembro.Funcao)</small>
+                                                </a>
+
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Empresas.Nome)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit_Trabalho" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="Delete_Trabalho" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+<!-- Paginação -->
+
+<paging page-no="Model.P"
+        page-size="Model.S"
+        total-records="Model.TotalRecords"
+        text-page-size="{0} records per page"
+        class-page-size-div="col-3"
+        max-displayed-pages="5">
+</paging>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        NºElementos
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/Trabalhos/Index?s=10">10</a>
+        <a class="dropdown-item" href="/Trabalhos/Index?s=20">20</a>
+        <a class="dropdown-item" href="/Trabalhos/Index?s=40">40</a>
+        <a class="dropdown-item" href="/Trabalhos/Index?s=@Model.TotalRecords">Tudo</a>
+
+    </div>
+
+</div>
+
+<!-- Modals --><!-- Modals --><!-- Modals --><!-- Modals -->
+<!-- Membro Modal -->
+<div class="modal fade" id="Membros_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes Orientador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="target">
+                @await Html.PartialAsync("Info_Orientador.cshtml", new FrontEnd.Models.Membros())
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Trabalho Modal -->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body" id="target">
+                @await Html.PartialAsync("Create_Trabalho.cshtml", new FrontEnd.Models.Trabalhos())
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+    <script>
+
+        $(function () {
+            $("#dropdownMenuButton").text('@Model.S');
+        })
+    </script>
+    }
+
+
+
+

@@ -16,7 +16,7 @@ namespace API_MEI.Data
         }
 
 
-        public DbSet<API_MEI.Models.Trabalhos> Trabalho { get; set; } = default!;
+        public DbSet<API_MEI.Models.Trabalhos> Trabalhos { get; set; } = default!;
         public DbSet<API_MEI.Models.Alunos>? Alunos { get; set; } = default!;
         public DbSet<API_MEI.Models.Docentes> Docentes { get; set; } = default!;
         public DbSet<API_MEI.Models.Empresas> Empresas { get; set; } = default!;
@@ -35,7 +35,7 @@ namespace API_MEI.Data
 
             modelBuilder.Entity<Orientadores>()
                 .HasKey(o => new { o.Trabalho_Id, o.Membro_Id });
-
+            
         }
 
     }

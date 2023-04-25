@@ -67,7 +67,9 @@
                                         @Html.DisplayFor(modelItem => item.Empresas.Nome)
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" asp-action="Edit_Especialista" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-primary" asp-action="Edit_Especialista" asp-route-id="@item.Id"data-ajax="true" data-ajax-method="get"
+                                            data-ajax-mode="replace" data-ajax-update="#target"
+                                            data-toggle="modal" data-target="#exampleModal">Edit</a>
                                         <a class="btn btn-sm btn-danger" asp-action="Delete_Especialista" asp-route-id="@item.Id">Delete</a>
                                     </td>
                                 </tr>
@@ -78,37 +80,56 @@
             </div>
 <!-- Paginação -->
 
-<paging page-no="Model.P"
-        page-size="Model.S"
-        total-records="Model.TotalRecords"
-        text-page-size="{0} records per page"
-        class-page-size-div="col-3"
-        max-displayed-pages="5">
-</paging>
+    <paging page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        NºElementos
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="/Especialistas/Index?s=10">10</a>
-        <a class="dropdown-item" href="/Especialistas/Index?s=20">20</a>
-        <a class="dropdown-item" href="/Especialistas/Index?s=40">40</a>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            NºElementos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Especialistas/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Especialistas/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Especialistas/Index?s=40">40</a>
+            <a class="dropdown-item" href="/Especialistas/Index?s=@Model.TotalRecords">Tudo</a>
+
+        </div>
+
     </div>
 
-</div>
-
+        <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Especialista</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="target">
+                    @await Html.PartialAsync("Edit_Especialista.cshtml", new FrontEnd.Models.Especialistas())
+                </div>
+            </div>
+        </div>
+    </div>
 
 @section Scripts
     {
 
+    <script src="~/js/tables.js" asp-append-version="true"></script>
     <script>
+
         $(function () {
             $("#dropdownMenuButton").text('@Model.S');
         })
     </script>
     }
-
 
 
 

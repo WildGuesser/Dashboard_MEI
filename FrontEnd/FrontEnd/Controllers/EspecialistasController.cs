@@ -170,7 +170,7 @@ namespace FrontEnd.Controllers
                     "Id",
                     "Nome");
 
-                return View(especialistas);
+                return PartialView("Edit_Especialista",especialistas);
             }
             catch (HttpRequestException ex)
             {

@@ -80,3 +80,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+//$(function () {
+//    // Get the stored option from localStorage
+//    var storedOption = localStorage.getItem('selectedOption');
+
+//    // Set initial text of dropdown menu from localStorage or default value
+//    if (storedOption) {
+//        $("#dropdownMenuButton").text(storedOption);
+//    } else {
+//        $("#dropdownMenuButton").text('@Model.S');
+//    }
+
+//    // Add event listener to update text and store selected option
+//    $(".dropdown-menu a.dropdown-item").on("click", function () {
+//        // Get text of selected option
+//        var selectedText = $(this).text();
+
+//        // Update text of dropdown menu
+//        $("#dropdownMenuButton").text(selectedText);
+
+//        // Store selected option in localStorage
+//        localStorage.setItem('selectedOption', selectedText);
+
+//        // Submit the form
+//        $("form").submit();
+//    });
+//});
+
