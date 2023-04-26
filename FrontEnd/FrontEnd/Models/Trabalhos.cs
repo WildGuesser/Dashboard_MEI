@@ -39,22 +39,26 @@ namespace FrontEnd.Models
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Aluno_Id")]
         [InverseProperty("Trabalho")]
-        public virtual Alunos Alunos { get; set; }
+        public virtual Alunos? Alunos { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Juri_Id")]
         [InverseProperty("Trabalho")]
         public virtual Juri? Juri { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Trabalho")]
-        public virtual ICollection<Orientadores> Orientadores { get; set; }
+        public virtual ICollection<Orientadores>? Orientadores { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Empresa_Id")]
         [InverseProperty("Trabalho")]
         public virtual Empresas? Empresas { get; set; } = null;
+
+        //not in API
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual Orientadores? Orientador { get; set; }

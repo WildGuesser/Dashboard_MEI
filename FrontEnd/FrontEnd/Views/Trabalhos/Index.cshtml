@@ -144,7 +144,7 @@
                                         <button class="accordion-button btn btn-info position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_Juri@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
                                             Juri
                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                @item.Juri.JuriMembros.Count()
+                                                @(@item.Juri == null ?  0 : @item.Juri.JuriMembros.Count())
                                                 <span class="visually-hidden"></span>
                                             </span>
                                         </button>
@@ -152,20 +152,23 @@
 
                                     <div id="collapse_Juri@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Juri@(item.Id)">
                                         <div class="list-group">
-                                            @foreach (var juriMembro in item.Juri.JuriMembros)
+                                            @if (@item.Juri != null)
                                             {
-                                                <a class="list-group-item list-group-item-action list-group-item-info"
-                                                    asp-action="Info_Membro" asp-route-id="@juriMembro.Membros.Id" data-ajax="true" data-ajax-method="get"
-                                                    data-ajax-mode="replace" data-ajax-update="#target"
-                                                    data-toggle="modal" data-target="#Membros_Modal">
+                                                @foreach (var juriMembro in item.Juri.JuriMembros)
+                                                {
+                                                    <a class="list-group-item list-group-item-action list-group-item-info"
+                                                        asp-action="Info_Membro" asp-route-id="@juriMembro.Membros.Id" data-ajax="true" data-ajax-method="get"
+                                                        data-ajax-mode="replace" data-ajax-update="#target"
+                                                        data-toggle="modal" data-target="#Membros_Modal">
 
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1"> @Html.DisplayFor(modelItem => juriMembro.Membros.Nome) </h5>
-                                                    </div>
-                                                    <small> @Html.DisplayFor(modelItem => juriMembro.Funcao)</small>
-                                                </a>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1"> @Html.DisplayFor(modelItem => juriMembro.Membros.Nome) </h5>
+                                                        </div>
+                                                        <small> @Html.DisplayFor(modelItem => juriMembro.Funcao)</small>
+                                                    </a>
 
 
+                                                }
                                             }
                                         </div>
                                     </div>

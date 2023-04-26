@@ -22,7 +22,11 @@ namespace FrontEnd.Controllers
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
         private List<Trabalhos> list;
+
         private List<Alunos> Alunos_list;
+        private List<Empresas> Empresas_list;
+        private List<Membros> Membros_list;
+
         private PagingModel pageEmpresas;
 
         public TrabalhosController(ILogger<TrabalhosController> logger, IConfiguration configuration)
@@ -115,8 +119,6 @@ namespace FrontEnd.Controllers
                 return View(trabalhos);
             }
 
-
-            return View(trabalhos);
         }
 
         // GET: Trabalhos/Edit/5
@@ -384,6 +386,61 @@ namespace FrontEnd.Controllers
                 // handle the exception by returning the Alunos Index view without making the API call
 
                 return View(Alunos_list);
+            }
+        }
+
+        // GET: Empresas
+        public async Task<IActionResult> Empresas_Index()
+        {
+            try
+            {
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Empresas/Index");
+
+                string body = await message.Content.ReadAsStringAsync();
+
+                Empresas_list = JsonConvert.DeserializeObject<List<Empresas>>(body);
+
+                if (Empresas_list == null)
+                {
+                    Empresas_list = new List<Empresas>();
+                }
+
+
+                return PartialView("Select_Empresa", Empresas_list);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Error fetching data from API");
+
+                return View(Empresas_list);
+            }
+        }
+
+        public async Task<IActionResult> Membros_Index()
+        {
+            try
+            {
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Trabalhos/Membros/List");
+
+                string body = await message.Content.ReadAsStringAsync();
+
+                Membros_list = JsonConvert.DeserializeObject<List<Membros>>(body);
+
+                if (Membros_list == null)
+                {
+                    Membros_list = new List<Membros>();
+                }
+
+
+                return PartialView("Select_Membro", Membros_list);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Error fetching data from API");
+
+                // handle the exception by returning the Alunos Index view without making the API call
+
+                return View(Membros_list);
             }
         }
     }//End Of Class

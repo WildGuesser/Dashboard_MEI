@@ -38,10 +38,11 @@ namespace API_MEI.Models
 
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }
-
+        
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Aluno_Id")]
         [InverseProperty("Trabalho")]
-        public virtual Alunos Alunos { get; set; }
+        public virtual Alunos? Alunos { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Juri_Id")]
@@ -50,7 +51,7 @@ namespace API_MEI.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Trabalho")]
-        public virtual ICollection<Orientadores> Orientadores { get; set; }
+        public virtual ICollection<Orientadores>? Orientadores { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Empresa_Id")]

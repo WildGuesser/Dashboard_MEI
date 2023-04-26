@@ -39,7 +39,7 @@ namespace API_MEI.Controllers
         public async Task<IActionResult> GetTrabalho(int id)
         {
             var trabalho = await _context.Trabalhos
-                .Include(t => t.Juri)
+                .Include(t => t.Juri).ThenInclude(l=>l.JuriMembros).ThenInclude(m => m.Membros)
                 .Include(t => t.Alunos)
                 .Include(t => t.Orientadores).ThenInclude(o=>o.Membros)
                 .Include(t => t.Empresas)
@@ -61,7 +61,6 @@ namespace API_MEI.Controllers
             {
                 try
                 {
-                   
                     _context.Add(input);
                     await _context.SaveChangesAsync();
 
@@ -69,7 +68,7 @@ namespace API_MEI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest($"Erro ao criar Especialiesta: {ex.Message}");
+                    return BadRequest($"Erro ao criar Trabalho: {ex.Message}");
                 }
             }
             else
@@ -163,6 +162,16 @@ namespace API_MEI.Controllers
             {
                 return StatusCode(500, $"Erro interno ao excluir múltiplos trabalhos: {ex.Message}");
             }
+        }
+        //Membros
+        // GET: api/Membros
+        [HttpGet("Membros/List")]
+        public async Task<IActionResult> Membros_List()
+        {
+            var membros = await _context.Membros
+                .ToListAsync();
+
+            return Ok(membros);
         }
 
         // GET: Trabalhos/Orientador/5
