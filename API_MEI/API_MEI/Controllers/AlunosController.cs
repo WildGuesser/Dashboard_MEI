@@ -35,6 +35,15 @@ namespace API_MEI.Controllers
             return Ok(alunosDTO);
         }
 
+        // GET: Alunos
+        [HttpGet("List_Active")]
+        public async Task<IActionResult> List_Active()
+        {
+            var alunos = await _context.Alunos.Where(a => a.Estado == true).ToListAsync();
+            var alunosDTO = _mapper.Map<List<AlunosDTO>>(alunos);
+            return Ok(alunosDTO);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlunoById(int id)
         {

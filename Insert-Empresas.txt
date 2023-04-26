@@ -19,7 +19,7 @@ VALUES
 ('Spacely Space Sprockets', 'Orbit City', 'georgespacely@spacelysprockets.com', 'SPC-017'),
 ('Coyote Logistics', 'Chicago', 'joshhundman@coyotelogistics.com', 'CYT-018'),
 ('Wayfair', 'Boston', 'nirajshah@wayfair.com', 'WAY-019'),
-('The Daily Planet', 'Metropolis', 'perryperry@dailyplanet.com', 'DPL-020');
+('The Daily Planet', 'Metropolis', 'perryperry@dailyplanet.com', 'DPL-020'),
 ('Stark Industries', 'Los Angeles', 'pepperpotts@starkind.com', 'STK-021'),
 ('LexCorp', 'Metropolis', 'lexluthor@lexcorp.com', 'LEX-022'),
 ('Daily Bugle', 'New York', 'jjonahjameson@dailybugle.com', 'DBG-023'),

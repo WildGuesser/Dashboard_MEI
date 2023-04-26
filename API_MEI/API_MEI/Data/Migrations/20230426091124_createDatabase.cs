@@ -73,7 +73,7 @@ namespace API_MEI.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trabalho",
+                name: "Trabalhos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -84,29 +84,28 @@ namespace API_MEI.Data.Migrations
                     Nota = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdendaProtocolo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Aluno_Id = table.Column<int>(type: "int", nullable: false),
-                    Juri_Id = table.Column<int>(type: "int", nullable: false),
+                    Juri_Id = table.Column<int>(type: "int", nullable: true),
                     Empresa_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trabalho", x => x.Id);
+                    table.PrimaryKey("PK_Trabalhos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trabalho_Alunos_Aluno_Id",
+                        name: "FK_Trabalhos_Alunos_Aluno_Id",
                         column: x => x.Aluno_Id,
                         principalTable: "Alunos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Trabalho_Empresas_Empresa_Id",
+                        name: "FK_Trabalhos_Empresas_Empresa_Id",
                         column: x => x.Empresa_Id,
                         principalTable: "Empresas",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Trabalho_Juri_Juri_Id",
+                        name: "FK_Trabalhos_Juri_Juri_Id",
                         column: x => x.Juri_Id,
                         principalTable: "Juri",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -194,9 +193,9 @@ namespace API_MEI.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orientadores_Trabalho_Trabalho_Id",
+                        name: "FK_Orientadores_Trabalhos_Trabalho_Id",
                         column: x => x.Trabalho_Id,
-                        principalTable: "Trabalho",
+                        principalTable: "Trabalhos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -217,21 +216,22 @@ namespace API_MEI.Data.Migrations
                 column: "Membro_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trabalho_Aluno_Id",
-                table: "Trabalho",
+                name: "IX_Trabalhos_Aluno_Id",
+                table: "Trabalhos",
                 column: "Aluno_Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trabalho_Empresa_Id",
-                table: "Trabalho",
+                name: "IX_Trabalhos_Empresa_Id",
+                table: "Trabalhos",
                 column: "Empresa_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trabalho_Juri_Id",
-                table: "Trabalho",
+                name: "IX_Trabalhos_Juri_Id",
+                table: "Trabalhos",
                 column: "Juri_Id",
-                unique: true);
+                unique: true,
+                filter: "[Juri_Id] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -252,7 +252,7 @@ namespace API_MEI.Data.Migrations
                 name: "Membros");
 
             migrationBuilder.DropTable(
-                name: "Trabalho");
+                name: "Trabalhos");
 
             migrationBuilder.DropTable(
                 name: "Alunos");

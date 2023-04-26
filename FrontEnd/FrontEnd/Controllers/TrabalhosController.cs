@@ -22,6 +22,7 @@ namespace FrontEnd.Controllers
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
         private List<Trabalhos> list;
+        private List<Alunos> Alunos_list;
         private PagingModel pageEmpresas;
 
         public TrabalhosController(ILogger<TrabalhosController> logger, IConfiguration configuration)
@@ -357,5 +358,53 @@ namespace FrontEnd.Controllers
             return View(trabalhos);
         }
 
+        // GET: Alunos
+        public async Task<IActionResult> Alunos_Index(
+            [FromQuery] int p = 1,
+            [FromQuery] int s = 10)
+        {
+            try
+            {
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Alunos/List_Active");
+
+                string body = await message.Content.ReadAsStringAsync();
+
+                Alunos_list = JsonConvert.DeserializeObject<List<Alunos>>(body);
+
+                if (Alunos_list == null)
+                {
+                    Alunos_list = new List<Alunos>();
+                }
+
+                AlunosPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+
+                //count records that returns after the search
+                model.TotalRecords = Alunos_list.Count;
+
+                model.AlunosList = Alunos_list
+                                        .Skip((p - 1) * s)
+                                        .Take(s)
+                                        .ToList();
+
+                return PartialView("Select_Aluno", model);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Error fetching data from API");
+
+                // handle the exception by returning the Alunos Index view without making the API call
+                AlunosPagingModel model = new()
+                {
+                    P = p,
+                    S = s
+                };
+                return View(model);
+            }
+        }
     }//End Of Class
 }//End of Namespace
+

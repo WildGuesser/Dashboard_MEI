@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_MEI.Data.Migrations
 {
     [DbContext(typeof(API_MEIContext))]
-    [Migration("20230419204750_createDatabase")]
+    [Migration("20230426091124_createDatabase")]
     partial class createDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,7 +227,7 @@ namespace API_MEI.Data.Migrations
                     b.Property<int?>("Empresa_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Juri_Id")
+                    b.Property<int?>("Juri_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Nota")
@@ -255,9 +255,10 @@ namespace API_MEI.Data.Migrations
                     b.HasIndex("Empresa_Id");
 
                     b.HasIndex("Juri_Id")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Juri_Id] IS NOT NULL");
 
-                    b.ToTable("Trabalho");
+                    b.ToTable("Trabalhos");
                 });
 
             modelBuilder.Entity("API_MEI.Models.Docentes", b =>
@@ -342,9 +343,7 @@ namespace API_MEI.Data.Migrations
 
                     b.HasOne("API_MEI.Models.Juri", "Juri")
                         .WithOne("Trabalho")
-                        .HasForeignKey("API_MEI.Models.Trabalhos", "Juri_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("API_MEI.Models.Trabalhos", "Juri_Id");
 
                     b.Navigation("Alunos");
 

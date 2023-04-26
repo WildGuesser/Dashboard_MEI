@@ -2,30 +2,27 @@
 
 
 
-<div class ="table-responsive-xxl">
+<div class="table-responsive-xxl">
     <form method="post" action="/Trabalhos/DeleteMultiple" id="delete-form">
-    
+
         <div class="d-flex flex-row">
 
             <div class="mr-auto p-2">
                 <button type="submit" class="btn btn-danger" id="delete-btn">Delete Selected</button>
             </div>
-    
+
             <div class="p-2">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <input type="text" class="form-control text" id="search-input" placeholder="Search">
                     <button class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i></button>
                 </div>
             </div>
-  
-            <div class="p-2">
-                <a class="btn btn-primary" asp-action="Create_Trabalho" data-ajax="true" data-ajax-method="get"
-                    data-ajax-mode="replace" data-ajax-update="#target"
-                    data-toggle="modal" data-target="#Create_Modal">Criar Trabalho</a>
-            </div>
-        
-        </div>
 
+            <div class="p-2">
+                <a class="btn btn-primary" asp-action="Create_Trabalho">Criar Trabalho</a>
+            </div>
+
+        </div>
 
 
         <table id="myTable" class="table">
@@ -232,7 +229,7 @@
     </div>
 </div>
 
-<!-- Create Trabalho Modal -->
+@*<!-- Create Trabalho Modal -->
 <div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -242,7 +239,7 @@
         </div>
     </div>
 </div>
-
+*@
 @section Scripts
     {
 

@@ -33,9 +33,8 @@ namespace FrontEnd.Models
         [Range(1, int.MaxValue, ErrorMessage = "O ID do aluno deve ser maior que 0.")]
         public int Aluno_Id { get; set; }
 
-        [Required(ErrorMessage = "O ID do júri é obrigatório.")]
         [Range(1, int.MaxValue, ErrorMessage = "O ID do júri deve ser maior que 0.")]
-        public int Juri_Id { get; set; }
+        public int? Juri_Id { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }

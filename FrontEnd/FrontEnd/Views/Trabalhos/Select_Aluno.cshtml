@@ -1,0 +1,126 @@
+﻿@model FrontEnd.Data.Paging_Models.AlunosPagingModel
+
+<body>
+    <div class="container">
+        <div class="d-flex flex-row">
+
+            <div class="p-2">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <input type="text" class="form-control text" id="search-input" placeholder="Search">
+                    <button class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+        <table id="myTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th data-type="numeric" class="text">
+                        @Html.DisplayNameFor(model => model.Aluno.Numero_Aluno)
+                    </th>
+                    <th class="text">
+                        @Html.DisplayNameFor(model => model.Aluno.Nome)
+                    </th>
+                    <th class="text">
+                        @Html.DisplayNameFor(model => model.Aluno.Curso)
+                    </th>
+                    <th class="text">
+                        @Html.DisplayNameFor(model => model.Aluno.Instituicao)
+                    </th>
+                    <th data-type="text-long" class="text">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AlunosList)
+                {
+                    <tr>
+                        <td class="text">@Html.DisplayFor(modelItem => item.Numero_Aluno)</td>
+                        <td class="text">@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td class="text">@Html.DisplayFor(modelItem => item.Curso)</td>
+                        <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary text" asp-route-id="@item.Id"
+                                onclick="selectAluno('@item.Id', '@item.Nome', '@item.Numero_Aluno')"
+                                data-dismiss="modal">Selecionar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+            
+        <!-- Paginação -->
+
+        <paging page-no="Model.P"
+                page-size="Model.S"
+                total-records="Model.TotalRecords"
+                text-page-size="{0} records per page"
+                class-page-size-div="col-3"
+                max-displayed-pages="5">
+        </paging>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                NºElementos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/Trabalhos/Alunos_Index?s=10">10</a>
+                <a class="dropdown-item" href="/Trabalhos/Alunos_Index?s=20">20</a>
+                <a class="dropdown-item" href="/Trabalhos/Alunos_Index?s=40">40</a>
+                <a class="dropdown-item" href="/Trabalhos/Alunos_Index?s=@Model.TotalRecords">Tudo</a>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+    <script>
+        document.getElementById("search-input").addEventListener("input", function () {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("search-input");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break; // break the loop once a match is found in any column
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        function selectAluno(alunoId, alunoNome, alunoNumero) {
+            // Store the selected aluno ID, nome, and numero in the hidden input fields
+            $('#AlunoId').val(alunoId);
+            $('#AlunoNome').val(alunoNome);
+            $('#AlunoNumero').val(alunoNumero);
+
+        }
+    </script>
+
+
+
+</body>
+
+    @section Scripts
+        {
+            <script src="~/js/tables.js" asp-append-version="true"></script>
+
+            <script>
+
+                $(function () {
+                    $("#dropdownMenuButton").text('@Model.S');
+                })
+            </script>
+        }
+
+
