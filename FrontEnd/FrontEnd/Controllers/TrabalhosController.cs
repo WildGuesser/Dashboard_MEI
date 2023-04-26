@@ -359,9 +359,7 @@ namespace FrontEnd.Controllers
         }
 
         // GET: Alunos
-        public async Task<IActionResult> Alunos_Index(
-            [FromQuery] int p = 1,
-            [FromQuery] int s = 10)
+        public async Task<IActionResult> Alunos_Index()
         {
             try
             {
@@ -376,33 +374,16 @@ namespace FrontEnd.Controllers
                     Alunos_list = new List<Alunos>();
                 }
 
-                AlunosPagingModel model = new()
-                {
-                    P = p,
-                    S = s
-                };
 
-                //count records that returns after the search
-                model.TotalRecords = Alunos_list.Count;
-
-                model.AlunosList = Alunos_list
-                                        .Skip((p - 1) * s)
-                                        .Take(s)
-                                        .ToList();
-
-                return PartialView("Select_Aluno", model);
+                return PartialView("Select_Aluno", Alunos_list);
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error fetching data from API");
 
                 // handle the exception by returning the Alunos Index view without making the API call
-                AlunosPagingModel model = new()
-                {
-                    P = p,
-                    S = s
-                };
-                return View(model);
+
+                return View(Alunos_list);
             }
         }
     }//End Of Class
