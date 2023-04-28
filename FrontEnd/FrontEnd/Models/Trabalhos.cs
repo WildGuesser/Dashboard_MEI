@@ -62,5 +62,8 @@ namespace FrontEnd.Models
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual Orientadores? Orientador { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public virtual Membros? Membro { get; set; }
     }
 }
