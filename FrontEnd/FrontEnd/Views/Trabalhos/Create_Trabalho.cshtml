@@ -77,43 +77,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <div class="btn-group" role="group" aria-label="Aluno input group">
-                        <div class="form-floating">
-                            <input asp-for="Empresa_Id" id="EmpresaId" class="form-control" placeholder=" "  />
-                            <label asp-for="Empresa_Id"> @Html.DisplayNameFor(model => model.Empresas.Id)</label>
-                            <span asp-validation-for="Empresa_Id" class="text-danger"></span>
-                        </div>
-                        <a id="btnAdicionarEmpresa" class="btn btn-outline-secondary"
-                           asp-action="Empresas_Index" data-ajax="true" data-ajax-method="get"
-                           data-ajax-mode="replace" data-ajax-update="#target"
-                           data-toggle="modal" data-target="#myModal">Adicionar Empresa</a>
-                    </div>
-                </div>
-                <div class="col-md-3 mr-5">
-                    <div class="form-floating mb-3">
-                        <input asp-for="Empresas.Nome" id="EmpresaNome" class="form-control" placeholder=" " disabled />
-                        <label asp-for="Empresas.Nome">@Html.DisplayNameFor(model => model.Empresas.Nome)</label>
-                        <span asp-validation-for="Empresas.Nome" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-1 mr-5">
-                    <div class="form-floating mb-3">
-                        <input asp-for="Empresas.Local" id="EmpresaLocal" class="form-control" placeholder=" " disabled />
-                        <label asp-for="Empresas.Local">@Html.DisplayNameFor(model => model.Empresas.Local)</label>
-                        <span asp-validation-for="Empresas.Local" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-1 mr-5">
-                    <div class="form-floating mb-3">
-                        <input asp-for="Empresas.Protocolo" id="EmpresaProtocolo" class="form-control" placeholder=" "disabled  />
-                        <label asp-for="Empresas.Protocolo">@Html.DisplayNameFor(model => model.Empresas.Protocolo)</label>
-                        <span asp-validation-for="Empresas.Protocolo" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
             <div class="form-group row">
                 <div class="col-md-2 mr-5">
                     <div class="form-floating mb-3">
@@ -123,37 +86,233 @@
                     </div>
                 </div>
                 <div class="col-md-9" id="membroInfo" style="display:none">
+                    @*Presidente Selection*@
                     <div class="form-group row">
                         <div class="col-md-3">
-                            <div class="btn-group" role="group" aria-label="Aluno input group">
+                            <div class="btn-group" role="group" aria-label="Presidente input group">
                                 <div class="form-floating">
-                                    <input asp-for="Membro.Id" id="MembroId" class="form-control" placeholder=" " />
+                                    <input asp-for="JuriIds" name="JuriIds" id="PresidenteMembroId" class="form-control" placeholder=" " />
                                     <label asp-for="Membro.Id"> @Html.DisplayNameFor(model => model.Membro.Id)</label>
                                     <span asp-validation-for="Membro.Id" class="text-danger"></span>
                                 </div>
                                 <a id="btnAdicionarJuri" class="btn btn-outline-secondary"
                                    asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
                                    data-ajax-mode="replace" data-ajax-update="#target"
-                                   data-toggle="modal" data-target="#myModal">Adicionar Juri</a>
+                                   data-toggle="modal" data-target="#myModal" data-role="Presidente">Adicionar Presidente</a>
                             </div>
                         </div>
                         <div class="col-md-2 mr-5">
                             <div class="form-floating mb-3">
-                                <input asp-for="Membro.Nome" id="MembroNome" class="form-control" placeholder=" " disabled />
+                                <input asp-for="Membro.Nome" id="PresidenteMembroNome" class="form-control" placeholder=" " disabled />
                                 <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
                                 <span asp-validation-for="Membro.Nome" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-2 mr-5">
                             <div class="form-floating mb-3">
-                                <input asp-for="Membro.Email" id="MembroEmail" class="form-control" placeholder=" " disabled />
+                                <input asp-for="Membro.Email" id="PresidenteMembroEmail" class="form-control" placeholder=" " disabled />
                                 <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
                                 <span asp-validation-for="Membro.Email" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
+                    @*End Presidente Selection*@
+                    @*Arguent Selection*@
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <div class="btn-group" role="group" aria-label="Arguente input group">
+                                <div class="form-floating">
+                                    <input asp-for="JuriIds" name="JuriIds" id="ArguenteMembroId" class="form-control" placeholder=" " />
+                                    <label asp-for="Membro.Id"> @Html.DisplayNameFor(model => model.Membro.Id)</label>
+                                    <span asp-validation-for="Membro.Id" class="text-danger"></span>
+                                </div>
+                                <a id="btnAdicionarArguente" class="btn btn-outline-secondary"
+                                   asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
+                                   data-ajax-mode="replace" data-ajax-update="#target"
+                                   data-toggle="modal" data-target="#myModal" data-role="Arguente">Adicionar Arguente</a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Nome" id="ArguenteMembroNome" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
+                                <span asp-validation-for="Membro.Nome" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Email" id="ArguenteMembroEmail" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
+                                <span asp-validation-for="Membro.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*End Arguente Selection*@
+                    @*Arguente 2 Selection*@
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <div class="btn-group" role="group" aria-label="Arguente 2 input group">
+                                <div class="form-floating">
+                                    <input asp-for="JuriIds" name="JuriIds" id="Arguente2MembroId" class="form-control" placeholder=" " />
+                                    <label asp-for="Membro.Id"> @Html.DisplayNameFor(model => model.Membro.Id)</label>
+                                    <span asp-validation-for="Membro.Id" class="text-danger"></span>
+                                </div>
+                                <a id="btnAdicionarArguente2" class="btn btn-outline-secondary"
+                                   asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
+                                   data-ajax-mode="replace" data-ajax-update="#target"
+                                   data-toggle="modal" data-target="#myModal" data-role="Arguente2">Adicionar Arguente 2</a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Nome" id="Arguente2MembroNome" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
+                                <span asp-validation-for="Membro.Nome" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Email" id="Arguente2MembroEmail" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
+                                <span asp-validation-for="Membro.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*End Arguente 2 Selection*@
+                    @*Vogal Selection*@
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <div class="btn-group" role="group" aria-label="Vogal input group">
+                                <div class="form-floating">
+                                    <input asp-for="JuriIds" name="JuriIds" id="VogalMembroId" class="form-control" placeholder=" " />
+                                    <label asp-for="Membro.Id"> @Html.DisplayNameFor(model => model.Membro.Id)</label>
+                                    <span asp-validation-for="Membro.Id" class="text-danger"></span>
+                                </div>
+                                <a id="btnAdicionarVogal" class="btn btn-outline-secondary"
+                                   asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
+                                   data-ajax-mode="replace" data-ajax-update="#target"
+                                   data-toggle="modal" data-target="#myModal" data-role="Vogal">Adicionar Vogal</a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Nome" id="VogalMembroNome" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
+                                <span asp-validation-for="Membro.Nome" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mr-5">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Membro.Email" id="VogalMembroEmail" class="form-control" placeholder=" " disabled />
+                                <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
+                                <span asp-validation-for="Membro.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*End Vogal Selection*@
+
                 </div>
             </div>
+                @*Orientador UTAD 1 Selection*@
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <div class="btn-group" role="group" aria-label="Orientador UTAD 1 input group">
+                            <div class="form-floating">
+                            <input asp-for="OrientadoresIds" name="OrientadoresIds" id="OrientadorUTAD1MembroId" class="form-control" placeholder=" " />
+                                <label asp-for="Membro.Id">@Html.DisplayNameFor(model => model.Membro.Id)</label>
+                                <span asp-validation-for="Membro.Id" class="text-danger"></span>
+                            </div>
+                            <a id="btnAdicionarOrientadorUTAD1" class="btn btn-outline-secondary"
+                               asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
+                               data-ajax-mode="replace" data-ajax-update="#target"
+                               data-toggle="modal" data-target="#myModal" data-role="OrientadorUTAD1">Adicionar Orientador UTAD 1</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Membro.Nome" id="OrientadorUTAD1MembroNome" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
+                            <span asp-validation-for="Membro.Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Membro.Email" id="OrientadorUTAD1MembroEmail" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
+                            <span asp-validation-for="Membro.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @*End Orientador UTAD 1 Selection*@
+                @*Orientador UTAD 2 Selection*@
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <div class="btn-group" role="group" aria-label="Orientador UTAD 2 input group">
+                            <div class="form-floating">
+                                <input asp-for="OrientadoresIds" name="OrientadoresIds" id="OrientadorUTAD2MembroId" class="form-control" placeholder=" " />
+                                <label asp-for="Membro.Id">@Html.DisplayNameFor(model => model.Membro.Id)</label>
+                                <span asp-validation-for="Membro.Id" class="text-danger"></span>
+                            </div>
+                            <a id="btnAdicionarOrientadorUTAD2" class="btn btn-outline-secondary"
+                               asp-action="Membros_Index" data-ajax="true" data-ajax-method="get"
+                               data-ajax-mode="replace" data-ajax-update="#target"
+                               data-toggle="modal" data-target="#myModal" data-role="OrientadorUTAD2">Adicionar Orientador UTAD 2</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Membro.Nome" id="OrientadorUTAD2MembroNome" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Membro.Nome">@Html.DisplayNameFor(model => model.Membro.Nome)</label>
+                            <span asp-validation-for="Membro.Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Membro.Email" id="OrientadorUTAD2MembroEmail" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Membro.Email">@Html.DisplayNameFor(model => model.Membro.Email)</label>
+                            <span asp-validation-for="Membro.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @*End Orientador UTAD 2 Selection*@
+                @*Empresa Selection*@
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <div class="btn-group" role="group" aria-label="Aluno input group">
+                            <div class="form-floating">
+                                <input asp-for="Empresa_Id" id="EmpresaId" class="form-control" placeholder=" " />
+                                <label asp-for="Empresa_Id"> @Html.DisplayNameFor(model => model.Empresas.Id)</label>
+                                <span asp-validation-for="Empresa_Id" class="text-danger"></span>
+                            </div>
+                            <a id="btnAdicionarEmpresa" class="btn btn-outline-secondary"
+                               asp-action="Empresas_Index" data-ajax="true" data-ajax-method="get"
+                               data-ajax-mode="replace" data-ajax-update="#target"
+                               data-toggle="modal" data-target="#myModal">Adicionar Empresa</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Empresas.Nome" id="EmpresaNome" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Empresas.Nome">@Html.DisplayNameFor(model => model.Empresas.Nome)</label>
+                            <span asp-validation-for="Empresas.Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Empresas.Local" id="EmpresaLocal" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Empresas.Local">@Html.DisplayNameFor(model => model.Empresas.Local)</label>
+                            <span asp-validation-for="Empresas.Local" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mr-5">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Empresas.Protocolo" id="EmpresaProtocolo" class="form-control" placeholder=" " disabled />
+                            <label asp-for="Empresas.Protocolo">@Html.DisplayNameFor(model => model.Empresas.Protocolo)</label>
+                            <span asp-validation-for="Empresas.Protocolo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                @*End Empresa Selection*@
             <div class="col-2 p-4">
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary mt-2" />
@@ -193,6 +352,16 @@
         } else {
             membroInfo.style.display = 'none';
         }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('a[data-role]').on('click', function () {
+            var role = $(this).data('role');
+            var url = '@Url.Action("Membros_Index", "Trabalhos")?role=' + role;
+            $(this).attr('href', url);
+        });
     });
 </script>
 

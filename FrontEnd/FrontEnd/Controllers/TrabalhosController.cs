@@ -416,7 +416,7 @@ namespace FrontEnd.Controllers
             }
         }
 
-        public async Task<IActionResult> Membros_Index()
+        public async Task<IActionResult> Membros_Index(string role)
         {
             try
             {
@@ -431,7 +431,7 @@ namespace FrontEnd.Controllers
                     Membros_list = new List<Membros>();
                 }
 
-
+                ViewBag.Role = role;
                 return PartialView("Select_Membro", Membros_list);
             }
             catch (HttpRequestException ex)

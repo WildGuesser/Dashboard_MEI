@@ -41,8 +41,8 @@
                         <td class="text">@Html.DisplayFor(modelItem => item.Contacto)</td>
                         <td>
                             <a class="btn btn-sm btn-primary text" asp-route-id="@item.Id"
-                           onclick="selectMembro('@item.Id', '@item.Nome', '@item.Email','@item.Contacto')"
-                           data-dismiss="modal">Selecionar</a>
+                               onclick="selectMembro('@ViewBag.Role', '@item.Id', '@item.Nome', '@item.Email')"
+                               data-dismiss="modal">Selecionar</a>
                         </td>
                     </tr>
                 }
@@ -112,22 +112,74 @@
         });
     </script>
     <script>
-        function selectMembro(membroId, membroNome, membroEmail, membroContacto) {
-            // Store the selected membro ID, nome, and numero in the hidden input fields
-            $('#MembroId').val(membroId);
-            $('#MembroNome').val(membroNome);
-            $('#MembroEmail').val(membroEmail);
-            $('#MembroContacto').val(membroContacto);
+        function isMembroAlreadySelected(membroId) {
+            const selectedMembroIds = [
+                $('#PresidenteMembroId').val(),
+                $('#ArguenteMembroId').val(),
+                $('#Arguente2MembroId').val(),
+                $('#VogalMembroId').val(),
+
+            ];
+
+            return selectedMembroIds.includes(membroId);
+        }
+
+        function isOrientadorAlreadySelected(membroId) {
+            const selectedOrientadorIds = [
+                $('#OrientadorUTAD1MembroId').val(),
+                $('#OrientadorUTAD2MembroId').val()
+            ];
+
+            return selectedOrientadorIds.includes(membroId);
+        }
+
+        function selectMembro(role, membroId, membroNome, membroEmail) {
+            if (isMembroAlreadySelected(membroId) && role !== 'OrientadorUTAD1' && role !== 'OrientadorUTAD2') {
+                alert('Este Membro já foi escolhido, selecione um diferente!');
+                return;
+            }
+
+            if ((role === 'OrientadorUTAD1' || role === 'OrientadorUTAD2') && isOrientadorAlreadySelected(membroId)) {
+                alert('Este Orientador já foi escolhido, selecione um diferente!');
+                return;
+            }
+
+            if (role === 'Arguente') {
+                $('#ArguenteMembroId').val(membroId);
+                $('#ArguenteMembroNome').val(membroNome);
+                $('#ArguenteMembroEmail').val(membroEmail);
+            } else if (role === 'Presidente') {
+                $('#PresidenteMembroId').val(membroId);
+                $('#PresidenteMembroNome').val(membroNome);
+                $('#PresidenteMembroEmail').val(membroEmail);
+            } else if (role === 'Arguente2') {
+                $('#Arguente2MembroId').val(membroId);
+                $('#Arguente2MembroNome').val(membroNome);
+                $('#Arguente2MembroEmail').val(membroEmail);
+            } else if (role === 'Vogal') {
+                $('#VogalMembroId').val(membroId);
+                $('#VogalMembroNome').val(membroNome);
+                $('#VogalMembroEmail').val(membroEmail);
+            } else if (role === 'OrientadorUTAD1') {
+                $('#OrientadorUTAD1MembroId').val(membroId);
+                $('#OrientadorUTAD1MembroNome').val(membroNome);
+                $('#OrientadorUTAD1MembroEmail').val(membroEmail);
+            } else if (role === 'OrientadorUTAD2') {
+                $('#OrientadorUTAD2MembroId').val(membroId);
+                $('#OrientadorUTAD2MembroNome').val(membroNome);
+                $('#OrientadorUTAD2MembroEmail').val(membroEmail);
+            }
         }
     </script>
 
 
 
+
+
+
+
+
 </body>
 
-@section Scripts
-    {
-    <script src="~/js/tables.js" asp-append-version="true"></script>
-        }
 
 
