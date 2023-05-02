@@ -35,7 +35,7 @@ namespace API_MEI.Data
 
             modelBuilder.Entity<Orientadores>()
                 .HasKey(o => new { o.Trabalho_Id, o.Membro_Id });
-            
+
         }
 
     }

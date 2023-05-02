@@ -15,10 +15,16 @@ namespace API_MEI.Models
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
         public DateTime Data_Defesa { get; set; }
 
+        [Required(ErrorMessage = "O Id Trabalho é obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O ID do júri deve ser maior que 0.")]
+        public int Trabalho_Id { get; set; }
+
         [InverseProperty("Juri")]
+        [ForeignKey("Trabalho_Id")]
         public virtual Trabalhos? Trabalho { get; set; }
 
         [InverseProperty("Juri")]
         public virtual ICollection<JuriMembros> JuriMembros { get; set; }
+
     }
 }

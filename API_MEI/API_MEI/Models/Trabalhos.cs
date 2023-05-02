@@ -33,8 +33,6 @@ namespace API_MEI.Models
         [Range(1, int.MaxValue, ErrorMessage = "O ID do aluno deve ser maior que 0.")]
         public int Aluno_Id { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O ID do júri deve ser maior que 0.")]
-        public int? Juri_Id { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }
@@ -45,7 +43,6 @@ namespace API_MEI.Models
         public virtual Alunos? Alunos { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [ForeignKey("Juri_Id")]
         [InverseProperty("Trabalho")]
         public virtual Juri? Juri { get; set; }
 
