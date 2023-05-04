@@ -39,7 +39,9 @@ namespace API_MEI.Controllers
         [HttpGet("List_Active")]
         public async Task<IActionResult> List_Active()
         {
-            var alunos = await _context.Alunos.Where(a => a.Estado == true).ToListAsync();
+            var alunos = await _context.Alunos
+                .Where(a => a.Estado == true && !_context.Trabalhos.Any(t => t.Aluno_Id == a.Id))
+                .ToListAsync();
             var alunosDTO = _mapper.Map<List<AlunosDTO>>(alunos);
             return Ok(alunosDTO);
         }

@@ -93,33 +93,67 @@ namespace FrontEnd.Controllers
         // POST: Trabalhos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create_Trabalho(Trabalhos trabalhos)
+        public async Task<IActionResult> Create_Trabalho(Trabalhos input)
         {
+            HttpResponseMessage response = null;
 
             try
             {
+                Trabalhos trabalho = new Trabalhos()
+                {
+                    Titulo=input.Titulo,
+                    ReferenciaInfo = input.ReferenciaInfo,  
+                    Tipo= input.Tipo,
+                    AdendaProtocolo = input.AdendaProtocolo,
+                    Aluno_Id=input.Aluno_Id,
+                    Nota = input.Nota,
+                    Empresa_Id=input.Empresa_Id,    
+
+                };
+
                 // Serialize the Trabalhos object to JSON
-                string json = JsonConvert.SerializeObject(trabalhos);
+                string json = JsonConvert.SerializeObject(trabalho);
 
                 // Send a POST request to the API to create a new Trabalhos object
-                var response = await _InternalClient.PostAsync(_APIserver + "/Trabalhos/Create",
+                response = await _InternalClient.PostAsync(_APIserver + "/Trabalhos/Create",
                     new StringContent(json, Encoding.UTF8, "application/json"));
 
                 response.EnsureSuccessStatusCode();
+
+                // Deserialize the JSON response to get the created object's ID
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var createdTrabalho = JsonConvert.DeserializeObject<dynamic>(apiResponse);
+                int createdTrabalhoId = createdTrabalho.Id;
+
+                if (input.Juri.Data_Defesa != null)
+                {
+
+                }
 
                 // Redirect to the Index action
                 return RedirectToAction(nameof(Index));
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, "Error creating new Trabalhos object");
-                ViewData["ErrorMessage"] += ex.Message;
+                _logger.LogError(ex, $"Error creating new Trabalhos object: {ex.Message}");
 
-                // Handle the exception by returning the Trabalhos Create view with the current object
-                return View(trabalhos);
+                if (response != null)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    ViewData["ErrorMessage"] += $"API Response: {apiResponse}";
+                }
+                else
+                {
+                    ViewData["ErrorMessage"] += "Unable to retrieve API response.";
+                }
+
+                // Log the serialized JSON data for debugging purposes
+                _logger.LogError($"Serialized JSON data: {JsonConvert.SerializeObject(input)}");
+
+                return View(input);
             }
-
         }
+
 
         // GET: Trabalhos/Edit/5
         public async Task<IActionResult> Edit_Trabalho(int? id)

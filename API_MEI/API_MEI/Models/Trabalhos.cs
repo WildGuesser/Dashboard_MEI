@@ -54,5 +54,7 @@ namespace API_MEI.Models
         [ForeignKey("Empresa_Id")]
         [InverseProperty("Trabalho")]
         public virtual Empresas? Empresas { get; set; } = null;
+
+
     }
 }

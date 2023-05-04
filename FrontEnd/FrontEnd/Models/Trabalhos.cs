@@ -33,8 +33,6 @@ namespace FrontEnd.Models
         [Range(1, int.MaxValue, ErrorMessage = "O ID do aluno deve ser maior que 0.")]
         public int Aluno_Id { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O ID do júri deve ser maior que 0.")]
-        public int? Juri_Id { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }
@@ -45,7 +43,6 @@ namespace FrontEnd.Models
         public virtual Alunos? Alunos { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [ForeignKey("Juri_Id")]
         [InverseProperty("Trabalho")]
         public virtual Juri? Juri { get; set; }
 
@@ -66,8 +63,11 @@ namespace FrontEnd.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual Membros? Membro { get; set; }
 
-        public List<int> JuriIds { get; set; }
-        public List<int> OrientadoresIds { get; set; }
+        public List<int>? JuriIds { get; set; }
+        public List<int>? OrientadoresIds { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
+        public DateTime Data_Defesa { get; set; }
     }
 }

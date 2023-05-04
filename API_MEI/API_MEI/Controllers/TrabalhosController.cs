@@ -64,7 +64,8 @@ namespace API_MEI.Controllers
                     _context.Add(input);
                     await _context.SaveChangesAsync();
 
-                    return Ok("Trabalho criado com sucesso!");
+                    // Return the created object's ID
+                    return Ok(new { Id = input.Id, Message = "Trabalho criado com sucesso!" });
                 }
                 catch (Exception ex)
                 {

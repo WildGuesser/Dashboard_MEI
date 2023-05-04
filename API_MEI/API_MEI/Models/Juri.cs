@@ -16,7 +16,7 @@ namespace API_MEI.Models
         public DateTime Data_Defesa { get; set; }
 
         [Required(ErrorMessage = "O Id Trabalho é obrigatório.")]
-        [Range(1, int.MaxValue, ErrorMessage = "O ID do júri deve ser maior que 0.")]
+        [Range(1, int.MaxValue, ErrorMessage = "O ID do Trabalho deve ser maior que 0.")]
         public int Trabalho_Id { get; set; }
 
         [InverseProperty("Juri")]
