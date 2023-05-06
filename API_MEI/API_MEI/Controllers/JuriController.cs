@@ -55,20 +55,22 @@ namespace API_MEI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(Juri juri)
+        public async Task<IActionResult> Create(Juri input)
         {
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(juri);
+                    _context.Add(input);
                     await _context.SaveChangesAsync();
-                    return Ok("Júri criado com sucesso!"); // retorna uma mensagem de sucesso
+
+                    // Return the created object's ID
+                    return Ok(new { Id = input.Id, Message = "Juri criado com sucesso!" });
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest($"Erro ao criar júri: {ex.Message}"); // retorna uma mensagem de erro com a exceção
+                    return BadRequest($"Erro ao criar Juri: {ex.Message}");
                 }
             }
             else

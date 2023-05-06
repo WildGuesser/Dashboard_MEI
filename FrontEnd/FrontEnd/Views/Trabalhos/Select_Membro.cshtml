@@ -40,7 +40,7 @@
                         <td class="text">@Html.DisplayFor(modelItem => item.Email)</td>
                         <td class="text">@Html.DisplayFor(modelItem => item.Contacto)</td>
                         <td>
-                            <a class="btn btn-sm btn-primary text" asp-route-id="@item.Id"
+                            <a class="btn btn-sm btn-primary text" asp-route-id="@item.Id" id="selectMembro"
                                onclick="selectMembro('@ViewBag.Role', '@item.Id', '@item.Nome', '@item.Email')"
                                data-dismiss="modal">Selecionar</a>
                         </td>

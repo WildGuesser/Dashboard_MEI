@@ -20,10 +20,10 @@ namespace API_MEI.Models
 
         [ForeignKey("Juri_Id")]
         [InverseProperty("JuriMembros")]
-        public virtual Juri Juri { get; set; }
+        public virtual Juri? Juri { get; set; }
 
         [ForeignKey("Membro_Id")]
         [InverseProperty("JuriMembros")]
-        public virtual Membros Membros { get; set; }
+        public virtual Membros? Membros { get; set; }
     }
 }

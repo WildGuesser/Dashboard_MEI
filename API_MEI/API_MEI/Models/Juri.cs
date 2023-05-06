@@ -24,7 +24,7 @@ namespace API_MEI.Models
         public virtual Trabalhos? Trabalho { get; set; }
 
         [InverseProperty("Juri")]
-        public virtual ICollection<JuriMembros> JuriMembros { get; set; }
+        public virtual ICollection<JuriMembros>? JuriMembros { get; set; }
 
     }
 }

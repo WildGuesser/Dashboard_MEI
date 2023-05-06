@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace FrontEnd.Models
+namespace FrontEnd.Models.ViewModel
 {
-    public class Trabalhos
+    public class TrabalhosViewModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -36,6 +36,30 @@ namespace FrontEnd.Models
 
         [Range(1, int.MaxValue, ErrorMessage = "O ID da empresa deve ser maior que 0.")]
         public int? Empresa_Id { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
+        public DateTime Data_Defesa { get; set; }
+
+
+        public virtual Membros? Presidente { get; set; }
+
+
+        public virtual Membros? Arguente_1 { get; set; }
+
+
+        public virtual Membros? Arguente_2 { get; set; }
+
+
+        public virtual Membros? Vogal { get; set; }
+
+
+        public virtual Membros? Orientador_1 { get; set; }
+
+        public virtual Membros? Orientador_2 { get; set; }
+
+
+
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Aluno_Id")]
@@ -69,9 +93,6 @@ namespace FrontEnd.Models
 
         public List<string>? OrientadoresFuncoes { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
-        public DateTime Data_Defesa { get; set; }
 
 
     }

@@ -39,8 +39,8 @@ namespace API_MEI.Controllers
         public async Task<IActionResult> GetTrabalho(int id)
         {
             var trabalho = await _context.Trabalhos
+                .Include(a => a.Alunos)
                 .Include(t => t.Juri).ThenInclude(l=>l.JuriMembros).ThenInclude(m => m.Membros)
-                .Include(t => t.Alunos)
                 .Include(t => t.Orientadores).ThenInclude(o=>o.Membros)
                 .Include(t => t.Empresas)
                 .SingleOrDefaultAsync(t => t.Id == id);

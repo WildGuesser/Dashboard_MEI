@@ -12,6 +12,8 @@ using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
 using FrontEnd.Data.Paging_Models;
+using Newtonsoft.Json.Linq;
+using FrontEnd.Models.ViewModel;
 
 namespace FrontEnd.Controllers
 {
@@ -96,6 +98,7 @@ namespace FrontEnd.Controllers
         public async Task<IActionResult> Create_Trabalho(Trabalhos input)
         {
             HttpResponseMessage response = null;
+            string apiResponse = null;
 
             try
             {
@@ -121,13 +124,89 @@ namespace FrontEnd.Controllers
                 response.EnsureSuccessStatusCode();
 
                 // Deserialize the JSON response to get the created object's ID
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                var createdTrabalho = JsonConvert.DeserializeObject<dynamic>(apiResponse);
-                int createdTrabalhoId = createdTrabalho.Id;
+                apiResponse = await response.Content.ReadAsStringAsync();
 
-                if (input.Juri.Data_Defesa != null)
+                // Use JObject to parse the JSON response
+                var createdTrabalho = JObject.Parse(apiResponse);
+
+                // Get the Id value as an integer
+                int createdTrabalhoId = createdTrabalho.Value<int>("id");
+
+                if (input.Data_Defesa != null)
                 {
+                    Juri juri = new Juri()
+                    {
+                        Data_Defesa = input.Data_Defesa,
+                        Trabalho_Id = createdTrabalhoId,
 
+                    };
+
+                    // Serialize the Trabalhos object to JSON
+                    string Jurijson = JsonConvert.SerializeObject(juri);
+
+                    // Send a POST request to the API to create a new Trabalhos object
+                    response = await _InternalClient.PostAsync(_APIserver + "/Juri/Create",
+                        new StringContent(Jurijson, Encoding.UTF8, "application/json"));
+
+                    response.EnsureSuccessStatusCode();
+
+                    apiResponse = await response.Content.ReadAsStringAsync();
+                    // Use JObject to parse the JSON response
+                    var createdJuri = JObject.Parse(apiResponse);
+                    // Get the Id value as an integer
+                    int createdJuriId = createdJuri.Value<int>("id");
+
+                    if (input.JuriIds != null)
+                    {
+                        // Initialize the counter
+                        int counter = 0;
+                        foreach (var id in input.JuriIds)
+                        {
+                            JuriMembros juriMembros = new JuriMembros()
+                            {
+                                Juri_Id = createdJuriId,
+                                Membro_Id = id,
+                                Funcao = input.JuriFuncoes[counter]
+                                
+                            };
+                            // Serialize the Trabalhos object to JSON
+                            string JuriMembrosjson = JsonConvert.SerializeObject(juriMembros);
+
+                            // Send a POST request to the API to create a new Trabalhos object
+                            response = await _InternalClient.PostAsync(_APIserver + "/JuriMembros/Create",
+                                new StringContent(JuriMembrosjson, Encoding.UTF8, "application/json"));
+
+                            response.EnsureSuccessStatusCode();
+                            counter++;
+                        }
+
+                    }
+
+                }
+
+                if(input.OrientadoresIds != null)
+                {
+                    // Initialize the counter
+                    int counter = 0;
+                    foreach (var id in input.OrientadoresIds)
+                    {
+                        Orientadores orientadores = new Orientadores()
+                        {
+                            Trabalho_Id = createdTrabalhoId,
+                            Membro_Id = id,
+                            Funcao = input.OrientadoresFuncoes[counter]
+
+                        };
+                        // Serialize the Trabalhos object to JSON
+                        string orientadoresjson = JsonConvert.SerializeObject(orientadores);
+
+                        // Send a POST request to the API to create a new Trabalhos object
+                        response = await _InternalClient.PostAsync(_APIserver + "/Orientadores/Create",
+                            new StringContent(orientadoresjson, Encoding.UTF8, "application/json"));
+
+                        response.EnsureSuccessStatusCode();
+                        counter++;
+                    }
                 }
 
                 // Redirect to the Index action
@@ -139,7 +218,7 @@ namespace FrontEnd.Controllers
 
                 if (response != null)
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    apiResponse = await response.Content.ReadAsStringAsync();
                     ViewData["ErrorMessage"] += $"API Response: {apiResponse}";
                 }
                 else
@@ -177,7 +256,44 @@ namespace FrontEnd.Controllers
                     return NotFound();
                 }
 
-                return View(trabalhos);
+                TrabalhosViewModel trabalhosVM = new TrabalhosViewModel()
+                {
+                    Titulo = trabalhos.Titulo,
+                    ReferenciaInfo = trabalhos.ReferenciaInfo,
+                    Tipo = trabalhos.Tipo,
+                    AdendaProtocolo = trabalhos.AdendaProtocolo,
+                    Aluno_Id = trabalhos.Aluno_Id,
+                    Nota = trabalhos.Nota,
+                    Alunos = trabalhos.Alunos,
+                    Empresa_Id = trabalhos.Empresa_Id,
+                    Empresas = trabalhos.Empresas,
+                    Data_Defesa = trabalhos.Juri.Data_Defesa
+
+                };
+
+                foreach (var trabalho in trabalhos.Juri.JuriMembros)
+                {
+                    if (trabalho.Funcao == "Presidente")
+                        trabalhosVM.Presidente = (trabalho.Membros);
+                    else if (trabalho.Funcao == "Arguente 1")
+                        trabalhosVM.Arguente_1 = (trabalho.Membros);
+                    else if (trabalho.Funcao == "Arguente 2")
+                        trabalhosVM.Arguente_2 = (trabalho.Membros);
+                    else if (trabalho.Funcao == "Vogal")
+                        trabalhosVM.Vogal = (trabalho.Membros);
+
+                }
+
+                foreach (var trabalho in trabalhos.Orientadores)
+                {
+                    if (trabalho.Funcao == "Orientador 1")
+                        trabalhosVM.Orientador_1 = (trabalho.Membros);
+                    else if (trabalho.Funcao == "Orientador 2")
+                        trabalhosVM.Orientador_2 = (trabalho.Membros);
+                }
+
+
+                return View(trabalhosVM);
             }
             catch (HttpRequestException ex)
             {

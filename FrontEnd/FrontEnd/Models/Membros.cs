@@ -14,7 +14,7 @@ namespace FrontEnd.Models
 
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [StringLength(200, MinimumLength = 2, ErrorMessage = "O campo Nome deve ter entre 2 e 200 caracteres.")]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [EmailAddress(ErrorMessage = "O email inserido não é válido.")]
         [StringLength(255, MinimumLength = 2, ErrorMessage = "O campo Email deve ter entre 2 e 255 caracteres.")]

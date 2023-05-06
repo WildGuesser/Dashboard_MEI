@@ -21,13 +21,14 @@ namespace API_MEI.Models
         [StringLength(100, ErrorMessage = "O campo Função deve ter no máximo 100 caracteres.")]
         public string Funcao { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Trabalho_Id")]
         [InverseProperty("Orientadores")]
-        public virtual Trabalhos Trabalho { get; set; }
+        public virtual Trabalhos? Trabalho { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [ForeignKey("Membro_Id")]
         [InverseProperty("Orientadores")]
-        public virtual Membros Membros { get; set; }
+        public virtual Membros? Membros { get; set; }
     }
 }
