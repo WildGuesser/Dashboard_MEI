@@ -14,6 +14,7 @@ using System.Text;
 using FrontEnd.Data.Paging_Models;
 using Newtonsoft.Json.Linq;
 using FrontEnd.Models.ViewModel;
+using System.Diagnostics.Metrics;
 
 namespace FrontEnd.Controllers
 {
@@ -258,6 +259,7 @@ namespace FrontEnd.Controllers
 
                 TrabalhosViewModel trabalhosVM = new TrabalhosViewModel()
                 {
+                    Id = trabalhos.Id,
                     Titulo = trabalhos.Titulo,
                     ReferenciaInfo = trabalhos.ReferenciaInfo,
                     Tipo = trabalhos.Tipo,
@@ -267,33 +269,50 @@ namespace FrontEnd.Controllers
                     Alunos = trabalhos.Alunos,
                     Empresa_Id = trabalhos.Empresa_Id,
                     Empresas = trabalhos.Empresas,
-                    Data_Defesa = trabalhos.Juri.Data_Defesa
+                    Data_Defesa = (DateTime)trabalhos.Juri.Data_Defesa
 
                 };
+
+                trabalhosVM.Juri.Id = trabalhos.Juri.Id;
 
                 foreach (var trabalho in trabalhos.Juri.JuriMembros)
                 {
                     if (trabalho.Funcao == "Presidente")
+                    {
                         trabalhosVM.Presidente = (trabalho.Membros);
+                        trabalhosVM.Presidente.OldId = (trabalho.Membros.Id);
+                    }
                     else if (trabalho.Funcao == "Arguente 1")
+                    {
                         trabalhosVM.Arguente_1 = (trabalho.Membros);
+                        trabalhosVM.Arguente_1.OldId = (trabalho.Membros.Id);
+                    }
                     else if (trabalho.Funcao == "Arguente 2")
+                    {
                         trabalhosVM.Arguente_2 = (trabalho.Membros);
+                        trabalhosVM.Arguente_2.OldId = (trabalho.Membros.Id);
+                    }
                     else if (trabalho.Funcao == "Vogal")
+                    {
                         trabalhosVM.Vogal = (trabalho.Membros);
-
+                        trabalhosVM.Vogal.OldId = (trabalho.Membros.Id);
+                    }
                 }
 
-                foreach (var trabalho in trabalhos.Orientadores)
+
                 {
-                    if (trabalho.Funcao == "Orientador 1")
-                        trabalhosVM.Orientador_1 = (trabalho.Membros);
-                    else if (trabalho.Funcao == "Orientador 2")
-                        trabalhosVM.Orientador_2 = (trabalho.Membros);
+
+                    foreach (var trabalho in trabalhos.Orientadores)
+                    {
+                        if (trabalho.Funcao == "Orientador 1")
+                            trabalhosVM.Orientador_1 = (trabalho.Membros);
+                        else if (trabalho.Funcao == "Orientador 2")
+                            trabalhosVM.Orientador_2 = (trabalho.Membros);
+                    }
+
+
+                    return View(trabalhosVM);
                 }
-
-
-                return View(trabalhosVM);
             }
             catch (HttpRequestException ex)
             {
@@ -307,24 +326,162 @@ namespace FrontEnd.Controllers
         // POST: Trabalhos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_Trabalho(int id, Trabalhos trabalhos)
+        public async Task<IActionResult> Edit_Trabalho(int id, TrabalhosViewModel trabalhosVM)
         {
-            if (id != trabalhos.Id)
+            if (id != trabalhosVM.Id)
             {
                 return NotFound();
             }
 
             try
             {
+                HttpResponseMessage response = null;
+                string apiResponse = null;
+
+                Trabalhos trabalhos = new Trabalhos()
+                {
+                    Id = id,
+                    Titulo = trabalhosVM.Titulo,
+                    ReferenciaInfo = trabalhosVM.ReferenciaInfo,
+                    Tipo = trabalhosVM.Tipo,
+                    AdendaProtocolo = trabalhosVM.AdendaProtocolo,
+                    Aluno_Id = trabalhosVM.Aluno_Id,
+                    Nota = trabalhosVM.Nota,
+
+                };
+
                 // Serialize the Trabalhos object to JSON
                 string json = JsonConvert.SerializeObject(trabalhos);
 
                 // Send a PUT request to the API to update the Trabalhos object with the specified ID
-                var response = await _InternalClient.PutAsync(_APIserver + $"/Trabalhos/{id}",
+                response = await _InternalClient.PutAsync(_APIserver + $"/Trabalhos/{id}",
                     new StringContent(json, Encoding.UTF8, "application/json"));
 
                 response.EnsureSuccessStatusCode();
 
+                //.....................................................//
+
+                //Juri and Juri Menbros
+                if(trabalhosVM.Data_Defesa != null)
+                {
+
+                    List <JuriMembros> juriMembrosList = new List<JuriMembros>();
+
+                    Dictionary<string, Membros> roleToMembro = new Dictionary<string, Membros>();
+
+                    if (trabalhosVM.Presidente != null)
+                    {
+                        roleToMembro.Add("Presidente", trabalhosVM.Presidente);
+                    }
+
+                    if (trabalhosVM.Arguente_1 != null)
+                    {
+                        roleToMembro.Add("Arguente 1", trabalhosVM.Arguente_1);
+                    }
+
+                    if (trabalhosVM.Arguente_2 != null)
+                    {
+                        roleToMembro.Add("Arguente 2", trabalhosVM.Arguente_2);
+                    }
+
+                    if (trabalhosVM.Vogal != null)
+                    {
+                        roleToMembro.Add("Vogal", trabalhosVM.Vogal);
+                    }
+
+
+                    if (trabalhosVM.Juri.Id != null) //If Juri created
+
+                    {
+
+                        Juri juri = new Juri()
+                        {
+                            Id = trabalhosVM.Juri.Id,
+                            Trabalho_Id = id,
+                            Data_Defesa = trabalhosVM.Data_Defesa,
+                        };
+
+                            // Serialize the Trabalhos object to JSON
+                            string jsonJuri = JsonConvert.SerializeObject(juri);
+
+                        // Send a PUT request to the API to update the Juri object with the specified ID
+                        var responseJuri = await _InternalClient.PutAsync(_APIserver + $"/Juri/{juri.Id}",
+                            new StringContent(jsonJuri, Encoding.UTF8, "application/json"));
+
+                        responseJuri.EnsureSuccessStatusCode();
+
+
+                        foreach (var pair in roleToMembro)
+                        {
+                            JuriMembros juriMembros = new JuriMembros()
+                            {
+                                Juri_Id = trabalhosVM.Juri.Id,
+                                Membro_Id = pair.Value.Id,
+                                Funcao = pair.Key
+
+                            };
+                            // Serialize the Trabalhos object to JSON
+                            string JuriMembrosjson = JsonConvert.SerializeObject(juriMembros);
+
+                            // Send a PUT request to the API to update the Juri object with the specified ID
+                            response = await _InternalClient.PutAsync(_APIserver + $"/JuriMembros/{juri.Id}/{pair.Value.OldId}",
+                                new StringContent(JuriMembrosjson, Encoding.UTF8, "application/json"));
+
+                            response.EnsureSuccessStatusCode();
+           
+                        }
+
+
+                    }
+                    else    //If Juri need to be created
+                    {
+                        Juri juri = new Juri()
+                        {
+                            Trabalho_Id = id,
+                            Data_Defesa = trabalhosVM.Data_Defesa,
+                        };
+
+                        // Serialize the Trabalhos object to JSON
+                        string Jurijson = JsonConvert.SerializeObject(juri);
+
+                        // Send a POST request to the API to create a new Trabalhos object
+                        response = await _InternalClient.PostAsync(_APIserver + "/Juri/Create",
+                            new StringContent(Jurijson, Encoding.UTF8, "application/json"));
+
+                        response.EnsureSuccessStatusCode();
+
+                        apiResponse = await response.Content.ReadAsStringAsync();
+                        // Use JObject to parse the JSON response
+                        var createdJuri = JObject.Parse(apiResponse);
+                        // Get the Id value as an integer
+                        int createdJuriId = createdJuri.Value<int>("id");
+
+
+                        foreach (var pair in roleToMembro)
+                        {
+                            JuriMembros juriMembros = new JuriMembros()
+                            {
+                                Juri_Id = createdJuriId,
+                                Membro_Id = pair.Value.Id,
+                                Funcao = pair.Key
+
+                            };
+                            // Serialize the Trabalhos object to JSON
+                            string JuriMembrosjson = JsonConvert.SerializeObject(juriMembros);
+
+                            // Send a POST request to the API to create a new Trabalhos object
+                            response = await _InternalClient.PostAsync(_APIserver + "/JuriMembros/Create",
+                                new StringContent(JuriMembrosjson, Encoding.UTF8, "application/json"));
+
+                            response.EnsureSuccessStatusCode();
+
+                        }
+                    }
+
+                
+                }
+
+              
                 // Redirect to the Index action
                 return RedirectToAction(nameof(Index));
             }
@@ -333,11 +490,10 @@ namespace FrontEnd.Controllers
                 _logger.LogError(ex, "Error updating Trabalhos object");
 
                 // Handle the exception by returning the Trabalhos Edit view with the current object
-                return View(trabalhos);
+                return View(trabalhosVM);
             }
 
 
-            return View(trabalhos);
         }
 
 

@@ -24,6 +24,9 @@ namespace FrontEnd.Models
         [StringLength(255, MinimumLength = 2, ErrorMessage = "O campo Contacto deve ter entre 2 e 255 caracteres.")]
         public string? Contacto { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+        public int? OldId { get; set; }
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Membros")]
         public virtual Especialistas? Especialistas { get; set; }

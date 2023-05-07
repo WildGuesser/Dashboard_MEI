@@ -79,34 +79,34 @@ namespace API_MEI.Controllers
                 return BadRequest($"Erro ao criar júri: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
             }
         }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int id, JuriMembros juriMembros)
+        [HttpPut("{juriId}/{membroId}")]
+        public async Task<IActionResult> Edit(int juriId, int membroId, JuriMembros juriMembros)
         {
-            var existingJuriMembros = await _context.JuriMembros.FindAsync(id);
+            var existingJuriMembros = await _context.JuriMembros.FindAsync(juriId, membroId);
             if (existingJuriMembros == null)
             {
-                return NotFound($"JuriMembros com ID {id} não encontrado.");
+                return NotFound($"JuriMembros with Juri_Id {juriId} and Membro_Id {membroId} not found.");
             }
 
             try
             {
-
-                _context.Entry(existingJuriMembros).State = EntityState.Detached;
-
-                _context.Update(juriMembros);
-
+                // Remove the existing JuriMembros record
+                _context.JuriMembros.Remove(existingJuriMembros);
                 await _context.SaveChangesAsync();
 
-                return Ok(juriMembros);
+                // Add the new JuriMembros record
+                _context.JuriMembros.Add(juriMembros);
+                await _context.SaveChangesAsync();
+
+                return Ok(existingJuriMembros);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest($"Erro ao salvar no banco de dados: {ex.Message}");
+                return BadRequest($"Error saving to the database: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, $"Internal error: {ex.Message}");
             }
         }
 

@@ -41,7 +41,6 @@ namespace FrontEnd.Models.ViewModel
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
         public DateTime Data_Defesa { get; set; }
 
-
         public virtual Membros? Presidente { get; set; }
 
 
@@ -68,7 +67,7 @@ namespace FrontEnd.Models.ViewModel
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Trabalho")]
-        public virtual Juri? Juri { get; set; }
+        public virtual Juri? Juri { get; set; } = new Juri();
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [InverseProperty("Trabalho")]
@@ -92,7 +91,6 @@ namespace FrontEnd.Models.ViewModel
         public List<int>? OrientadoresIds { get; set; }
 
         public List<string>? OrientadoresFuncoes { get; set; }
-
 
 
     }

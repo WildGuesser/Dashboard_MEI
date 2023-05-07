@@ -10,10 +10,9 @@ namespace API_MEI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "O campo Data de Defesa é obrigatório.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
-        public DateTime Data_Defesa { get; set; }
+        public DateTime? Data_Defesa { get; set; }
 
         [Required(ErrorMessage = "O Id Trabalho é obrigatório.")]
         [Range(1, int.MaxValue, ErrorMessage = "O ID do Trabalho deve ser maior que 0.")]
