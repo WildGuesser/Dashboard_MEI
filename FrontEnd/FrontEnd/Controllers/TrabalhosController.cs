@@ -100,10 +100,35 @@ namespace FrontEnd.Controllers
         {
             HttpResponseMessage response = null;
             string apiResponse = null;
-            if(input.Aluno_Id == null )
+
+
+            if (input.Aluno_Id == 0)
+            {
+                TempData["Aluno_IdError"] = "Por favor, forneça um Aluno.";
+            }
+
+            if (input.Presidente.Id == 0)
+            {
+                TempData["Presidente_IdError"] = "Por favor, forneça um Presidente.";
+            }
+
+            if (input.Arguente_1.Id == 0)
+            {
+                TempData["Arguente_1_IdError"] = "Por favor, forneça um Arguente 1.";
+            }
+
+            if (input.Vogal.Id == 0)
+            {
+                TempData["Vogal_IdError"] = "Por favor, forneça um Vogal.";
+            }
+
+            if (!ModelState.IsValid)
             {
                 return View(input);
             }
+
+
+
             try
             {
                 Trabalhos trabalho = new Trabalhos()
