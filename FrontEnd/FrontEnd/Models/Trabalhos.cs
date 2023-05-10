@@ -63,12 +63,6 @@ namespace FrontEnd.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual Membros? Membro { get; set; }
 
-        public List<int>? JuriIds { get; set; }
-        public List<string>? JuriFuncoes { get; set; }   
-        public List<int>? OrientadoresIds { get; set; }
-
-        public List<string>? OrientadoresFuncoes { get; set; }
-
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
         public DateTime Data_Defesa { get; set; }

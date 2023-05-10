@@ -80,35 +80,36 @@ namespace API_MEI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int id, Orientadores orientadores)
+        [HttpPut("{trabalhoId}/{membroId}")]
+        public async Task<IActionResult> Edit(int trabalhoId, int membroId, Orientadores orientadores)
         {
-            var existingOrientadores = await _context.Orientadores.FindAsync(id);
-            if (existingOrientadores == null)
-            {
-                return NotFound($"Orientadores com ID {id} não encontrado.");
-            }
+            var existingOrientadores = await _context.Orientadores.FindAsync(trabalhoId, membroId);
 
             try
             {
+                if(existingOrientadores != null)
+                { 
+                    // Remove the existing JuriMembros record
+                    _context.Orientadores.Remove(existingOrientadores);
+                    await _context.SaveChangesAsync();
+                }
 
-                _context.Entry(existingOrientadores).State = EntityState.Detached;
-
-                _context.Update(orientadores);
-
+                // Add the new JuriMembros record
+                _context.Orientadores.Add(orientadores);
                 await _context.SaveChangesAsync();
 
                 return Ok(orientadores);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest($"Erro ao salvar no banco de dados: {ex.Message}");
+                return BadRequest($"Error saving to the database: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
+                return StatusCode(500, $"Internal error: {ex.Message}");
             }
         }
+
 
 
         [HttpDelete("{id}")]

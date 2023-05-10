@@ -86,12 +86,5 @@ namespace FrontEnd.Models.ViewModel
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual Membros? Membro { get; set; }
 
-        public List<int>? JuriIds { get; set; }
-        public List<string>? JuriFuncoes { get; set; }   
-        public List<int>? OrientadoresIds { get; set; }
-
-        public List<string>? OrientadoresFuncoes { get; set; }
-
-
     }
 }

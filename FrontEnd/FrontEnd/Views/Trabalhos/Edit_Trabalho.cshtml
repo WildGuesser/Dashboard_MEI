@@ -124,7 +124,6 @@
 
                         <input type="hidden" asp-for="Juri.Id" class="form-control" placeholder=" " />
                         <input type="hidden" asp-for="Presidente.Id" name="Presidente.Id" id="PresidenteMembroId" class="form-control" placeholder=" " />
-                        <input type="hidden" asp-for="JuriFuncoes" name="JuriFuncoes" id="funcPresidente" class="form-control" value="Presidente" disabled />
 
                     </div>
                     @*End Presidente Selection*@
@@ -155,7 +154,6 @@
                             <button type="button" class="btn btn-lg btn-outline-danger clearBtn" data-clear-role="Arguente">Limpar</button>
                         </div>
                         <input type="hidden" asp-for="Arguente_1.Id" name="Arguente_1.Id" id="ArguenteMembroId" class="form-control" placeholder=" " />
-                        <input type="hidden" asp-for="JuriFuncoes" name="JuriFuncoes" id="funcArguente1" class="form-control" value="Arguente 1" disabled />
                     </div>
                     @*End Arguente Selection*@
 
@@ -185,7 +183,6 @@
                             <button type="button" class="btn btn-lg btn-outline-danger clearBtn" data-clear-role="Arguente2">Limpar</button>
                         </div>
                         <input type="hidden" asp-for="Arguente_2.Id" name="Arguente_2.Id" id="Arguente2MembroId" class="form-control" placeholder=" " />
-                        <input type="hidden" asp-for="JuriFuncoes" name="JuriFuncoes" id="funcArguente2" class="form-control" value="Arguente 2" disabled />
                     </div>
                     @*End Arguente 2 Selection*@
 
@@ -214,8 +211,7 @@
                         <div class="col-md-2 mr-5 mt-1">
                             <button type="button" class="btn btn-lg btn-outline-danger clearBtn" data-clear-role="Vogal">Limpar</button>
                         </div>
-                        <input asp-for="Vogal.Id" name="Vogal.Id" id="VogalMembroId" class="form-control" placeholder=" " />
-                        <input type="hidden" asp-for="JuriFuncoes" name="JuriFuncoes" id="funcVogal" class="form-control" value="Vogal" disabled />
+                        <input type="hidden" asp-for="Vogal.Id" name="Vogal.Id" id="VogalMembroId" class="form-control" placeholder=" " />
                     </div>
                     @*End Vogal Selection*@
 
@@ -248,8 +244,10 @@
                 <div class="col-md-2 mr-5 mt-1">
                     <button type="button" class="btn btn-lg btn-outline-danger clearBtn" data-clear-role="OrientadorUTAD1">Limpar</button>
                 </div>
-                <input  asp-for="Orientador_1.Id" id="OrientadorUTAD1MembroId" class="form-control" placeholder=" " />
-                <input type="hidden" asp-for="OrientadoresFuncoes" name="OrientadoresFuncoes" id="funcOrientadorUTAD1" class="form-control" value="Orientador 1" />
+                <input type="hidden" asp-for="Orientador_1.Id" id="OrientadorUTAD1MembroId" class="form-control" placeholder=" " />
+                @*----------------------Old ids---------------------------*@
+                <input type="hidden" asp-for="Orientador_1.OldId" />
+                <input type="hidden" asp-for="Orientador_2.OldId" />
 
             </div>
             @*End Orientador UTAD 1 Selection*@
@@ -279,8 +277,7 @@
                 <div class="col-md-2 mr-5 mt-1">
                     <button type="button" class="btn btn-lg btn-outline-danger clearBtn" data-clear-role="OrientadorUTAD2">Limpar</button>
                 </div>
-                <input  asp-for="Orientador_2.Id" id="OrientadorUTAD2MembroId" class="form-control" placeholder=" " />
-                <input type="hidden" asp-for="OrientadoresFuncoes" name="OrientadoresFuncoes" id="funcOrientadorUTAD2" class="form-control" value="Orientador 2" />
+                <input type="hidden" asp-for="Orientador_2.Id" id="OrientadorUTAD2MembroId" class="form-control" placeholder=" " />
             </div>
             @*End Orientador UTAD 2 Selection*@
 
@@ -324,7 +321,7 @@
 
                 <div class="form-group">
                     <input type="submit" value="Guardar" class="btn btn-primary" />
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <a asp-action="Index" type="button" class="btn btn-secondary" >Fechar</a>
                 </div>
 
         </form>

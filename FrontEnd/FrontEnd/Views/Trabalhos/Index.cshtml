@@ -110,7 +110,11 @@
 
                                     <div id="collapse_Orientadores@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Orientadores@(item.Id)">
                                         <div class="list-group">
-                                            @foreach (var orientador in item.Orientadores)
+                                            @{
+                                                var customSortOrderOrientadores = new List<string> { "Orientador 1", "Orientador 2" };
+                                                var sortedOrientadores = item.Orientadores.OrderBy(o => customSortOrderOrientadores.IndexOf(o.Funcao));
+                                            }
+                                            @foreach (var orientador in sortedOrientadores)
                                             {
                                                     <a class="list-group-item list-group-item-action list-group-item-info"
                                                         asp-action="Info_Membro" asp-route-id="@orientador.Membros.Id"data-ajax="true" data-ajax-method="get"
@@ -152,9 +156,14 @@
 
                                     <div id="collapse_Juri@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Juri@(item.Id)">
                                         <div class="list-group">
+                                            @{
+                                                var customSortOrder = new List<string> { "Presidente", "Arguente 1", "Arguente 2", "Vogal" };
+                                                var sortedJuriMembros = item.Juri.JuriMembros.OrderBy(j => customSortOrder.IndexOf(j.Funcao));
+                                            }
+
                                             @if (@item.Juri != null)
                                             {
-                                                @foreach (var juriMembro in item.Juri.JuriMembros)
+                                                @foreach (var juriMembro in sortedJuriMembros)
                                                 {
                                                     <a class="list-group-item list-group-item-action list-group-item-info"
                                                         asp-action="Info_Membro" asp-route-id="@juriMembro.Membros.Id" data-ajax="true" data-ajax-method="get"
