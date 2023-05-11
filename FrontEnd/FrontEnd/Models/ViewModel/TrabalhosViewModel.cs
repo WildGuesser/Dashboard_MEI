@@ -39,7 +39,7 @@ namespace FrontEnd.Models.ViewModel
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date, ErrorMessage = "Insira uma data válida no formato dd/MM/yyyy.")]
-        public DateTime Data_Defesa { get; set; }
+        public DateTime? Data_Defesa { get; set; }
 
         public virtual Membros? Presidente { get; set; }
 

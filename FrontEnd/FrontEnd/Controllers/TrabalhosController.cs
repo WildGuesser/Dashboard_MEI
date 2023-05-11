@@ -102,30 +102,52 @@ namespace FrontEnd.Controllers
             string apiResponse = null;
 
 
+            bool hasErrors = false;
+
             if (input.Aluno_Id == 0)
             {
                 TempData["Aluno_IdError"] = "Por favor, forneça um Aluno.";
+                hasErrors = true;
             }
 
-            if (input.Presidente.Id == 0)
+            if (input.Orientador_1.Id == 0)
             {
-                TempData["Presidente_IdError"] = "Por favor, forneça um Presidente.";
+                TempData["Orientador_1_IdError"] = "Por favor, forneça um Orientador 1.";
+                hasErrors = true;
             }
 
-            if (input.Arguente_1.Id == 0)
+            if (input.Orientador_2.Id == 0)
             {
-                TempData["Arguente_1_IdError"] = "Por favor, forneça um Arguente 1.";
+                TempData["Orientador_2_IdError"] = "Por favor, forneça um Orientador 2.";
+                hasErrors = true;
             }
 
-            if (input.Vogal.Id == 0)
+            if (input.Data_Defesa != null)
             {
-                TempData["Vogal_IdError"] = "Por favor, forneça um Vogal.";
+                if (input.Presidente.Id == 0)
+                {
+                    TempData["Presidente_IdError"] = "Por favor, forneça um Presidente.";
+                    hasErrors = true;
+                }
+
+                if (input.Arguente_1.Id == 0)
+                {
+                    TempData["Arguente_1_IdError"] = "Por favor, forneça um Arguente 1.";
+                    hasErrors = true;
+                }
+
+                if (input.Vogal.Id == 0)
+                {
+                    TempData["Vogal_IdError"] = "Por favor, forneça um Vogal.";
+                    hasErrors = true;
+                }
             }
 
-            if (!ModelState.IsValid)
+            if (hasErrors)
             {
                 return View(input);
             }
+
 
 
 
@@ -402,6 +424,54 @@ namespace FrontEnd.Controllers
                 return NotFound();
             }
 
+            bool hasErrors = false;
+
+            if (trabalhosVM.Aluno_Id == 0)
+            {
+                TempData["Aluno_IdError"] = "Por favor, forneça um Aluno.";
+                hasErrors = true;
+            }
+
+            if (trabalhosVM.Orientador_1.Id == 0)
+            {
+                TempData["Orientador_1_IdError"] = "Por favor, forneça um Orientador 1.";
+                hasErrors = true;
+            }
+
+            if (trabalhosVM.Orientador_2.Id == 0)
+            {
+                TempData["Orientador_2_IdError"] = "Por favor, forneça um Orientador 2.";
+                hasErrors = true;
+            }
+
+            if (trabalhosVM.Data_Defesa != null)
+            {
+                if (trabalhosVM.Presidente.Id == 0)
+                {
+                    TempData["Presidente_IdError"] = "Por favor, forneça um Presidente.";
+                    hasErrors = true;
+                }
+
+                if (trabalhosVM.Arguente_1.Id == 0)
+                {
+                    TempData["Arguente_1_IdError"] = "Por favor, forneça um Arguente 1.";
+                    hasErrors = true;
+                }
+
+                if (trabalhosVM.Vogal.Id == 0)
+                {
+                    TempData["Vogal_IdError"] = "Por favor, forneça um Vogal.";
+                    hasErrors = true;
+                }
+            }
+
+            if (hasErrors)
+            {
+                return View(trabalhosVM);
+            }
+
+
+
             try
             {
                 HttpResponseMessage response = null;
@@ -439,28 +509,64 @@ namespace FrontEnd.Controllers
 
                     Dictionary<string, Membros> roleToMembro = new Dictionary<string, Membros>();
 
-                    if (trabalhosVM.Presidente != null)
+                    if (trabalhosVM.Presidente.Id != 0)
                     {
                         roleToMembro.Add("Presidente", trabalhosVM.Presidente);
                     }
 
-                    if (trabalhosVM.Arguente_1 != null)
+                    if (trabalhosVM.Arguente_1.Id != 0)
                     {
                         roleToMembro.Add("Arguente 1", trabalhosVM.Arguente_1);
                     }
 
-                    if (trabalhosVM.Arguente_2 != null)
+                    if (trabalhosVM.Arguente_2.Id != 0)
                     {
+                        if(trabalhosVM.Arguente_2.OldId == null && trabalhosVM.Juri.Id != 0)
+                        {
+                            JuriMembros juriMembros = new JuriMembros()
+                            {
+                                Juri_Id = trabalhosVM.Juri.Id,
+                                Membro_Id = trabalhosVM.Arguente_2.Id,
+                                Funcao = "Arguente 2"
+
+                            };
+                            string JuriMembrosjson = JsonConvert.SerializeObject(juriMembros);
+
+                            // Send a POST request to the API to create a new Trabalhos object
+                            response = await _InternalClient.PostAsync(_APIserver + "/JuriMembros/Create",
+                                new StringContent(JuriMembrosjson, Encoding.UTF8, "application/json"));
+
+                            response.EnsureSuccessStatusCode();
+                        }
+                        else
                         roleToMembro.Add("Arguente 2", trabalhosVM.Arguente_2);
                     }
+                    else
+                    {
+                        if(trabalhosVM.Arguente_2.OldId != 0)
+                        { 
+                            JuriMembros juriMembros = new JuriMembros()
+                            {
+                                Juri_Id = trabalhosVM.Juri.Id,
+                                Membro_Id = (int)trabalhosVM.Arguente_2.OldId,
+                                Funcao = "Arguente 2"
 
-                    if (trabalhosVM.Vogal != null)
+                            };
+
+                            // Send a PUT request to the API to update the Juri object with the specified ID
+                            response = await _InternalClient.DeleteAsync(_APIserver + $"/JuriMembros/{juriMembros.Juri_Id}/{juriMembros.Membro_Id}");
+
+                            response.EnsureSuccessStatusCode();
+                        }
+                    }
+
+                    if (trabalhosVM.Vogal.Id != 0)
                     {
                         roleToMembro.Add("Vogal", trabalhosVM.Vogal);
                     }
 
 
-                    if (trabalhosVM.Juri.Id != null) //If Juri created
+                    if (trabalhosVM.Juri.Id != 0) //If Juri created
 
                     {
 

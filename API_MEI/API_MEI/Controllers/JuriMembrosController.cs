@@ -111,18 +111,18 @@ namespace API_MEI.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{juriId}/{membroId}")]
+        public async Task<IActionResult> Delete(int juriId, int membroId)
         {
             if (_context.JuriMembros == null)
             {
                 return Problem("Entity set 'API_MEIContext.JuriMembross' is null.");
             }
-            var juriMembros = await _context.JuriMembros.FindAsync(id);
+            var existingJuriMembros = await _context.JuriMembros.FindAsync(juriId, membroId);
 
-            if (juriMembros != null)
+            if (existingJuriMembros != null)
             {
-                _context.JuriMembros.Remove(juriMembros);
+                _context.JuriMembros.Remove(existingJuriMembros);
                 await _context.SaveChangesAsync();
                 return Ok("Eliminado com sucesso");
             }
