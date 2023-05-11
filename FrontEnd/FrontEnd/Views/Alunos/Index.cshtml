@@ -6,11 +6,9 @@
         <div class="row">
             <div class="col-2">
                 <div class="row mt-5">
-                    <div class="col-6  mt-5">
+                    <div class="btn-group mt-5" role="group" aria-label="Basic example">
                         <input type="text" class="form-control text" id="search-input" placeholder="Search">
-                    </div>
-                    <div class="col-6  mt-5">
-                        <button class="btn btn-primary" id="search-btn">Search</button>
+                        <button class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
             </div>
@@ -67,9 +65,7 @@
                             <td>
                                 <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id"data-ajax="true" data-ajax-method="get"
                                             data-ajax-mode="replace" data-ajax-update="#target"
-                                            data-toggle="modal" data-target="#exampleModal">Edit</a>
-                                <a class="btn btn-sm btn-danger text" asp-action="Delete_Aluno" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                                            data-toggle="modal" data-target="#exampleModal">Edit</a>                            </td>
                         </tr>
                     }
                 </tbody>
