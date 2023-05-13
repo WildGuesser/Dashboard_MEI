@@ -30,9 +30,10 @@ namespace API_MEI.Controllers
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
-            var empresas = await _context.Empresas.ToListAsync();
-            var empresasDTO = _mapper.Map<List<EmpresasDTO>>(empresas);
-            return Ok(empresasDTO);
+            var empresas = await _context.Empresas
+                .Include(j => j.Especialistas).ThenInclude(jm => jm.Membros).ToListAsync(); 
+
+            return Ok(empresas);
         }
 
         [HttpGet("{id}")]

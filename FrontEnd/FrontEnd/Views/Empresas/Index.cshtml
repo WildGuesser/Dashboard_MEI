@@ -49,9 +49,45 @@
                                     <td class="text">@Html.DisplayFor(modelItem => item.Local)</td>
                                     <td class="text">@Html.DisplayFor(modelItem => item.Email_empresa)</td>
                                     <td>
+                                        <div class="accordion" id="accordion_Orientadores@(item.Id)">
+                                            <div class="accordion-item">
+
+                                                <h5 class="accordion-header">
+                                                    <button class="accordion-button btn btn-info position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_Orientadores@(item.Id)" aria-expanded="true" aria-controls="collapseOne">
+                                                        Orientadores
+                                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                            @item.Especialistas.Count()
+                                                            <span class="visually-hidden"></span>
+                                                        </span>
+                                                    </button>
+                                                </h5>
+
+                                                <div id="collapse_Orientadores@(item.Id)" class="accordion-collapse collapse" data-bs-parent="#accordion_Orientadores@(item.Id)">
+                                                    <div class="list-group">
+                                                        @foreach (var especialista in item.Especialistas)
+                                                        {
+                                                            <a class="list-group-item list-group-item-action list-group-item-info"
+                                                            asp-action="Info_Membro" asp-route-id="@especialista.Membros.Id" data-ajax="true" data-ajax-method="get"
+                                                               data-ajax-mode="replace" data-ajax-update="#target"
+                                                               data-toggle="modal" data-target="#Membros_Modal">
+
+                                                                <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="mb-1"> @Html.DisplayFor(modelItem => especialista.Membros.Nome) </h5>
+                                                                </div>
+                                                            </a>
+
+
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
                                         <a class="btn btn-sm btn-primary text" asp-action="Edit_Empresa" asp-route-id="@item.Id"
                                             data-ajax="true" data-ajax-method="get"
-                                            data-ajax-mode="replace" data-ajax-update="#target"
+                                            data-ajax-mode="replace" data-ajax-update="#empresa"
                                             data-toggle="modal" data-target="#exampleModal">Edit</a>
                                         <a class="btn btn-sm btn-danger text" asp-action="Delete_Empresa" asp-route-id="@item.Id">Delete</a>
                                     </td>
@@ -88,7 +124,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Editar Empresa</h5>
@@ -96,13 +132,30 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="target">
+                <div class="modal-body" id="empresa">
                     @await Html.PartialAsync("Edit_Empresa.cshtml", new FrontEnd.Models.Empresas())
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modals --><!-- Modals --><!-- Modals --><!-- Modals -->
+<!-- Membro Modal -->
+<div class="modal fade" id="Membros_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes Especialista</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="target">
+                    @await Html.PartialAsync("Info_Especialista.cshtml", new FrontEnd.Models.Membros())
+            </div>
+        </div>
+    </div>
+</div>
     @section Scripts 
     {
 

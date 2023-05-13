@@ -280,5 +280,37 @@ namespace FrontEnd.Controllers
 
         }
 
+        public async Task<IActionResult> Info_Membro(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                // Send a GET request to the API to retrieve the Trabalhos object with the specified ID
+                HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + $"/Trabalhos/Membros/{id}");
+
+                string body = await message.Content.ReadAsStringAsync();
+
+                Membros especialista = JsonConvert.DeserializeObject<Membros>(body);
+
+                if (especialista == null)
+                {
+                    return NotFound();
+                }
+
+                return PartialView("Info_Especialista", especialista);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Error fetching data from API");
+
+                // Handle the exception by returning the Trabalhos Index view
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
     }
 }
