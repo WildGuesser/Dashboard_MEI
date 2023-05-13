@@ -18,7 +18,30 @@
         </div>
     </div>
 
+    <!-- Paginação -->
 
+    <paging page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
+
+    <!-- Top Dropdown -->
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            NºElementos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Alunos/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>
+            <a class="dropdown-item" href="/Alunos/Index?s=@Model.TotalRecords">Tudo</a>
+        </div>
+
+    </div>
+    <!-- End Paginação -->
               
     <div>
         <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
@@ -87,8 +110,9 @@
             max-displayed-pages="5">
     </paging>
 
+    <!-- Bottom Dropdown -->
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             NºElementos
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -99,6 +123,7 @@
         </div>
 
     </div>
+    <!-- End Paginação -->
 
         <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -124,8 +149,9 @@
         <script>
 
             $(function () {
-                $("#dropdownMenuButton").text('@Model.S');
+                $("#topDropdownMenuButton, #bottomDropdownMenuButton").text('@Model.S');
             })
+
         </script>
     }
 
