@@ -16,6 +16,11 @@ namespace FrontEnd.Models
         [Display(Name = "Numero Aluno")]
         public int Numero_Aluno { get; set; }
 
+        [Required(ErrorMessage = "A Edição do aluno é obrigatório.")]
+        [Range(1990, int.MaxValue, ErrorMessage = "O número do aluno deve ser maior que zero.")]
+        [Display(Name = "Edição")]
+        public int Edicao { get; set; }
+
         [Required(ErrorMessage = "O nome do aluno é obrigatório.")]
         [StringLength(200, ErrorMessage = "O nome do aluno deve ter no máximo 200 caracteres.")]
         [Display(Name = "Nome Aluno")]

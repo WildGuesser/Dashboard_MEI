@@ -31,8 +31,7 @@ namespace API_MEI.Controllers
         public async Task<IActionResult> Index()
         {
             var alunos = await _context.Alunos.ToListAsync();
-            var alunosDTO = _mapper.Map<List<AlunosDTO>>(alunos);
-            return Ok(alunosDTO);
+            return Ok(alunos);
         }
 
         // GET: Alunos

@@ -14,6 +14,11 @@ namespace API_MEI.Models
         [StringLength(255, MinimumLength = 2, ErrorMessage = "O título deve ter entre 2 e 255 caracteres.")]
         public string Titulo { get; set; }
 
+        [Required(ErrorMessage = "O Ano Letivo de registro é obrigatório.")]
+        [Range(1990, int.MaxValue, ErrorMessage = "O Ano Letivo deve ser maior que 1990.")]
+        [Display(Name = "Ano Letivo")]
+        public int Ano_Letivo { get; set; }
+
         [StringLength(255, MinimumLength = 2, ErrorMessage = "O título deve ter entre 2 e 255 caracteres.")]
         public string? ReferenciaInfo { get; set; }
 

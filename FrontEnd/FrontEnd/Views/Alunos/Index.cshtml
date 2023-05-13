@@ -45,6 +45,9 @@
                             @Html.DisplayNameFor(model => model.Aluno.Instituicao)
                         </th>
                         <th class="text">
+                            @Html.DisplayNameFor(model => model.Aluno.Edicao)
+                        </th>
+                        <th class="text">
                             @Html.DisplayNameFor(model => model.Aluno.Estado)
                         </th>
                         <th data-type="text-long" class="text">
@@ -61,6 +64,7 @@
                             <td class="text">@Html.DisplayFor(modelItem => item.Curso)</td>
                             <td class="text">@Html.DisplayFor(modelItem => item.Email)</td>
                             <td class="text">@Html.DisplayFor(modelItem => item.Instituicao)</td>
+                            <td class="text">@Html.DisplayFor(modelItem => item.Edicao)</td>
                             <td class="text">@Html.DisplayFor(modelItem => item.Estado)</td>
                             <td>
                                 <a class="btn btn-sm btn-primary text" asp-action="Edit_Aluno" asp-route-id="@item.Id"data-ajax="true" data-ajax-method="get"

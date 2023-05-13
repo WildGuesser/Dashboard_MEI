@@ -4,6 +4,7 @@ using API_MEI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_MEI.Data.Migrations
 {
     [DbContext(typeof(API_MEIContext))]
-    partial class API_MEIContextModelSnapshot : ModelSnapshot
+    [Migration("20230513171536_edicao_aluno-anoletivo_trabalhos")]
+    partial class edicao_alunoanoletivo_trabalhos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
