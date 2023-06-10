@@ -2,7 +2,6 @@
     margin: 0px;
     padding: 0px;
     background-color: #1b203d;
-    overflow: hidden;
     font-family: system-ui;
 }
 
@@ -59,6 +58,21 @@
             color: #818181;
         }
 
+.label {
+    font-size: 15px;
+    font-weight: 400;
+    color: white;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+}
+
+    .line p {
+        margin-right: 10px; /* Adjust the margin as needed */
+    }
+
 .box-icon {
     font-size: 40px !important;
     float: right;
@@ -70,15 +84,18 @@
 .col-div-8 {
     width: 70%;
     float: left;
-    margin-top:40px;
+    margin-top: 40px;
 }
 
 .col-div-4 {
-    width: 30%;
+    width: 33%;
     float: left;
-    margin-top:40px;
+    margin-top: 40px;
 }
 
+.max {
+    max-height: 20em;
+}
 .content-box {
     padding: 20px;
 }
@@ -104,7 +121,7 @@
 
 .box-8 {
     margin-left: 10px;
-    height:auto;
+    height: auto;
 }
 
 table {
@@ -119,4 +136,3 @@ td, th {
     color: #ddd;
     border-bottom: 1px solid #81818140;
 }
-

@@ -12,7 +12,7 @@ namespace FrontEnd.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly string _APIserver;
 		private readonly HttpClient _InternalClient;
-		private List<Trabalhos> list;
+		private List<Trabalhos> Trabalhos_list;
 
 		private List<Alunos> Alunos_list;
 		private List<Empresas> Empresas_list;
@@ -39,7 +39,15 @@ namespace FrontEnd.Controllers
             {
                 List<Alunos> sortedList = alunosList.OrderByDescending(a => a.Numero_Aluno).ToList();
                 model.Alunos = sortedList.Take(5).ToList();
-            }
+
+				// Count Alunos per Edicao
+				Dictionary<int, int> tipoCount = alunosList
+					.GroupBy(t => t.Edicao)
+					.ToDictionary(g => g.Key, g => g.Count());
+
+				model.Anos = tipoCount.Keys.ToArray();
+				model.AnosN = tipoCount.Values.ToArray();
+			}
             else
             {
                 model.Alunos = new List<Alunos>();
@@ -62,8 +70,33 @@ namespace FrontEnd.Controllers
             {
                 model.DataMaisProxima = DateTime.Parse(nearestDateStr);
             }
+            message = await _InternalClient.GetAsync(_APIserver + "/Trabalhos/Index");
+            body = await message.Content.ReadAsStringAsync();
+            Trabalhos_list = JsonConvert.DeserializeObject<List<Trabalhos>>(body);
+
+            if (Trabalhos_list != null && Trabalhos_list.Count > 0)
+            {
+                List<Trabalhos> sortedList = Trabalhos_list.OrderByDescending(a => a.Data_Defesa).ToList();
+                model.Trabalhos = sortedList.Take(5).ToList();
+
+                // Count the number of Trabalhos for each Tipo
+                Dictionary<string, int> tipoCount = Trabalhos_list
+                    .GroupBy(t => t.Tipo)
+                    .ToDictionary(g => g.Key, g => g.Count());
+
+                // Assign the dictionary values to the model properties
+                model.Tipos = tipoCount.Keys.ToArray();
+                model.TipoN = tipoCount.Values.ToArray();
+            }
+            else
+            {
+                model.Trabalhos = new List<Trabalhos>();
+                model.Tipos = new string[0];
+                model.TipoN = new int[0];
+            }
 
             return View(model);
+
         }
 
 

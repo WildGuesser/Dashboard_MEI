@@ -161,7 +161,8 @@ namespace FrontEnd.Controllers
                     AdendaProtocolo = input.AdendaProtocolo,
                     Aluno_Id=input.Aluno_Id,
                     Nota = input.Nota,
-                    Empresa_Id=input.Empresa_Id,    
+                    Empresa_Id=input.Empresa_Id,   
+                    Ano_Letivo = input.Ano_Letivo
 
                 };
 
@@ -347,6 +348,7 @@ namespace FrontEnd.Controllers
                     Titulo = trabalhos.Titulo,
                     ReferenciaInfo = trabalhos.ReferenciaInfo,
                     Tipo = trabalhos.Tipo,
+                    Ano_Letivo = trabalhos.Ano_Letivo,
                     AdendaProtocolo = trabalhos.AdendaProtocolo,
                     Aluno_Id = trabalhos.Aluno_Id,
                     Nota = trabalhos.Nota,
@@ -483,6 +485,7 @@ namespace FrontEnd.Controllers
                     Titulo = trabalhosVM.Titulo,
                     ReferenciaInfo = trabalhosVM.ReferenciaInfo,
                     Tipo = trabalhosVM.Tipo,
+                    Ano_Letivo = trabalhosVM.Ano_Letivo,
                     AdendaProtocolo = trabalhosVM.AdendaProtocolo,
                     Aluno_Id = trabalhosVM.Aluno_Id,
                     Nota = trabalhosVM.Nota,

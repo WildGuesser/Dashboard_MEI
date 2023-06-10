@@ -14,6 +14,9 @@ namespace API_MEI.Models
         [JsonPropertyName("nmenbros")]
         public int? Nmenbros { get; set; }
 
+        [JsonPropertyName("nempresas")]
+        public int? Nempresas { get; set; }
+
         [JsonPropertyName("dataMaisProxima")]
         public DateTime? DataMaisProxima { get; set; }
     }

@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"] - FrontEnd</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -35,18 +37,18 @@
             </div>
 
             <ul class="list-unstyled menu-elements">
-                <li class="active">
+                <li>
                     <a asp-controller="Home" asp-action="Index" class="scroll-link"><i class="fas fa-home"></i> Home</a>
                 </li>
-                <li class="active">
-                    <a asp-controller="#" asp-action="#" class="scroll-link">
+                <li>
+                    <a asp-controller="Charts" asp-action="Index" class="scroll-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
                           <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                         </svg> Gráficos
                     </a>
                 </li>
                 <li>
-                    <a href="#otherSections" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" role="button" aria-controls="otherSections">
+                    <a href="#otherSections" data-toggle="collapse" aria-expanded="false" class=" dropdown-toggle" role="button" aria-controls="otherSections">
                         <i class="fa fa-table" aria-hidden="true"></i> Tabelas
                     </a>
                     <ul class="collapse list-unstyled" id="otherSections">

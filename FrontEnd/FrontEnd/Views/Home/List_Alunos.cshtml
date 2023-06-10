@@ -38,50 +38,6 @@
     </div>
 
     
-    <script type="text/javascript">
-    $(document).ready(function () {
-            var table = $('#myTable').DataTable({
-                pageLength: parseInt($('#rows-per-page').val()), // Set the initial page length
-                lengthChange: false, // Disable the built-in length menu
-                searching: false, // Disable the built-in search box
-                paging: true, // Enable pagination
-                info: false, // Disable the table information display
-            });
-
-        $('#rows-per-page').on('change', function () {
-            table.page.len(parseInt($(this).val())).draw();
-        });
-
-        // Handle the search button click event
-        $('#search-btn').on('click', function () {
-            table.search($('#search-input').val()).draw();
-        });
-    });
-</script>
-
-    <script>
-        document.getElementById("search-input").addEventListener("input", function () {
-            var input, filter, table, tr, td, i, j, txtValue;
-            input = document.getElementById("search-input");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                            break; // break the loop once a match is found in any column
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 
 
     @section Scripts

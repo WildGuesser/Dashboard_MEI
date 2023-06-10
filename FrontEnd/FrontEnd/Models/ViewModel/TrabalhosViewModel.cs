@@ -22,6 +22,11 @@ namespace FrontEnd.Models.ViewModel
         [StringLength(100, MinimumLength = 2, ErrorMessage = "O título deve ter entre 2 e 100 caracteres.")]
         public string Tipo { get; set; }
 
+        [Required(ErrorMessage = "O Ano Letivo de registro é obrigatório.")]
+        [Range(1990, int.MaxValue, ErrorMessage = "O Ano Letivo deve ser maior que 1990.")]
+        [Display(Name = "Ano Letivo")]
+        public int Ano_Letivo { get; set; }
+
         [Range(0, 20, ErrorMessage = "A nota deve estar entre 0 e 20.")]
         public string? Nota { get; set; }
 

@@ -2,11 +2,15 @@
 
 body {
     background-color: #1b203d;
-    overflow: hidden;
     font-family: system-ui;
     color: white;
+    margin: 3% 6%;
 }
 
 #myTable {
     color: white;
+}
+
+#exampleModal, #Membros_Modal {
+    color: black;
 }

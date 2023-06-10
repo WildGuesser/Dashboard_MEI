@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FrontEnd.Models.Trabalhos>
+
+<div class="container">
+    <div class="d-flex flex-row">
+    </div>
+    <table id="myTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th data-type="numeric" class="text">
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </th>
+                <th class="text">
+                    @Html.DisplayNameFor(model => model.Alunos.Nome)
+                </th>
+                <th class="text">
+                    @Html.DisplayNameFor(model => model.Ano_Letivo)
+                </th>
+                <th class="text">
+                    @Html.DisplayNameFor(model => model.Data_Defesa)
+                </th>
+                <th data-type="text-long" class="text">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text">@Html.DisplayFor(modelItem => item.Titulo)</td>
+                    <td class="text">@Html.DisplayFor(modelItem => item.Alunos.Nome)</td>
+                    <td class="text">@Html.DisplayFor(modelItem => item.Ano_Letivo)</td>
+
+                    @if (item.Data_Defesa == null || item.Data_Defesa == DateTime.MinValue)
+                    {
+                        <td class="text">Sem data de Defesa</td>
+                    }
+                    else
+                    {
+                        <td class="text">@Html.DisplayFor(modelItem => item.Data_Defesa)</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+    {
+    <script src="~/js/tables.js" asp-append-version="true"></script>
+}

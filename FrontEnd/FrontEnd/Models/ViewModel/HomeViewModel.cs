@@ -7,11 +7,12 @@ namespace FrontEnd.Models.ViewModel
 	{
 
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-		[ForeignKey("Aluno_Id")]
-		[InverseProperty("Trabalho")]
 		public virtual List<Alunos>? Alunos { get; set; }
 
-		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public virtual List<Trabalhos>? Trabalhos { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 
 		public virtual int? Nalunos { get; set; }
 
@@ -19,9 +20,17 @@ namespace FrontEnd.Models.ViewModel
 
 		public virtual int? Nmenbros { get; set; }
 
-		public virtual DateTime? DataMaisProxima {get; set;}
+        public virtual int? Nempresas { get; set; }
 
+        public virtual DateTime? DataMaisProxima {get; set;}
 
+		public virtual string[]? Tipos { get; set; }	
 
-    }
+		public virtual int[]? TipoN { get;set; }
+
+		public virtual int[]? Anos { get; set; }
+
+		public virtual int[]? AnosN { get; set; }
+
+	}
 }

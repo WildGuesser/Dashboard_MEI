@@ -43,6 +43,9 @@ namespace API_MEI.Controllers
                 // Get the number of Membros
                 homeData.Nmenbros = await _context.Membros.CountAsync();
 
+                // Get the number of Empresas
+                homeData.Nempresas = await _context.Empresas.CountAsync();
+
                 // Get the nearest date
                 homeData.DataMaisProxima = await _context.Trabalhos
                     .Where(t => t.Juri.Data_Defesa >= DateTime.Today) // Filter for dates greater than or equal to today
