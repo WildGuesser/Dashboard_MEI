@@ -1,0 +1,12 @@
+﻿
+
+body {
+    background-color: #1b203d;
+    overflow: hidden;
+    font-family: system-ui;
+    color: white;
+}
+
+#myTable {
+    color: white;
+}

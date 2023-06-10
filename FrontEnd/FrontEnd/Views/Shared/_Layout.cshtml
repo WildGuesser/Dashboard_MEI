@@ -13,9 +13,9 @@
 
     <link rel="stylesheet" href="/css/Style.css">
     <link rel="stylesheet" href="/css/media-queries.css">
+
     <!-- Tabelas -->
     <link rel="stylesheet" href="/css/Tables.css">
-
 
 </head>
 <body>
@@ -31,18 +31,28 @@
             </div>
 
             <div class="logo">
-                <h3><a href="index.html">Bootstrap 4 Template with Sidebar Menu</a></h3>
+                <h3><a href="index.html"></a></h3>
             </div>
 
             <ul class="list-unstyled menu-elements">
                 <li class="active">
-                    <a class="scroll-link" href="#top-content"><i class="fas fa-home"></i> Home</a>
+                    <a asp-controller="Home" asp-action="Index" class="scroll-link"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="active">
+                    <a asp-controller="#" asp-action="#" class="scroll-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                          <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                        </svg> Gráficos
+                    </a>
                 </li>
                 <li>
                     <a href="#otherSections" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" role="button" aria-controls="otherSections">
-                        <i class="fas fa-sync"></i>Tabelas
+                        <i class="fa fa-table" aria-hidden="true"></i> Tabelas
                     </a>
                     <ul class="collapse list-unstyled" id="otherSections">
+                        <li>
+                            <a class="scroll-link" asp-controller="Trabalhos" asp-action="Index">Trabalhos</a>
+                        </li>
                         <li>
                             <a class="scroll-link" asp-controller="Alunos" asp-action="Index">Alunos</a>
                         </li>
@@ -51,6 +61,9 @@
                         </li>
                         <li>
                             <a class="scroll-link" asp-controller="Especialistas" asp-action="Index">Especialistas</a>
+                        </li>
+                        <li>
+                            <a class="scroll-link" asp-controller="Empresas" asp-action="Index">Empresas</a>
                         </li>
                     </ul>
                 </li>

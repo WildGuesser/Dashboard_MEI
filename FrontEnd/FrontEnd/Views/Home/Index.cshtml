@@ -1,8 +1,94 @@
-﻿@{
+﻿@model FrontEnd.Models.ViewModel.HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="/css/Home.css">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+	
+	<div id="main">
+
+
+		<div class="clearfix"></div>
+		<br />
+
+		<div class="col-div-3">
+			<div class="box">
+			<p>
+				@(Model.Nalunos ?? 0)
+				<br /><span>Alunos</span>
+			</p>
+				<i class="fa fa-graduation-cap box-icon"></i>
+			</div>
+		</div>
+		<div class="col-div-3">
+			<div class="box">
+			<p>
+				@(Model.NTrabalhos ?? 0)
+				<br /><span>Trabalhos</span>
+			</p>
+				<i class="fa fa-list box-icon"></i>
+			</div>
+		</div>
+		<div class="col-div-3">
+			<div class="box">
+			<p>
+				@(Model.Nmenbros ?? 0)
+				<br /><span>Membros</span>
+			</p>
+				<i class="fa fa-users box-icon"></i>
+			</div>
+		</div>
+		<div class="col-div-3">
+			<div class="box">
+			<p>
+				@if (Model.DataMaisProxima != null)
+				{
+					@Model.DataMaisProxima
+					<br /><span>Data Mais Proxima</span>
+				}
+				else
+				{
+					<br /><span>Sem Datas Marcadas</span>
+				}
+			</p>
+			<i class="fa fa-calendar box-icon"></i>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<br /><br />
+		<div class="col-div-8">
+			<div class="box-8">
+				<div class="content-box">
+				<p>Ultimos alunos <span> <a class="btn btn-sm" asp-controller="Alunos" asp-action="Index">Mostrar Tudo</a> </span></p>
+					<br />
+					@await Html.PartialAsync("List_Alunos.cshtml", Model.Alunos)
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-div-4">
+			<div class="box-4">
+				<div class="content-box">
+				<p>Total Sale <span>Mostrar Tudo</span></p>
+
+					<div class="circle-wrap">
+						<div class="circle">
+							<div class="mask full">
+								<div class="fill"></div>
+							</div>
+							<div class="mask half">
+								<div class="fill"></div>
+							</div>
+							<div class="inside-circle"> 70% </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
+
