@@ -20,7 +20,20 @@
     </div>
           
         <!-- Paginação -->
+    <div class="btn-group pagina" role="group" aria-label="Basic example">
 
+        <div class="dropdown mr-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                NºElementos
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Empresas/Index?s=10">10</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=20">20</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=40">40</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=@Model.TotalRecords">Tudo</a>
+                </div>
+        
+        </div>
         <paging
                 page-no="Model.P"
                 page-size="Model.S"
@@ -30,19 +43,8 @@
                 max-displayed-pages="5"
         >
         </paging>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            NºElementos
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/Empresas/Index?s=10">10</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=20">20</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=40">40</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=@Model.TotalRecords">Tudo</a>
-            </div>
-        
     </div>
+
     <!-- End Paginação -->
             <div>
                 <form method="post" action="/Empresas/DeleteMultiple" id="delete-form">
@@ -124,28 +126,29 @@
                 </form>
             </div>
     <!-- Paginação -->
+    <div class="btn-group pagina" role="group" aria-label="Basic example">
 
-        <paging
-                page-no="Model.P"
-                page-size="Model.S"
-                total-records="Model.TotalRecords"
-                text-page-size="{0} records per page"
-                class-page-size-div="col-3"
-                max-displayed-pages="5"
-        >
-        </paging>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            NºElementos
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/Empresas/Index?s=10">10</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=20">20</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=40">40</a>
-                <a class="dropdown-item" href="/Empresas/Index?s=@Model.TotalRecords">Tudo</a>
-            </div>
+        <div class="dropdown mr-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                NºElementos
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Empresas/Index?s=10">10</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=20">20</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=40">40</a>
+                    <a class="dropdown-item" href="/Empresas/Index?s=@Model.TotalRecords">Tudo</a>
+                </div>
         
+        </div>
+            <paging
+                    page-no="Model.P"
+                    page-size="Model.S"
+                    total-records="Model.TotalRecords"
+                    text-page-size="{0} records per page"
+                    class-page-size-div="col-3"
+                    max-displayed-pages="5"
+            >
+            </paging>
     </div>
     <!-- End Paginação -->
     <!-- Modal -->

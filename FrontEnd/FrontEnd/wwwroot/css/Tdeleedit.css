@@ -1,0 +1,9 @@
+﻿body {
+    background-color: #1b203d;
+    font-family: system-ui;
+    margin: 3% 6%;
+}
+
+#exampleModal, #Membros_Modal {
+    color: black;
+}

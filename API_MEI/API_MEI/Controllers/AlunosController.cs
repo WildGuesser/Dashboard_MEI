@@ -69,9 +69,16 @@ namespace API_MEI.Controllers
             {
                 try
                 {
+                    // Check if the Numero_Aluno already exists in the database
+                    if (_context.Alunos.Any(a => a.Numero_Aluno == alunosDTO.Numero_Aluno))
+                    {
+                        return BadRequest("Erro ao criar aluno: O número do aluno já existe.");
+                    }
+
                     var aluno = _mapper.Map<Alunos>(alunosDTO);
                     _context.Add(aluno);
                     await _context.SaveChangesAsync();
+
                     return Ok("Aluno criado com sucesso!"); // retorna uma mensagem de sucesso
                 }
                 catch (Exception ex)
@@ -85,6 +92,7 @@ namespace API_MEI.Controllers
                 return BadRequest($"Erro ao criar aluno: Modelo inválido. Erros: {string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))}");
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(int id, AlunosDTO alunosDTO)

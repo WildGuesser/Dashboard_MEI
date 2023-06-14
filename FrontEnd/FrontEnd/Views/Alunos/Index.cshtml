@@ -2,6 +2,18 @@
 
 <link rel="stylesheet" href="/css/All.css">
 
+
+@if (TempData.ContainsKey("ExportSuccessMessage"))
+{
+    <div class="alert alert-success">@TempData["ExportSuccessMessage"]</div>
+}
+
+@if (TempData.ContainsKey("ExportErrorMessage"))
+{
+    <div class="alert alert-danger">@TempData["ExportErrorMessage"]</div>
+}
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-2">
@@ -18,18 +30,12 @@
         </div>
     </div>
 
-    <!-- Paginação -->
 
-    <paging page-no="Model.P"
-            page-size="Model.S"
-            total-records="Model.TotalRecords"
-            text-page-size="{0} records per page"
-            class-page-size-div="col-3"
-            max-displayed-pages="5">
-    </paging>
 
+<!-- Paginação -->
+<div class="btn-group pagina" role="group" aria-label="Basic example">
     <!-- Top Dropdown -->
-    <div class="dropdown">
+    <div class="dropdown mr-4">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             NºElementos
         </button>
@@ -41,11 +47,29 @@
         </div>
 
     </div>
+    <paging  page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
+
+</div>
+
     <!-- End Paginação -->
               
     <div>
         <form method="post" action="/Alunos/DeleteMultiple" id="delete-form">
             <button type="submit" class="btn btn-danger" id="delete-btn">Delete Selected</button>
+            <a class="btn btn-sm btn-primary ml-5 mr-5" asp-action="ExportCSV">Export CSV </a>
+            <form method="post" asp-action="ImportCSV" enctype="multipart/form-data">
+                <!-- File input -->
+                <button class="btn btn-sm btn-primary" type="submit">Import CSV</button>
+                <input  type="file" name="csvFile" accept=".csv" />
+            </form>
+
+
             <table id="myTable" class="table">
                 <thead>
                     <tr>
@@ -101,29 +125,32 @@
     </div>
     
     <!-- Paginação -->
-
-    <paging page-no="Model.P"
-            page-size="Model.S"
-            total-records="Model.TotalRecords"
-            text-page-size="{0} records per page"
-            class-page-size-div="col-3"
-            max-displayed-pages="5">
-    </paging>
-
     <!-- Bottom Dropdown -->
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            NºElementos
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/Alunos/Index?s=10">10</a>
-            <a class="dropdown-item" href="/Alunos/Index?s=20">20</a>
-            <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>            
-            <a class="dropdown-item" href="/Alunos/Index?s=@Model.TotalRecords">Tudo</a>
+    <div class="btn-group pagina" role="group" aria-label="Basic example">
+        <div class="dropdown mr-4">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                NºElementos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/Alunos/Index?s=10">10</a>
+                <a class="dropdown-item" href="/Alunos/Index?s=20">20</a>
+                <a class="dropdown-item" href="/Alunos/Index?s=40">40</a>            
+                <a class="dropdown-item" href="/Alunos/Index?s=@Model.TotalRecords">Tudo</a>
+            </div>
+
         </div>
 
+        <paging page-no="Model.P"
+                page-size="Model.S"
+                total-records="Model.TotalRecords"
+                text-page-size="{0} records per page"
+                class-page-size-div="col-3"
+                max-displayed-pages="5">
+        </paging>
+
+        <!-- End Paginação -->
     </div>
-    <!-- End Paginação -->
+
 
         <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -141,6 +168,9 @@
             </div>
         </div>
     </div>
+
+
+
 
     @section Scripts
     {

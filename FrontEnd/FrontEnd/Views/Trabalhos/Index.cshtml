@@ -2,6 +2,31 @@
 
 <link rel="stylesheet" href="/css/All.css">
 
+        <div class="btn-group pagina" role="group" aria-label="Basic example">
+
+            <!-- Paginação -->
+            <div class="dropdown mr-4">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    NºElementos
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Trabalhos/Index?s=10">10</a>
+                    <a class="dropdown-item" href="/Trabalhos/Index?s=20">20</a>
+                    <a class="dropdown-item" href="/Trabalhos/Index?s=40">40</a>
+                    <a class="dropdown-item" href="/Trabalhos/Index?s=@Model.TotalRecords">Tudo</a>
+
+                </div>
+
+            </div>
+
+            <paging page-no="Model.P"
+                    page-size="Model.S"
+                    total-records="Model.TotalRecords"
+                    text-page-size="{0} records per page"
+                    class-page-size-div="col-3"
+                    max-displayed-pages="5">
+            </paging>
+        </div>
 
 <div class="table-responsive-xxl">
     <form method="post" action="/Trabalhos/DeleteMultiple" id="delete-form">
@@ -24,30 +49,8 @@
             </div>
 
         </div>
+    
 
-        <!-- Paginação -->
-
-        <paging page-no="Model.P"
-                page-size="Model.S"
-                total-records="Model.TotalRecords"
-                text-page-size="{0} records per page"
-                class-page-size-div="col-3"
-                max-displayed-pages="5">
-        </paging>
-
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="topDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                NºElementos
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/Trabalhos/Index?s=10">10</a>
-                <a class="dropdown-item" href="/Trabalhos/Index?s=20">20</a>
-                <a class="dropdown-item" href="/Trabalhos/Index?s=40">40</a>
-                <a class="dropdown-item" href="/Trabalhos/Index?s=@Model.TotalRecords">Tudo</a>
-
-            </div>
-
-        </div>
         <!-- End Paginação -->
         <table id="myTable" class="table">
             <thead>
@@ -230,26 +233,28 @@
     </form>
 </div>
 <!-- Paginação -->
+<div class="btn-group pagina" role="group" aria-label="Basic example">
 
-<paging page-no="Model.P"
-        page-size="Model.S"
-        total-records="Model.TotalRecords"
-        text-page-size="{0} records per page"
-        class-page-size-div="col-3"
-        max-displayed-pages="5">
-</paging>
+    <div class="dropdown mr-4">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            NºElementos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/Trabalhos/Index?s=10">10</a>
+            <a class="dropdown-item" href="/Trabalhos/Index?s=20">20</a>
+            <a class="dropdown-item" href="/Trabalhos/Index?s=40">40</a>
+            <a class="dropdown-item" href="/Trabalhos/Index?s=@Model.TotalRecords">Tudo</a>
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="bottomDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        NºElementos
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="/Trabalhos/Index?s=10">10</a>
-        <a class="dropdown-item" href="/Trabalhos/Index?s=20">20</a>
-        <a class="dropdown-item" href="/Trabalhos/Index?s=40">40</a>
-        <a class="dropdown-item" href="/Trabalhos/Index?s=@Model.TotalRecords">Tudo</a>
+        </div>
 
     </div>
+    <paging page-no="Model.P"
+            page-size="Model.S"
+            total-records="Model.TotalRecords"
+            text-page-size="{0} records per page"
+            class-page-size-div="col-3"
+            max-displayed-pages="5">
+    </paging>
 
 </div>
 <!-- End Paginação -->
