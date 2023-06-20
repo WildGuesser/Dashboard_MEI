@@ -104,7 +104,7 @@ namespace FrontEnd.Controllers
                     string json = JsonConvert.SerializeObject(alunos);
 
                     // Send a POST request to the API to create a new Alunos object
-                    var response = await _InternalClient.PostAsync(_APIserver + "/Alunos/Create",
+                    var response = await _InternalClient.PutAsync(_APIserver + "/Alunos/Create",
                         new StringContent(json, Encoding.UTF8, "application/json"));
 
                     response.EnsureSuccessStatusCode();

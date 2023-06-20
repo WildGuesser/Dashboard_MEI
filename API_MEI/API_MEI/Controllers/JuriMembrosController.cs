@@ -7,11 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class JuriMembrosController : ControllerBase
     {
         private readonly API_MEIContext _context;

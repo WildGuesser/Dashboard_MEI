@@ -3,7 +3,10 @@ using FrontEnd.Models;
 using FrontEnd.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Common;
 using System.Diagnostics;
+using System.Globalization;
+using System.Net.Http.Headers;
 
 namespace FrontEnd.Controllers
 {
@@ -31,6 +34,8 @@ namespace FrontEnd.Controllers
         {
             HomeViewModel model = new HomeViewModel();
 
+
+
             HttpResponseMessage message = await _InternalClient.GetAsync(_APIserver + "/Alunos/List_Active");
             string body = await message.Content.ReadAsStringAsync();
             List<Alunos> alunosList = JsonConvert.DeserializeObject<List<Alunos>>(body);
@@ -40,14 +45,14 @@ namespace FrontEnd.Controllers
                 List<Alunos> sortedList = alunosList.OrderByDescending(a => a.Numero_Aluno).ToList();
                 model.Alunos = sortedList.Take(5).ToList();
 
-				// Count Alunos per Edicao
-				Dictionary<int, int> tipoCount = alunosList
-					.GroupBy(t => t.Edicao)
-					.ToDictionary(g => g.Key, g => g.Count());
+                // Count Alunos per Edicao
+                Dictionary<int, int> tipoCount = alunosList
+                    .GroupBy(t => t.Edicao)
+                    .ToDictionary(g => g.Key, g => g.Count());
 
-				model.Anos = tipoCount.Keys.ToArray();
-				model.AnosN = tipoCount.Values.ToArray();
-			}
+                model.Anos = tipoCount.Keys.ToArray();
+                model.AnosN = tipoCount.Values.ToArray();
+            }
             else
             {
                 model.Alunos = new List<Alunos>();
@@ -60,23 +65,24 @@ namespace FrontEnd.Controllers
             dynamic responseData = JsonConvert.DeserializeObject(body);
 
             // Set the properties of the HomeViewModel object manually
-            model.Nalunos = responseData["nalunos"];
-            model.NTrabalhos = responseData["nTrabalhos"];
-            model.Nmenbros = responseData["nmenbros"];
+            model.Nalunos = responseData != null ? responseData["nalunos"] : null;
+            model.NTrabalhos = responseData != null ? responseData["nTrabalhos"] : null;
+            model.Nmenbros = responseData != null ? responseData["nmenbros"] : null;
 
             // Convert the nearest date from string to DateOnly
-            string nearestDateStr = responseData["dataMaisProxima"];
-            if (!string.IsNullOrEmpty(nearestDateStr))
+            string nearestDateStr = responseData != null ? responseData["dataMaisProxima"] : null;
+            if (DateTime.TryParseExact(nearestDateStr, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime nearestDate))
             {
-                model.DataMaisProxima = DateTime.Parse(nearestDateStr);
+                model.DataMaisProxima = nearestDate;
             }
+
             message = await _InternalClient.GetAsync(_APIserver + "/Trabalhos/Index");
             body = await message.Content.ReadAsStringAsync();
             Trabalhos_list = JsonConvert.DeserializeObject<List<Trabalhos>>(body);
 
             if (Trabalhos_list != null && Trabalhos_list.Count > 0)
             {
-                List<Trabalhos> sortedList = Trabalhos_list.OrderByDescending(a => a.Data_Defesa).ToList();
+                List<Trabalhos> sortedList = Trabalhos_list.OrderBy(a => a.Data_Defesa).ToList();
                 model.Trabalhos = sortedList.Take(5).ToList();
 
                 // Count the number of Trabalhos for each Tipo
@@ -96,8 +102,8 @@ namespace FrontEnd.Controllers
             }
 
             return View(model);
-
         }
+
 
 
 

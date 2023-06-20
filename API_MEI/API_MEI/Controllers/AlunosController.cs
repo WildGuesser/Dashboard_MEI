@@ -10,11 +10,13 @@ using API_MEI.Models;
 using AutoMapper;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using API_MEI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class AlunosController : ControllerBase
     {
         private readonly API_MEIContext _context;

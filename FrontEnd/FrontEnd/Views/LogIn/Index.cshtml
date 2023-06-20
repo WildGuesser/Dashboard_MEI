@@ -1,16 +1,46 @@
-﻿<link rel="stylesheet" href="/css/LogIn.css">
+﻿@model FrontEnd.Models.ViewModel.LogInViewModel
 
+@{
+    Layout = null;
+}
 
-<div class="container">
-    <div class="row"> 
-        <div class="col-md-6"> 
-            <div class="card"> 
-                <form onsubmit="event.preventDefault()" class="box"> 
-                    <h1>Login</h1> <p class="text-muted"> Please enter your login and password!</p> 
-                    <input type="text" name="" placeholder="Username"> <input type="password" name="" placeholder="Password">
-                    <a class="forgot text-muted" href="#">Forgot password?</a> <input type="submit" name="" value="Login" href="#"> 
-                </form> 
-            </div> 
-        </div> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="/css/LogIn.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/Style.css">
+    <link rel="stylesheet" href="/css/media-queries.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form asp-action="LogIn" class="box">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <h1>Login</h1>
+                        <p class="text-muted">Please enter your username and password!</p>
+                        <input asp-for="Username" type="text" placeholder="Username">
+                        <span asp-validation-for="Username" class="text-danger"></span>
+
+                        <input asp-for="Password" type="password" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                        <input type="submit" value="Login">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</body>
+</html>

@@ -9,11 +9,13 @@ using API_MEI.Models;
 using AutoMapper;
 using API_MEI.DTOs.Tabela_Docente;
 using API_MEI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class DocentesController : ControllerBase
     {
         private readonly API_MEIContext _context;

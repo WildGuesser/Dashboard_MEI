@@ -10,6 +10,8 @@ using API_MEI.Models;
 using AutoMapper;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using API_MEI.DTOs;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace API_MEI.Controllers
 {
@@ -28,6 +30,7 @@ namespace API_MEI.Controllers
 
         // GET: Home
         [HttpGet("Index")]
+
         public async Task<IActionResult> Index()
         {
             try

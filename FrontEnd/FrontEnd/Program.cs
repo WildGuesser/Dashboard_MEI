@@ -8,6 +8,12 @@ builder.Services.AddDbContext<FrontEndContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromMinutes(10);
+    option.Cookie.Name = ".AspNetCore.Session";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +29,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

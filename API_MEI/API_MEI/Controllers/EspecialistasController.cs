@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_MEI.Data;
 using API_MEI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class EspecialistasController : ControllerBase
     {
         private readonly API_MEIContext _context;

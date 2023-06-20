@@ -1,0 +1,11 @@
+USE [API_MEI.Data]
+GO
+
+-- Inserting mock data for Trabalhos table
+INSERT INTO [dbo].[Trabalhos] (Titulo, ReferenciaInfo, Tipo, Nota, AdendaProtocolo, Aluno_Id, Empresa_Id, Ano_Letivo)
+VALUES
+    ('Nature and Animals', 'REF123', 'Projeto', '15', 'Adenda 1', 1, 1, 2023),
+    ('Computer Science', 'REF456', 'Estágio', '12', 'Adenda 2', 2, 2, 2023),
+    ('Environmental Studies', 'REF789', 'Dissertação', '18', 'Adenda 3', 3, 3, 2023),
+    ('Social Sciences', 'REFABC', 'Projeto', '10', 'Adenda 4', 4, 4, 2023),
+    ('Business Management', 'REFDEF', 'Estágio', '16', 'Adenda 5', 5, 5, 2023);

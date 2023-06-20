@@ -30,13 +30,13 @@
                     <td class="text">@Html.DisplayFor(modelItem => item.Alunos.Nome)</td>
                     <td class="text">@Html.DisplayFor(modelItem => item.Ano_Letivo)</td>
 
-                    @if (item.Data_Defesa == null || item.Data_Defesa == DateTime.MinValue)
+                    @if (item.Data_Defesa == null)
                     {
                         <td class="text">Sem data de Defesa</td>
                     }
                     else
                     {
-                        <td class="text">@Html.DisplayFor(modelItem => item.Data_Defesa)</td>
+                        <td class="text">@Html.DisplayFor(modelItem => item.Juri.Data_Defesa)</td>
                     }
                 </tr>
             }

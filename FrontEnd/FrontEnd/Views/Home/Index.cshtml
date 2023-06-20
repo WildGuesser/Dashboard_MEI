@@ -45,7 +45,8 @@
 			<p>
 				@if (Model.DataMaisProxima != null)
 				{
-					@Model.DataMaisProxima
+                    @Model.DataMaisProxima.Value.ToString("dd/MM/yyyy")
+                    
 					<br /><span>Data Mais Proxima</span>
 				}
 				else
@@ -61,7 +62,7 @@
 		<div class="col-div-8">
 			<div class="box-8">
 				<div class="content-box">
-				<p>Ultimos alunos <span> <a class="btn btn-sm" asp-controller="Alunos" asp-action="Index">Mostrar Tudo</a> </span></p>
+				<p>Alunos <span> <a class="btn btn-sm" asp-controller="Alunos" asp-action="Index">Mostrar Tudo</a> </span></p>
 					<br />
 					@await Html.PartialAsync("List_Alunos.cshtml", Model.Alunos)
 
@@ -83,7 +84,7 @@
 		<div class="col-div-8">
 			<div class="box-8">
 				<div class="content-box">
-					<p>Ultimos Trabalhos <span> <a class="btn btn-sm" asp-controller="Trabalhos" asp-action="Index">Mostrar Tudo</a> </span></p>
+					<p>Trabalhos <span> <a class="btn btn-sm" asp-controller="Trabalhos" asp-action="Index">Mostrar Tudo</a> </span></p>
 					<br />
 					@await Html.PartialAsync("List_Trabalhos.cshtml", Model.Trabalhos)
 

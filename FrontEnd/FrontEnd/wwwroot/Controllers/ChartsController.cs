@@ -69,11 +69,11 @@ namespace FrontEnd.Controllers
             // Deserialize the response into a dynamic object
             dynamic responseData = JsonConvert.DeserializeObject(body);
 
-            // Set the properties of the HomeViewModel object manually
-            model.Nalunos = responseData["nalunos"];
-            model.NTrabalhos = responseData["nTrabalhos"];
-            model.Nmenbros = responseData["nmenbros"];
-            model.Nempresas = responseData["nempresas"];
+            // Set the properties of the ChartsViewModel object manually
+            model.Nalunos = responseData?["nalunos"];
+            model.NTrabalhos = responseData?["nTrabalhos"];
+            model.Nmenbros = responseData?["nmenbros"];
+            model.Nempresas = responseData?["nempresas"];
 
 
 
@@ -119,13 +119,18 @@ namespace FrontEnd.Controllers
                 model.Ndefendidos = tdefendidos.Values.ToArray();
             }
             else
-			{
-				model.Trabalhos = new List<Trabalhos>();
-				model.Tipos = new string[0];
-				model.TipoN = new int[0];
-			}
+            {
+                model.Trabalhos = new List<Trabalhos>();
+                model.Tipos = new string[0];
+                model.TipoN = new int[0];
+                model.meanNotaPerAno = new double[0];
+                model.meanNotaAnos = new int[0];
+                model.Pdefendidos = new double[0];
+                model.Ndefendidos = new int[0];
+            }
 
-			return View(model);
+
+            return View(model);
 
 		}
 

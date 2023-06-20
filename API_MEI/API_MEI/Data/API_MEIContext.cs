@@ -26,6 +26,8 @@ namespace API_MEI.Data
         public DbSet<API_MEI.Models.Membros> Membros { get; set; } = default!;
         public DbSet<API_MEI.Models.JuriMembros> JuriMembros { get; set; } = default!;
 
+        public DbSet<API_MEI.Models.User> User { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
