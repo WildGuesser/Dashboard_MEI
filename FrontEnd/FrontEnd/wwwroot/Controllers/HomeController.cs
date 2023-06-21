@@ -15,7 +15,8 @@ namespace FrontEnd.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly string _APIserver;
 		private readonly HttpClient _InternalClient;
-		private List<Trabalhos> Trabalhos_list;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private List<Trabalhos> Trabalhos_list;
 
 		private List<Alunos> Alunos_list;
 		private List<Empresas> Empresas_list;
@@ -23,12 +24,20 @@ namespace FrontEnd.Controllers
 
 		private PagingModel pageEmpresas;
 
-		public HomeController (ILogger<HomeController> logger, IConfiguration configuration)
+		public HomeController (ILogger<HomeController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			_logger = logger;
 			_APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
 			_InternalClient = new HttpClient();
-		}
+            _httpContextAccessor = httpContextAccessor;
+
+            // Retrieve the token from the session
+            string token = httpContextAccessor.HttpContext.Session.GetString("AuthToken");
+
+            // Set the token in the default request headers
+            _InternalClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        }
 
         public async Task<IActionResult> Index()
         {

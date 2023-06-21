@@ -17,6 +17,8 @@ namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
+
     public class HomeController : ControllerBase
     {
         private readonly API_MEIContext _context;

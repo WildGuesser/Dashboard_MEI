@@ -16,7 +16,7 @@ namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
+    [Authorize]
     public class AlunosController : ControllerBase
     {
         private readonly API_MEIContext _context;

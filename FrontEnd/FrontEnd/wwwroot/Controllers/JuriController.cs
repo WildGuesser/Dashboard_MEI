@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FrontEnd.Data;
 using FrontEnd.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,12 +23,21 @@ namespace FrontEnd.Controllers
         private readonly ILogger<JuriController> _logger;
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JuriController(ILogger<JuriController> logger, IConfiguration configuration)
+        public JuriController(ILogger<JuriController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
             _InternalClient = new HttpClient();
+            _httpContextAccessor = httpContextAccessor;
+
+
+            // Retrieve the token from the session
+            string token = httpContextAccessor.HttpContext.Session.GetString("AuthToken");
+
+            // Set the token in the default request headers
+            _InternalClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         // GET: Juri

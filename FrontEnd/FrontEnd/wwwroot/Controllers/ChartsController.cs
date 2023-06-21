@@ -4,6 +4,7 @@ using FrontEnd.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace FrontEnd.Controllers
 {
@@ -12,7 +13,8 @@ namespace FrontEnd.Controllers
 		private readonly ILogger<ChartsController> _logger;
 		private readonly string _APIserver;
 		private readonly HttpClient _InternalClient;
-		private List<Trabalhos> Trabalhos_list;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private List<Trabalhos> Trabalhos_list;
 
 		private List<Alunos> Alunos_list;
 		private List<Empresas> Empresas_list;
@@ -20,14 +22,21 @@ namespace FrontEnd.Controllers
 
 		private PagingModel pageEmpresas;
 
-		public ChartsController(ILogger<ChartsController> logger, IConfiguration configuration)
-		{
-			_logger = logger;
-			_APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
-			_InternalClient = new HttpClient();
-		}
+        public ChartsController(ILogger<ChartsController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        {
+            _logger = logger;
+            _APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
+            _InternalClient = new HttpClient();
+            _httpContextAccessor = httpContextAccessor;
 
-		public async Task<IActionResult> Index()
+            // Retrieve the token from the session
+            string token = httpContextAccessor.HttpContext.Session.GetString("AuthToken");
+
+            // Set the token in the default request headers
+            _InternalClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        public async Task<IActionResult> Index()
 		{
 			ChartsViewModel model = new ChartsViewModel();
 

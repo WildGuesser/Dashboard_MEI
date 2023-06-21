@@ -1,0 +1,19 @@
+Numero_Aluno,Nome,Curso,Email,Contacto,Instituicao,Edicao,Estado
+23456,Maria Santos,Matemática,maria.santos@example.com,965432109,Universidade de Coimbra,2023,True
+34567,Manuel Alves,Física,manuel.alves@example.com,919876543,Universidade de Lisboa,2023,True
+45678,Ana Sousa,Química,ana.sousa@example.com,925678901,Universidade de Aveiro,2023,True
+56789,Ricardo Pereira,Biologia,ricardo.pereira@example.com,927654321,Universidade do Minho,2023,True
+67890,Sofia Fernandes,Artes,sofia.fernandes@example.com,936543210,Universidade de Évora,2023,True
+78901,Miguel Costa,Direito,miguel.costa@example.com,932156789,Universidade Nova de Lisboa,2023,True
+89012,Beatriz Santos,História,beatriz.santos@example.com,915432167,Universidade do Algarve,2023,True
+90123,Hugo Almeida,Economia,hugo.almeida@example.com,932187654,Universidade de Trás-os-Montes e Alto Douro,2023,True
+12345,Inês Oliveira,Farmácia,ines.oliveira@example.com,934218765,Universidade de Coimbra,2023,True
+23457,Pedro Carvalho,Arquitetura,pedro.carvalho@example.com,932145678,Universidade do Porto,2023,True
+34568,Rita Soares,Engenharia Mecânica,rita.soares@example.com,933214567,Universidade de Aveiro,2023,True
+45679,David Rodrigues,Psicologia,david.rodrigues@example.com,939876543,Universidade de Lisboa,2023,True
+56790,Ana Rita Costa,Ciências Sociais,anarita.costa@example.com,935678921,Universidade de Coimbra,2023,True
+67891,Jorge Mendes,Geografia,jorge.mendes@example.com,917654328,Universidade de Aveiro,2023,True
+78902,Catarina Ribeiro,Medicina,catarina.ribeiro@example.com,935218767,Universidade do Porto,2020,True
+89013,Pedro Santos,Educação,pedro.santos@example.com,936543219,Universidade de Lisboa,2020,True
+90124,Sara Ferreira,Gestão,sara.ferreira@example.com,934567891,Universidade Nova de Lisboa,2020,True
+12346,Miguel Costa,Direito,miguel.costa@example.com,932156789,Universidade de Coimbra,2020,True

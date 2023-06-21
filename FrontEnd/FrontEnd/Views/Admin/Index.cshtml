@@ -1,0 +1,70 @@
+﻿@model FrontEnd.Data.Paging_Models.UsersPagingModel
+
+
+<link rel="stylesheet" href="/css/Admin.css">
+
+<h1>Gestão de Admins</h1>
+
+<div id="main">
+
+    <div class="clearfix"></div>
+    <br />
+
+	<div class="col-div-6">
+		<div class="box-6">
+			<div class="content-box">
+				<p>Users</p>
+				<br />
+                <table id="myTable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th data-type="numeric" class="text">
+                                @Html.DisplayNameFor(model => model.User.Username)
+                            </th>
+                            <th data-type="text-long" class="text">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UserList)
+                        {
+                            <tr>
+                                <td class="text">@Html.DisplayFor(modelItem => item.Username)</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger text" asp-controller="Admin" asp-action="Delete" asp-route-username="@item.Username" >Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-div-4">
+		<div class="box-4">
+			 <form asp-action="register" >
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <p class="text-user">Insira o Username e Password do Admin que quer criar</p>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="@Model.User.Username" class="control-label"></label>
+                            <input asp-for="@Model.User.Username" class="form-control" min="1" />
+                            <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="@Model.User.Password" class="control-label"></label>
+                            <input asp-for="@Model.User.Password" type="password" class="form-control" />
+                            <span asp-validation-for="@Model.User.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input class="btn btn-primary" type="submit" value="Criar Novo">
+            </form>
+		</div>
+	</div>
+</div>

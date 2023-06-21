@@ -15,6 +15,7 @@ namespace API_MEI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
 
     public class DocentesController : ControllerBase
     {

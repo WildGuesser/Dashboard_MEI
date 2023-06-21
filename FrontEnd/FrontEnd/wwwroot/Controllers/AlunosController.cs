@@ -16,6 +16,9 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
+using NuGet.Common;
+using System.Net.Http.Headers;
+using System.Net.Http;
 
 namespace FrontEnd.Controllers
 {
@@ -25,14 +28,22 @@ namespace FrontEnd.Controllers
         private readonly ILogger<AlunosController> _logger;
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
+        private IHttpContextAccessor _httpContextAccessor;
         private List<Alunos> list;
         private PagingModel pageEmpresas;
 
-        public AlunosController(ILogger<AlunosController> logger, IConfiguration configuration)
+        public AlunosController(ILogger<AlunosController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
             _InternalClient = new HttpClient();
+            _httpContextAccessor = httpContextAccessor;
+
+            // Retrieve the token from the session
+            string token = _httpContextAccessor.HttpContext.Session.GetString("AuthToken");
+
+            // Set the token in the default request headers
+            _InternalClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         // GET: Alunos
@@ -104,7 +115,7 @@ namespace FrontEnd.Controllers
                     string json = JsonConvert.SerializeObject(alunos);
 
                     // Send a POST request to the API to create a new Alunos object
-                    var response = await _InternalClient.PutAsync(_APIserver + "/Alunos/Create",
+                    var response = await _InternalClient.PostAsync(_APIserver + "/Alunos/Create",
                         new StringContent(json, Encoding.UTF8, "application/json"));
 
                     response.EnsureSuccessStatusCode();

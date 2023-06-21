@@ -1,0 +1,145 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #1b203d;
+    font-family: system-ui;
+}
+
+.clearfix {
+    clear: both;
+}
+
+h1{
+    margin-top:5%;
+    text-align:center;
+    color:white;
+}
+
+#main {
+    padding: 16px;
+    margin-left: 10%;
+}
+
+.col-div-6 {
+    width: 50%;
+    float: left;
+}
+
+.profile {
+    display: inline-block;
+    float: right;
+    width: 160px;
+}
+
+
+.col-div-3 {
+    width: 25%;
+    float: left;
+}
+
+.box {
+    width: 85%;
+    height: 100px;
+    background-color: #272c4a;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+    .box p {
+        font-size: 35px;
+        color: white;
+        font-weight: bold;
+        line-height: 30px;
+        padding-left: 10px;
+        margin-top: 20px;
+        display: inline-block;
+    }
+
+        .box p span {
+            font-size: 20px;
+            font-weight: 400;
+            color: #818181;
+        }
+
+.label {
+    font-size: 15px;
+    font-weight: 400;
+    color: white;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+}
+
+    .line p {
+        margin-right: 10px; /* Adjust the margin as needed */
+    }
+
+.box-icon {
+    font-size: 40px !important;
+    float: right;
+    margin-top: 35px !important;
+    color: #818181;
+    padding-right: 10px;
+}
+
+.col-div-8 {
+    width: 70%;
+    float: left;
+    margin-top: 40px;
+}
+
+.col-div-4 {
+    width: 33%;
+    float: left;
+    margin-top: 40px;
+}
+
+.max {
+    max-height: 20em;
+}
+.content-box {
+    padding: 20px;
+}
+
+    .content-box p {
+        margin: 0px;
+        font-size: 20px;
+        color: #f7403b;
+    }
+
+        .content-box p span {
+            float: right;
+            background-color: #ddd;
+            padding: 3px 10px;
+            font-size: 15px;
+        }
+
+.box-8, .box-4 {
+    width: 95%;
+    background-color: #272c4a;
+}
+
+
+.box-8 {
+    margin-left: 10px;
+    height: auto;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th, .text-user {
+    text-align: left;
+    padding: 15px;
+    color: #ddd;
+    border-bottom: 1px solid #81818140;
+}
+
+label {
+    color:white;
+}

@@ -5,6 +5,7 @@ using API_MEI.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,6 +15,7 @@ namespace API_MEI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly API_MEIContext _context;
@@ -28,17 +30,27 @@ namespace API_MEI.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult<string> GetMe()
+        [HttpGet("List_Users")]
+        public async Task<IActionResult> ListUsers()
         {
-            var userName = _userService.GetMyName();
-            return Ok(userName);
+            var users = await _context.User.ToListAsync();
+            var userList = users.Select(user => new User { ID = user.ID, Username = user.Username }).ToList();
+            return Ok(userList);
         }
+
+
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
+            // Check if the username already exists
+            if (await _context.User.AnyAsync(u => u.Username == request.Username))
+            {
+                return BadRequest("Username already exists.");
+            }
+            _context.Entry(user).State = EntityState.Detached;
+
+
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             user.Username = request.Username;
@@ -53,6 +65,7 @@ namespace API_MEI.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
 
@@ -95,6 +108,29 @@ namespace API_MEI.Controllers
             SetRefreshToken(newRefreshToken);
 
             return Ok(token);
+        }
+
+
+        [HttpPost ("delete")]
+        public async Task<IActionResult> Delete(JustUserDTO user)
+        {
+            var usera = _context.User.Where(u => user.Username == u.Username).FirstOrDefault();
+            if (usera == null)
+            {
+                return NotFound("Aluno não encontrado.");
+            }
+
+            try
+            {
+                _context.User.Remove(usera);
+                await _context.SaveChangesAsync();
+                _context.Entry(usera).State = EntityState.Detached;
+                return Ok("Aluno excluído com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno ao excluir o aluno: {ex.Message}");
+            }
         }
 
         private RefreshToken GenerateRefreshToken()
@@ -164,5 +200,7 @@ namespace API_MEI.Controllers
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
+
+
     }
 }

@@ -12,6 +12,7 @@ using System.Configuration;
 using Newtonsoft.Json;
 using System.Text;
 using FrontEnd.Data.Paging_Models;
+using System.Net.Http.Headers;
 
 namespace FrontEnd.Controllers
 {
@@ -21,14 +22,21 @@ namespace FrontEnd.Controllers
         private readonly ILogger<DocentesController> _logger;
         private readonly string _APIserver;
         private readonly HttpClient _InternalClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private List<Docentes> list;
 
-
-        public DocentesController(ILogger<DocentesController> logger, IConfiguration configuration)
+        public DocentesController(ILogger<DocentesController> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _APIserver = configuration.GetSection("WebAPIServers").GetSection("DashboardAPI").Value;
             _InternalClient = new HttpClient();
+            _httpContextAccessor = httpContextAccessor;
+
+            // Retrieve the token from the session
+            string token = httpContextAccessor.HttpContext.Session.GetString("AuthToken");
+
+            // Set the token in the default request headers
+            _InternalClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         // GET: Docentes
